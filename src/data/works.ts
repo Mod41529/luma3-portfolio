@@ -91,43 +91,135 @@ export const works: WorkItem[] = [
   {
     id: 'v2',
     category: 'video',
-    title: 'Synthetic Seasons',
-    titleKo: '합성된 계절',
-    year: 2024,
-    tools: ['Kling', 'Premiere Pro', 'SUNO'],
+    title: 'Inner Universe',
+    titleKo: '내부 우주',
+    year: 2026,
+    tools: ['Midjourney', 'Kling'],
     description:
-      'Four seasons captured through generative AI, each representing a different emotional state.',
+      'Microscopic biological cells rendered as a glowing alien ecosystem — the body as cosmos.',
     descriptionKo:
-      '생성 AI로 포착한 사계절. 각 계절은 다른 감정 상태를 표현합니다.',
+      '발광하는 미시 세포들을 외계 생태계로 렌더링. 몸 안에 존재하는 우주.',
     howIMadeThis: {
-      tools: ['Kling', 'Adobe Premiere Pro', 'SUNO', 'Midjourney'],
+      tools: ['Midjourney v6', 'Kling AI'],
       prompt:
-        'Cherry blossoms falling in slow motion, hyperrealistic, 4K, spring afternoon light, Japanese aesthetic',
+        'Microscopic biological cells glowing in vibrant colors, bioluminescent, alien ecosystem, deep space aesthetic, ultra detailed',
       processNotes:
-        'Created 4 separate AI video sequences for each season, then edited together with original music generated in SUNO.',
+        'Generated the base image in Midjourney, then animated with Kling to bring the cellular structures to life. The motion reveals depth that the static image only hints at.',
     },
-    thumbnailAlt: 'Falling cherry blossoms',
+    thumbnailAlt: 'Glowing microscopic cells',
     videoSrc: '/videos/v2.mp4',
     thumbnailSrc: '/images/thumbnails/v2.jpg',
   },
   {
     id: 'v3',
     category: 'video',
-    title: 'Brand in Motion',
-    titleKo: '브랜드 모션',
-    year: 2023,
-    tools: ['After Effects', 'Illustrator'],
+    title: 'First Light',
+    titleKo: '첫 번째 빛',
+    year: 2026,
+    tools: ['Midjourney', 'Kling'],
     description:
-      'Corporate motion identity package for a fintech startup — logo animation, transitions, and lower thirds.',
-    descriptionKo: '핀테크 스타트업을 위한 모션 아이덴티티 패키지.',
+      'A child releases balloons into a bright summer sky — innocence, color, and upward motion.',
+    descriptionKo:
+      '아이가 여름 하늘로 풍선을 날려 보내는 순간. 순수함, 색채, 상승.',
     howIMadeThis: {
-      tools: ['Adobe After Effects', 'Adobe Illustrator'],
+      tools: ['Midjourney v6', 'Kling AI'],
+      prompt:
+        'First-person perspective of a child releasing colorful balloons into blue summer sky, cinematic, warm sunlight, dreamy',
       processNotes:
-        "Designed the motion system around the brand's core value of 'precision'. Used elastic expressions for the logo reveal and custom easing for all transitions.",
+        'The first-person framing was intentional — placing the viewer inside the memory rather than observing it. Kling preserved the soft light remarkably well.',
     },
-    thumbnailAlt: 'Abstract brand motion graphic',
+    thumbnailAlt: 'Child releasing colorful balloons into sky',
     videoSrc: '/videos/v3.mp4',
     thumbnailSrc: '/images/thumbnails/v3.jpg',
+  },
+  {
+    id: 'v4',
+    category: 'video',
+    title: 'Abyss',
+    titleKo: '심연',
+    year: 2026,
+    tools: ['Midjourney', 'Kling'],
+    description:
+      'A lone diver stands in a glowing bioluminescent reef — small against the infinite dark.',
+    descriptionKo:
+      '생물발광 산호초 속 홀로 선 다이버. 무한한 어둠 앞의 작은 존재.',
+    howIMadeThis: {
+      tools: ['Midjourney v6', 'Kling AI'],
+      prompt:
+        'Deep sea diver surrounded by glowing bioluminescent creatures, dark underwater, neon purples and greens, cinematic wide shot',
+      processNotes:
+        'The scale contrast between the diver and the environment was the core concept. Kling added subtle particle movement that made the creatures feel alive.',
+    },
+    thumbnailAlt: 'Diver in bioluminescent deep sea',
+    videoSrc: '/videos/v4.mp4',
+    thumbnailSrc: '/images/thumbnails/v4.jpg',
+  },
+  {
+    id: 'v5',
+    category: 'video',
+    title: 'Mountain Line',
+    titleKo: '산악 질주',
+    year: 2026,
+    tools: ['Midjourney', 'Kling'],
+    description:
+      'An orange supercar cuts through a mountain road at dusk — speed as pure sensation.',
+    descriptionKo:
+      '황혼의 산악 도로를 달리는 오렌지색 슈퍼카. 감각으로서의 속도.',
+    howIMadeThis: {
+      tools: ['Midjourney v6', 'Kling AI'],
+      prompt:
+        'Luxury sports car speeding through mountain road, dramatic sunset sky, motion blur, cinematic, hyperrealistic',
+      processNotes:
+        'Focused on the motion blur in the road surface — Kling handled the directional blur well, giving the sense of real velocity.',
+    },
+    thumbnailAlt: 'Orange supercar on mountain road at sunset',
+    videoSrc: '/videos/v5.mp4',
+    thumbnailSrc: '/images/thumbnails/v5.jpg',
+  },
+  {
+    id: 'v6',
+    category: 'video',
+    title: 'Chromatic Burst',
+    titleKo: '크로마틱 버스트',
+    year: 2026,
+    tools: ['Midjourney', 'Kling'],
+    description:
+      'An explosion of liquid pigments suspended in dark space — color as raw energy.',
+    descriptionKo:
+      '어둠 속 액체 안료의 폭발. 에너지 그 자체로서의 색채.',
+    howIMadeThis: {
+      tools: ['Midjourney v6', 'Kling AI'],
+      prompt:
+        'Explosion of liquid colors in mid-air, swirling paint, black background, ultra detailed, macro photography style',
+      processNotes:
+        'The static image was already striking, but the animation added a sense of ongoing expansion — like the explosion is still happening.',
+    },
+    thumbnailAlt: 'Colorful liquid paint explosion on black background',
+    videoSrc: '/videos/v6.mp4',
+    thumbnailSrc: '/images/thumbnails/v6.jpg',
+    featured: true,
+  },
+  {
+    id: 'v7',
+    category: 'video',
+    title: 'Urban Signal',
+    titleKo: '어반 시그널',
+    year: 2026,
+    tools: ['Midjourney', 'Kling'],
+    description:
+      'A fashion model on a vibrant city street — the body as visual language against urban noise.',
+    descriptionKo:
+      '컬러풀한 도시 거리의 패션 모델. 도시의 소음에 맞서는 시각 언어로서의 몸.',
+    howIMadeThis: {
+      tools: ['Midjourney v6', 'Kling AI'],
+      prompt:
+        'High fashion model walking through colorful urban street, editorial photography style, vivid colors, cinematic bokeh',
+      processNotes:
+        'The challenge was keeping the model sharp while the background felt alive. Kling introduced subtle movement in her dress and the background elements.',
+    },
+    thumbnailAlt: 'Fashion model on colorful urban street',
+    videoSrc: '/videos/v7.mp4',
+    thumbnailSrc: '/images/thumbnails/v7.jpg',
   },
 
   // ─── Music ───────────────────────────────────────────────────────────────
