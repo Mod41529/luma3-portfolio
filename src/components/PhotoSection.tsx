@@ -229,10 +229,16 @@ function DetailPanel({
   )
 }
 
+const INITIAL_PHOTO_COUNT = 8
+
 // ── Section ─────────────────────────────────────────────────────────────────
 export default function PhotoSection() {
   const [selected, setSelected] = useState<WorkItem | null>(null)
+  const [showMore, setShowMore] = useState(false)
   const handleClose = useCallback(() => setSelected(null), [])
+
+  const visible = showMore ? photoWorks : photoWorks.slice(0, INITIAL_PHOTO_COUNT)
+  const remaining = photoWorks.length - INITIAL_PHOTO_COUNT
 
   return (
     <section id="photography" className="border-t border-[#e5e5e5]">
@@ -257,15 +263,30 @@ export default function PhotoSection() {
         </Link>
       </div>
 
-      {/* Masonry grid — CSS columns */}
+      {/* Masonry grid — 4 CSS columns */}
       <div
         className="p-px bg-[#e5e5e5]"
-        style={{ columns: '2', columnGap: '1px' }}
+        style={{ columns: '2 160px', columnGap: '1px' }}
       >
-        {photoWorks.map((work, i) => (
+        {visible.map((work, i) => (
           <PhotoCard key={work.id} work={work} index={i} onClick={setSelected} />
         ))}
       </div>
+
+      {/* View More */}
+      {!showMore && remaining > 0 && (
+        <div className="flex justify-center py-6 border-t border-[#e5e5e5]">
+          <button
+            onClick={() => setShowMore(true)}
+            className="flex items-center gap-3 px-7 py-2.5 border border-[#e5e5e5]
+                       text-[10px] font-bold uppercase tracking-[0.3em] text-[#737373]
+                       hover:border-[#1a1a1a] hover:text-[#1a1a1a] transition-colors duration-150"
+          >
+            View More
+            <span className="text-[#a3a3a3] font-mono">+{remaining}</span>
+          </button>
+        </div>
+      )}
 
       {/* Detail panel */}
       <AnimatePresence>

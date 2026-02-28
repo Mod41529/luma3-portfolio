@@ -12,7 +12,7 @@ const gridConfig: { id: CategoryId; className: string }[] = [
 ]
 
 const featuredVideo = works.find(w => w.category === 'video' && w.featured)
-const featuredMusic = works.find(w => w.category === 'music')
+const featuredMusic = works.find(w => w.id === 'm5') ?? works.find(w => w.category === 'music')
 
 export default function BentoGrid() {
   return (
