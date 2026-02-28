@@ -192,6 +192,65 @@ export const works: WorkItem[] = [
     thumbnailAlt: 'Seoul nightscape abstract',
     audioSrc: '/audio/m3.mp3',
   },
+  {
+    id: 'm4',
+    category: 'music',
+    title: 'Always Awake',
+    titleKo: '항상 깨어',
+    year: 2025,
+    tools: ['SUNO', 'Ableton'],
+    description:
+      'A late-night electronic piece — restless energy captured in layered synths and a driving rhythm that never quite settles.',
+    descriptionKo:
+      '깊은 밤의 불면을 담은 일렉트로닉 트랙. 안정되지 않는 리듬과 레이어드 신스.',
+    howIMadeThis: {
+      tools: ['SUNO', 'Ableton Live'],
+      processNotes:
+        'The title came first — the feeling of being wired at 2am. Built the arrangement around that tension: a beat that keeps threatening to drop but never fully resolves.',
+    },
+    thumbnailAlt: 'Night synth waveform',
+    audioSrc: '/audio/m4.mp3',
+  },
+  {
+    id: 'm5',
+    category: 'music',
+    title: 'Distorted Daydream',
+    titleKo: '왜곡된 백일몽',
+    year: 2025,
+    tools: ['SUNO', 'Logic Pro'],
+    description:
+      'Clave-driven rhythm mutated through distortion — a percussive daydream that blurs the line between structure and chaos.',
+    descriptionKo:
+      '클라베 리듬을 왜곡으로 변형한 타악기적 백일몽. 구조와 혼돈의 경계.',
+    howIMadeThis: {
+      tools: ['SUNO', 'Logic Pro X'],
+      prompt:
+        'Clave rhythm, afrobeat influence, heavily distorted percussion, dreamy atmosphere, hypnotic loop, 95bpm',
+      processNotes:
+        'Started with a traditional clave pattern, then ran it through distortion chains until it felt hallucinatory. Mixed clean and destroyed versions in parallel.',
+    },
+    thumbnailAlt: 'Distorted rhythm waveform',
+    audioSrc: '/audio/m5.mp3',
+  },
+  {
+    id: 'm6',
+    category: 'music',
+    title: 'love4',
+    titleKo: 'love4',
+    year: 2025,
+    tools: ['SUNO', 'Udio'],
+    description:
+      'A short, unpolished love song — the fourth draft that finally felt honest.',
+    descriptionKo:
+      '짧고 다듬어지지 않은 러브송. 솔직하게 느껴진 네 번째 초안.',
+    howIMadeThis: {
+      tools: ['SUNO', 'Udio'],
+      processNotes:
+        'Made three versions before this one. Kept the rough edges intentionally — sometimes the imperfection is the point.',
+    },
+    thumbnailAlt: 'Soft waveform',
+    audioSrc: '/audio/m6.mp3',
+  },
 
   // ─── Photography ─────────────────────────────────────────────────────────
   {
