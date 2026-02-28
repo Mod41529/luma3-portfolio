@@ -435,6 +435,132 @@ export const works: WorkItem[] = [
     thumbnailAlt: 'Wizard casting colorful spell',
     imageSrc: '/images/photo/p5.jpg',
   },
+  {
+    id: 'p6',
+    category: 'photography',
+    title: 'The Frontier',
+    titleKo: '프론티어',
+    year: 2026,
+    tools: ['Midjourney'],
+    description:
+      'An astronaut stands alone on a rocky alien surface, dwarfed by a sky of colliding nebulae — the scale of wonder.',
+    descriptionKo:
+      '충돌하는 성운으로 가득 찬 하늘 아래 혼자 선 우주비행사. 경이로움의 스케일.',
+    howIMadeThis: {
+      tools: ['Midjourney v6'],
+      prompt:
+        'Astronaut standing on colorful alien planet, massive nebula sky, orange and blue, cinematic, silhouette, epic scale',
+      processNotes:
+        'The goal was to show smallness as awe rather than loneliness. The warm/cool color split in the sky creates a tension that keeps the image alive.',
+    },
+    thumbnailAlt: 'Astronaut silhouette against colorful alien nebula sky',
+    imageSrc: '/images/photo/p6.jpg',
+  },
+  {
+    id: 'p7',
+    category: 'photography',
+    title: 'Bioluminescence',
+    titleKo: '생물 발광',
+    year: 2026,
+    tools: ['Midjourney'],
+    description:
+      'A diver suspended in a deep-sea canyon of glowing organisms — darkness made habitable by light.',
+    descriptionKo:
+      '발광 생물로 가득 찬 심해 협곡에 떠 있는 다이버. 빛으로 살아지는 어둠.',
+    howIMadeThis: {
+      tools: ['Midjourney v6'],
+      prompt:
+        'Deep sea diver surrounded by glowing bioluminescent sea creatures, dark underwater canyon, neon purple and green, cinematic wide',
+      processNotes:
+        'Companion piece to the video work Abyss. The static image captures detail the video sacrifices for motion — two different ways of seeing the same world.',
+    },
+    thumbnailAlt: 'Diver among glowing bioluminescent creatures',
+    imageSrc: '/images/photo/p7.jpg',
+  },
+  {
+    id: 'p8',
+    category: 'photography',
+    title: 'Neon Shore',
+    titleKo: '네온 쇼어',
+    year: 2026,
+    tools: ['Midjourney'],
+    description:
+      'A futuristic city skyline reflected in still water at night — pink and blue neon bleeding into fog.',
+    descriptionKo:
+      '야간 수면에 반사된 미래 도시 스카이라인. 안개 속으로 번지는 핑크와 블루 네온.',
+    howIMadeThis: {
+      tools: ['Midjourney v6'],
+      prompt:
+        'Futuristic city skyline at night, neon pink and blue reflections on water, foggy atmosphere, cyberpunk aesthetic, wide shot',
+      processNotes:
+        'The fog was the key ingredient — it softens the hard edges of the architecture and makes the neon feel atmospheric rather than decorative.',
+    },
+    thumbnailAlt: 'Futuristic city skyline with neon reflections',
+    imageSrc: '/images/photo/p8.jpg',
+  },
+  {
+    id: 'p9',
+    category: 'photography',
+    title: 'Last Stand',
+    titleKo: '최후의 순간',
+    year: 2026,
+    tools: ['Midjourney'],
+    description:
+      'An ancient warrior silhouetted against a burning sunset sky — stillness before the storm.',
+    descriptionKo:
+      '불타는 일몰 하늘을 배경으로 한 고대 전사의 실루엣. 폭풍 전의 고요.',
+    howIMadeThis: {
+      tools: ['Midjourney v6'],
+      prompt:
+        'Ancient warrior standing on battlefield at sunrise, dramatic orange sky, silhouette, cinematic, Greek soldier with shield and spear',
+      processNotes:
+        'Kept the warrior as a pure silhouette — identity stripped to form. The sky does all the emotional work.',
+    },
+    thumbnailAlt: 'Ancient warrior silhouette against dramatic orange sky',
+    imageSrc: '/images/photo/p9.jpg',
+  },
+  {
+    id: 'p10',
+    category: 'photography',
+    title: 'Stage Fever',
+    titleKo: '스테이지 피버',
+    year: 2026,
+    tools: ['Midjourney'],
+    description:
+      'A guitarist lost in the music, wrapped in colored smoke and stage light — the moment of total surrender.',
+    descriptionKo:
+      '컬러 스모크와 무대 조명에 싸인 기타리스트. 완전한 몰입의 순간.',
+    howIMadeThis: {
+      tools: ['Midjourney v6'],
+      prompt:
+        'Electric guitarist on stage during summer music festival, colorful smoke, dramatic stage lighting, silhouette, crowd in background',
+      processNotes:
+        'The silhouette treatment was deliberate — any face would reduce this to a portrait. As a silhouette, it becomes everyone who has ever lost themselves in music.',
+    },
+    thumbnailAlt: 'Guitarist silhouette on stage with colorful smoke',
+    imageSrc: '/images/photo/p10.jpg',
+  },
+  {
+    id: 'p11',
+    category: 'photography',
+    title: 'Pigment Storm',
+    titleKo: '안료의 폭풍',
+    year: 2026,
+    tools: ['Midjourney'],
+    description:
+      'Liquid pigments colliding in mid-air against pure black — controlled chaos, color as force.',
+    descriptionKo:
+      '순수한 검정 배경 위 공중에서 충돌하는 액체 안료. 통제된 혼돈, 힘으로서의 색채.',
+    howIMadeThis: {
+      tools: ['Midjourney v6'],
+      prompt:
+        'Explosion of liquid colors in mid-air, swirling paint pigments, pure black background, macro photography, ultra detailed',
+      processNotes:
+        'Companion piece to the video Chromatic Burst. Studied high-speed liquid photography references to get the fluid dynamics right in the prompt.',
+    },
+    thumbnailAlt: 'Colorful liquid pigment explosion on black background',
+    imageSrc: '/images/photo/p11.jpg',
+  },
 
   // ─── Design ──────────────────────────────────────────────────────────────
   {
