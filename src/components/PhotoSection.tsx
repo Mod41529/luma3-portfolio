@@ -229,7 +229,7 @@ function DetailPanel({
   )
 }
 
-const INITIAL_PHOTO_COUNT = 8
+const INITIAL_PHOTO_COUNT = 6
 
 // ── Section ─────────────────────────────────────────────────────────────────
 export default function PhotoSection() {

@@ -14,6 +14,7 @@ interface BentoCardProps {
   audioSrc?: string
   audioTitle?: string
   audioTitleKo?: string
+  imageSrc?: string
 }
 
 function fmt(s: number) {
@@ -23,7 +24,7 @@ function fmt(s: number) {
 
 export default function BentoCard({
   category, index, className = '',
-  videoSrc, audioSrc, audioTitle, audioTitleKo,
+  videoSrc, audioSrc, audioTitle, audioTitleKo, imageSrc,
 }: BentoCardProps) {
   const audioRef = useRef<HTMLAudioElement>(null)
   const [playing, setPlaying] = useState(false)
@@ -46,6 +47,7 @@ export default function BentoCard({
 
   const isVideo = !!videoSrc
   const isMusic = !!audioSrc
+  const isPhoto = !!imageSrc
 
   return (
     <motion.div
@@ -59,8 +61,8 @@ export default function BentoCard({
         <div
           className="group relative h-full overflow-hidden cursor-pointer transition-colors duration-200"
           style={{ backgroundColor: '#FAFAFA' }}
-          onMouseEnter={e => { if (!isVideo) e.currentTarget.style.backgroundColor = '#F0F0F0' }}
-          onMouseLeave={e => { if (!isVideo) e.currentTarget.style.backgroundColor = '#FAFAFA' }}
+          onMouseEnter={e => { if (!isVideo && !isPhoto) e.currentTarget.style.backgroundColor = '#F0F0F0' }}
+          onMouseLeave={e => { if (!isVideo && !isPhoto) e.currentTarget.style.backgroundColor = '#FAFAFA' }}
         >
           {/* ── Video background ── */}
           {isVideo && (
@@ -74,17 +76,30 @@ export default function BentoCard({
             </>
           )}
 
+          {/* ── Photo background ── */}
+          {isPhoto && (
+            <>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={imageSrc}
+                alt=""
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-black/50 group-hover:bg-black/40 transition-colors duration-300" />
+            </>
+          )}
+
           {/* ── Category label — top-left ── */}
           <div className="absolute top-5 left-5 right-5 flex items-start justify-between z-10">
             <p
               className="text-[10px] tracking-[0.22em] uppercase font-medium font-mono"
-              style={{ color: isVideo ? 'rgba(255,255,255,0.75)' : category.accent }}
+              style={{ color: (isVideo || isPhoto) ? 'rgba(255,255,255,0.75)' : category.accent }}
             >
               {category.nameEn}
             </p>
             <div
               className="w-6 h-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-150 shrink-0"
-              style={{ color: isVideo ? 'white' : category.accent }}
+              style={{ color: (isVideo || isPhoto) ? 'white' : category.accent }}
             >
               <ArrowUpRight size={14} strokeWidth={1.5} />
             </div>
@@ -147,17 +162,17 @@ export default function BentoCard({
           {/* ── Bottom text block ── */}
           <div className="absolute bottom-5 left-5 right-5 z-10">
             <p className={`text-base font-medium leading-tight mb-1.5
-                          ${isVideo ? 'text-white' : 'text-[#1a1a1a]'}`}>
+                          ${(isVideo || isPhoto) ? 'text-white' : 'text-[#1a1a1a]'}`}>
               {category.nameKo}
             </p>
             <p className={`text-xs leading-relaxed line-clamp-2
-                          ${isVideo ? 'text-white/70' : 'text-[#737373]'}`}>
+                          ${(isVideo || isPhoto) ? 'text-white/70' : 'text-[#737373]'}`}>
               {category.description}
             </p>
           </div>
 
           {/* ── Accent tint on hover (default cards only) ── */}
-          {!isVideo && !isMusic && (
+          {!isVideo && !isMusic && !isPhoto && (
             <div
               className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-200"
               style={{

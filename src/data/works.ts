@@ -287,8 +287,8 @@ export const works: WorkItem[] = [
   {
     id: 'm4',
     category: 'music',
-    title: 'Always Awake',
-    titleKo: '항상 깨어',
+    title: 'All Ways Awake',
+    titleKo: '언제나 깨어',
     year: 2025,
     tools: ['SUNO', 'Ableton'],
     description:
@@ -327,8 +327,8 @@ export const works: WorkItem[] = [
   {
     id: 'm6',
     category: 'music',
-    title: 'love4',
-    titleKo: 'love4',
+    title: 'luv4',
+    titleKo: 'luv4',
     year: 2025,
     tools: ['SUNO', 'Udio'],
     description:
@@ -345,28 +345,6 @@ export const works: WorkItem[] = [
   },
 
   // ─── Photography ─────────────────────────────────────────────────────────
-  {
-    id: 'p1',
-    category: 'photography',
-    title: 'Concrete Gardens',
-    titleKo: '콘크리트 정원',
-    year: 2024,
-    tools: ['Sony A7IV', 'Lightroom', 'Midjourney'],
-    description:
-      'A series exploring nature reclaiming urban space in Seoul, combining real photography with AI-extended scenes.',
-    descriptionKo:
-      '서울의 도시 공간을 되찾는 자연을 탐구하는 시리즈. 실제 사진과 AI 확장 장면을 결합했습니다.',
-    howIMadeThis: {
-      tools: ['Sony A7IV', 'Adobe Lightroom', 'Midjourney v6'],
-      prompt:
-        'Hyperrealistic photo of plants growing through concrete cracks in Seoul, street photography style, natural light, 35mm perspective',
-      processNotes:
-        'Shot base photos on Sony A7IV, then used Midjourney to extend scenes and add surreal natural elements, blended in Photoshop.',
-    },
-    thumbnailAlt: 'Plants growing through concrete',
-    imageSrc: '/images/photo/p1.jpg',
-    featured: true,
-  },
   {
     id: 'p2',
     category: 'photography',
@@ -455,27 +433,6 @@ export const works: WorkItem[] = [
     },
     thumbnailAlt: 'Astronaut silhouette against colorful alien nebula sky',
     imageSrc: '/images/photo/p6.jpg',
-  },
-  {
-    id: 'p7',
-    category: 'photography',
-    title: 'Bioluminescence',
-    titleKo: '생물 발광',
-    year: 2026,
-    tools: ['Midjourney'],
-    description:
-      'A diver suspended in a deep-sea canyon of glowing organisms — darkness made habitable by light.',
-    descriptionKo:
-      '발광 생물로 가득 찬 심해 협곡에 떠 있는 다이버. 빛으로 살아지는 어둠.',
-    howIMadeThis: {
-      tools: ['Midjourney v6'],
-      prompt:
-        'Deep sea diver surrounded by glowing bioluminescent sea creatures, dark underwater canyon, neon purple and green, cinematic wide',
-      processNotes:
-        'Companion piece to the video work Abyss. The static image captures detail the video sacrifices for motion — two different ways of seeing the same world.',
-    },
-    thumbnailAlt: 'Diver among glowing bioluminescent creatures',
-    imageSrc: '/images/photo/p7.jpg',
   },
   {
     id: 'p8',

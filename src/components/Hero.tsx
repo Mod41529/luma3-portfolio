@@ -53,6 +53,7 @@ export default function Hero() {
     let dynSpawnMouse = 190
     let dynRMin      = 1.4
     let dynRMax      = 2.5
+    let dynTextRepelR = 220  // exclusion zone around center text block
 
     const computeSizes = () => {
       const s = Math.hypot(W, H) / REF_DIAG          // 0.25 (mobile) → 1.0 (1440p) → 1.6 (4K)
@@ -64,6 +65,7 @@ export default function Hero() {
       dynSpawnMouse = Math.round(Math.max(120, 190 * s))
       dynRMin       = Math.max(0.8, 1.4 * Math.min(s, 1.8))
       dynRMax       = dynRMin + Math.max(0.8, 1.1 * Math.min(s, 1.8))
+      dynTextRepelR = Math.round(Math.max(140, 220 * s))
     }
 
     // ── Particle factories (use dynamic values) ──────────────────────────────
@@ -77,10 +79,19 @@ export default function Hero() {
       dying: false,
     })
 
-    const initialParticles = (): Particle[] =>
-      Array.from({ length: dynN }, () =>
-        mkParticle(Math.random() * W, Math.random() * H, false)
-      )
+    const initialParticles = (): Particle[] => {
+      const arr: Particle[] = []
+      let tries = 0
+      while (arr.length < dynN && tries < dynN * 10) {
+        tries++
+        const x = Math.random() * W
+        const y = Math.random() * H
+        const dt2 = (x - W / 2) ** 2 + (y - H / 2) ** 2
+        if (dt2 < dynTextRepelR ** 2) continue
+        arr.push(mkParticle(x, y, false))
+      }
+      return arr
+    }
 
     const findSpawnPoint = (): { x: number; y: number } | null => {
       const { x: mx, y: my } = mouseRef.current
@@ -89,6 +100,9 @@ export default function Hero() {
         const y = Math.random() * H
         const dm2 = (x - mx) ** 2 + (y - my) ** 2
         if (dm2 < dynSpawnMouse ** 2) continue
+        // Exclude center text zone
+        const dt2 = (x - W / 2) ** 2 + (y - H / 2) ** 2
+        if (dt2 < dynTextRepelR ** 2) continue
         let ok = true
         for (const p of pts) {
           if ((x - p.x) ** 2 + (y - p.y) ** 2 < dynSpawnGap ** 2) { ok = false; break }
@@ -158,6 +172,15 @@ export default function Hero() {
           const md = Math.sqrt(md2)
           const f  = (1 - md / dynRepelR) * REPEL_F
           p.vx += (mdx / md) * f; p.vy += (mdy / md) * f
+        }
+
+        // Static text zone repulsion — push particles away from viewport center
+        const tdx = p.x - W / 2, tdy = p.y - H / 2
+        const td2 = tdx ** 2 + tdy ** 2
+        if (td2 < dynTextRepelR ** 2 && td2 > 0.25) {
+          const td = Math.sqrt(td2)
+          const tf = (1 - td / dynTextRepelR) * 1.2
+          p.vx += (tdx / td) * tf; p.vy += (tdy / td) * tf
         }
 
         p.vx *= DAMP; p.vy *= DAMP
