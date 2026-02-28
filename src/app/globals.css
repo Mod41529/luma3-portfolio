@@ -1,0 +1,134 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #fafafa;
+  --bg-subtle: #f4f4f2;
+  --fg: #1a1a1a;
+  --fg-muted: #737373;
+  --fg-subtle: #a3a3a3;
+  --border: #e5e5e5;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  background: var(--bg);
+  color: var(--fg);
+}
+
+/* Film grain overlay — very subtle */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.035;
+  pointer-events: none;
+  z-index: 9999;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 192px 192px;
+  background-repeat: repeat;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 3px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 2px;
+}
+
+/* Selection */
+::selection {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+/* ─── Bento Grid ─────────────────────────────────────────────── */
+/* Stitch design: 1px grid lines via gap + background color */
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 280px 280px 220px;
+  gap: 1px;
+  background-color: #e5e5e5;
+  border: 1px solid #e5e5e5;
+}
+
+.bento-video       { grid-column: 1 / 3; grid-row: 1 / 3; }
+.bento-music       { grid-column: 3;     grid-row: 1 / 3; }
+.bento-design      { grid-column: 4;     grid-row: 1;     }
+.bento-development { grid-column: 4;     grid-row: 2;     }
+.bento-photography { grid-column: 1 / 3; grid-row: 3;     }
+.bento-strategy    { grid-column: 3 / 5; grid-row: 3;     }
+
+@media (max-width: 900px) {
+  .bento-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 240px 200px 200px 200px;
+    gap: 1px;
+  }
+  .bento-video       { grid-column: 1 / 3; grid-row: 1; }
+  .bento-music       { grid-column: 1;     grid-row: 2; }
+  .bento-design      { grid-column: 2;     grid-row: 2; }
+  .bento-photography { grid-column: 1 / 3; grid-row: 3; }
+  .bento-development { grid-column: 1;     grid-row: 4; }
+  .bento-strategy    { grid-column: 2;     grid-row: 4; }
+}
+
+/* ─── Large viewport text scaling ───────────────────────────────────────── */
+/* Editorial labels (text-[9px], text-[10px], text-[11px]) scale up at
+   xl (1280px) and 2xl (1536px) — keeps the tiny-label aesthetic while
+   remaining readable on large monitors.                                    */
+@media (min-width: 1280px) {
+  .text-\[9px\]  { font-size: 10px; }
+  .text-\[10px\] { font-size: 11px; }
+  .text-\[11px\] { font-size: 12px; }
+}
+@media (min-width: 1536px) {
+  .text-\[9px\]  { font-size: 11px; }
+  .text-\[10px\] { font-size: 12px; }
+  .text-\[11px\] { font-size: 13px; }
+  .text-sm       { font-size: 15px; }
+}
+@media (min-width: 1920px) {
+  .text-\[9px\]  { font-size: 12px; }
+  .text-\[10px\] { font-size: 13px; }
+  .text-\[11px\] { font-size: 14px; }
+  .text-sm       { font-size: 16px; }
+  .text-xs       { font-size: 13px; }
+}
+
+/* ─── Mobile fine-tuning ─────────────────────────────────────────────────── */
+@media (max-width: 520px) {
+  .bento-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    gap: 1px;
+  }
+  .bento-video,
+  .bento-music,
+  .bento-design,
+  .bento-development,
+  .bento-photography,
+  .bento-strategy {
+    grid-column: 1;
+    grid-row: auto;
+    min-height: 180px;
+  }
+}
