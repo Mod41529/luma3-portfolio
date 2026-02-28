@@ -242,14 +242,14 @@ export default function Hero() {
   }, [])
 
   return (
-    <section className="relative min-h-screen flex flex-col justify-center px-8 md:px-16 overflow-hidden">
+    <section className="relative min-h-screen flex flex-col justify-center items-center px-8 md:px-16 overflow-hidden">
       <canvas
         ref={canvasRef}
         aria-hidden
         className="absolute inset-0 w-full h-full pointer-events-none transition-opacity duration-300"
       />
 
-      <div className="relative z-10 max-w-5xl w-full">
+      <div className="relative z-10 max-w-5xl w-full text-center">
         <motion.div initial="initial" animate="animate" transition={{ staggerChildren: 0.1 }}>
 
           <motion.p
@@ -258,7 +258,7 @@ export default function Hero() {
             className="font-mono uppercase tracking-[0.28em] text-[#a3a3a3] mb-10
                        text-[10px] xl:text-[11px] 2xl:text-[12px]"
           >
-            Portfolio — 2025
+            Portfolio — 2026
           </motion.p>
 
           <motion.h1
@@ -279,13 +279,13 @@ export default function Hero() {
           <motion.div
             variants={fadeUp}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="flex flex-col md:flex-row md:items-end justify-between mt-5 gap-4"
+            className="flex flex-col items-center mt-5 gap-3"
           >
             <p className="font-light leading-relaxed text-[#737373]
                           text-xl md:text-2xl 2xl:text-3xl">
               Think in systems, create in layers.
             </p>
-            <div className="flex flex-col items-start md:items-end gap-1.5">
+            <div className="flex flex-col items-center gap-1.5">
               <span className="uppercase font-bold text-[#a3a3a3]
                                tracking-[0.3em] text-[10px] xl:text-[11px] 2xl:text-[13px]">
                 Based in Seoul / Creative Designer
@@ -300,7 +300,7 @@ export default function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2, duration: 0.6 }}
-        className="absolute bottom-10 left-8 md:left-16 flex items-center gap-3 text-[#a3a3a3]"
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-[#a3a3a3]"
       >
         <motion.div animate={{ y: [0, 5, 0] }} transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}>
           <ArrowDown size={13} strokeWidth={1.5} />

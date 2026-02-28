@@ -59,6 +59,23 @@ export default function SideNav() {
 
       {/* Nav */}
       <nav className="flex-1 overflow-y-auto px-4 py-5 flex flex-col gap-0.5">
+        {/* Main */}
+        <button
+          onClick={() => {
+            if (pathname === '/') {
+              window.scrollTo({ top: 0, behavior: 'smooth' })
+            } else {
+              window.location.href = '/'
+            }
+          }}
+          className="flex items-center gap-2.5 px-2 py-2 text-sm font-medium w-full text-left
+                     text-[#1a1a1a] hover:bg-[#f4f4f2] rounded-sm transition-colors duration-150 mb-1"
+        >
+          Main
+        </button>
+
+        <div className="h-px bg-[#e5e5e5] mx-2 mb-3" />
+
         <p className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#a3a3a3] px-2 mb-2">
           Work
         </p>

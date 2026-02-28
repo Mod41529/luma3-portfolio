@@ -1,5 +1,5 @@
 import BentoCard from './BentoCard'
-import { categories } from '@/data/works'
+import { categories, works } from '@/data/works'
 import { CategoryId } from '@/types'
 
 const gridConfig: { id: CategoryId; className: string }[] = [
@@ -10,6 +10,9 @@ const gridConfig: { id: CategoryId; className: string }[] = [
   { id: 'photography', className: 'bento-photography' },
   { id: 'strategy',    className: 'bento-strategy' },
 ]
+
+const featuredVideo = works.find(w => w.category === 'video' && w.featured)
+const featuredMusic = works.find(w => w.category === 'music')
 
 export default function BentoGrid() {
   return (
@@ -22,6 +25,10 @@ export default function BentoGrid() {
               category={categories[id]}
               index={index}
               className={className}
+              videoSrc={id === 'video' ? featuredVideo?.videoSrc : undefined}
+              audioSrc={id === 'music' ? featuredMusic?.audioSrc : undefined}
+              audioTitle={id === 'music' ? featuredMusic?.title : undefined}
+              audioTitleKo={id === 'music' ? featuredMusic?.titleKo : undefined}
             />
           ))}
         </div>
