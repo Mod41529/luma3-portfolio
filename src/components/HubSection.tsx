@@ -93,45 +93,145 @@ function DevelopmentBody() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-40px' }}
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-      className="px-6 md:px-12 py-12 md:py-16"
+      className="flex flex-col md:flex-row"
     >
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-10">
-        {/* Left: project info */}
+      {/* Left: project info */}
+      <div className="w-full md:w-2/5 px-6 md:px-12 py-12 md:py-16 flex flex-col justify-center border-b md:border-b-0 md:border-r border-[#e5e5e5]">
         <div className="flex gap-7 items-start">
-          <span className="text-[10px] font-mono text-[#c3c3c3] mt-2 shrink-0">01</span>
+          <span className="text-[10px] font-mono text-[#c3c3c3] mt-1.5 shrink-0">01</span>
           <div>
-            <h3 className="text-4xl md:text-5xl font-black tracking-tighter text-[#1a1a1a] leading-[0.9] mb-5">
+            <h3 className="text-3xl md:text-4xl font-black tracking-tighter text-[#1a1a1a] leading-[0.92] mb-5">
               {featured.title}
             </h3>
-            <p className="text-sm text-[#737373] font-light leading-relaxed max-w-lg mb-6">
+            <p className="text-sm text-[#737373] font-light leading-relaxed mb-6">
               {featured.description}
             </p>
-            <div className="flex flex-wrap gap-1.5">
+            <div className="flex flex-wrap gap-1.5 mb-8">
               {featured.tools.map((tool) => (
-                <span
-                  key={tool}
-                  className="px-2.5 py-1 text-[9px] font-bold uppercase tracking-wider text-[#737373] border border-[#e5e5e5]"
-                >
+                <span key={tool} className="px-2.5 py-1 text-[9px] font-bold uppercase tracking-wider text-[#737373] border border-[#e5e5e5]">
                   {tool}
                 </span>
               ))}
             </div>
+            <div className="flex items-center gap-4">
+              <span className="text-[9px] font-mono text-[#a3a3a3] uppercase tracking-widest">{featured.year}</span>
+              <Link
+                href="/work/development"
+                className="group inline-flex items-center gap-2 border border-[#475569] px-5 py-2.5 hover:bg-[#475569] transition-colors duration-200"
+              >
+                <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#475569] group-hover:text-white transition-colors duration-200">
+                  View all
+                </span>
+                <ArrowUpRight size={11} className="text-[#475569] group-hover:text-white transition-colors duration-200" />
+              </Link>
+            </div>
           </div>
         </div>
+      </div>
 
-        {/* Right: year + CTA */}
-        <div className="flex flex-col items-start md:items-end gap-3 shrink-0 pl-[3.25rem] md:pl-0">
-          <span className="text-[9px] font-mono text-[#a3a3a3] uppercase tracking-widest">{featured.year}</span>
-          <Link
-            href="/work/development"
-            className="group inline-flex items-center gap-2 border border-[#475569] px-5 py-2.5 hover:bg-[#475569] transition-colors duration-200"
-          >
-            <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#475569] group-hover:text-white transition-colors duration-200">
-              View all
-            </span>
-            <ArrowUpRight size={11} className="text-[#475569] group-hover:text-white transition-colors duration-200" />
-          </Link>
+      {/* Right: workflow diagram */}
+      <div className="w-full md:w-3/5 bg-[#F8F8F8] relative flex items-center justify-center p-8 md:p-14 min-h-[460px]">
+        {/* grid background */}
+        <div
+          className="absolute inset-0 opacity-40 pointer-events-none"
+          style={{
+            backgroundImage: 'linear-gradient(to right, #e5e5e5 1px, transparent 1px), linear-gradient(to bottom, #e5e5e5 1px, transparent 1px)',
+            backgroundSize: '40px 40px',
+          }}
+        />
+        {/* panel labels */}
+        <p className="absolute top-5 left-5 text-[8px] font-mono uppercase tracking-[0.25em] text-[#a3a3a3]">
+          Example — luma3 포트폴리오 빌드
+        </p>
+        <div className="absolute top-5 right-5 flex items-center gap-1.5">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#059669] animate-pulse" />
+          <span className="text-[8px] font-mono uppercase tracking-[0.25em] text-[#059669]">Live System</span>
         </div>
+
+        {/* SVG flowchart */}
+        <svg
+          viewBox="0 0 380 390"
+          className="relative w-full max-w-[340px]"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          {/* ── Connector lines (drawn first, behind nodes) ── */}
+
+          {/* Task → Claude */}
+          <line x1="185" y1="44"  x2="185" y2="68"  stroke="#cbd5e1" strokeWidth="1"/>
+          <polygon points="185,68 181,62 189,62" fill="#cbd5e1"/>
+
+          {/* Claude → branch split */}
+          <line x1="185" y1="122" x2="185" y2="140" stroke="#cbd5e1" strokeWidth="1"/>
+          <line x1="80"  y1="140" x2="290" y2="140" stroke="#cbd5e1" strokeWidth="1"/>
+          <line x1="80"  y1="140" x2="80"  y2="156" stroke="#cbd5e1" strokeWidth="1"/>
+          <line x1="290" y1="140" x2="290" y2="156" stroke="#cbd5e1" strokeWidth="1"/>
+          <polygon points="80,156 76,150 84,150"   fill="#cbd5e1"/>
+          <polygon points="290,156 286,150 294,150" fill="#cbd5e1"/>
+
+          {/* Workers → merge */}
+          <line x1="80"  y1="222" x2="80"  y2="242" stroke="#cbd5e1" strokeWidth="1"/>
+          <line x1="290" y1="222" x2="290" y2="242" stroke="#cbd5e1" strokeWidth="1"/>
+          <line x1="80"  y1="242" x2="290" y2="242" stroke="#cbd5e1" strokeWidth="1"/>
+          <line x1="185" y1="242" x2="185" y2="258" stroke="#cbd5e1" strokeWidth="1"/>
+          <polygon points="185,258 181,252 189,252" fill="#cbd5e1"/>
+
+          {/* Review → Deploy */}
+          <line x1="185" y1="314" x2="185" y2="346" stroke="#cbd5e1" strokeWidth="1"/>
+          <polygon points="185,346 181,340 189,340" fill="#cbd5e1"/>
+
+          {/* Iterate: Review right → Codex right (dashed loop) */}
+          <path d="M 295,286 H 362 V 189 H 355" stroke="#cbd5e1" strokeWidth="1" strokeDasharray="3 3"/>
+          <polygon points="355,189 362,185 362,193" fill="#cbd5e1"/>
+          <text
+            x="369" y="237"
+            fill="#c3c3c3"
+            fontSize="7"
+            fontFamily="monospace"
+            textAnchor="middle"
+            transform="rotate(90, 369, 237)"
+          >
+            iterate
+          </text>
+
+          {/* ── Nodes ── */}
+
+          {/* Task */}
+          <rect x="115" y="8" width="140" height="36" fill="#1a1a1a"/>
+          <text x="185" y="22" textAnchor="middle" fill="#737373"   fontSize="7"  fontFamily="monospace" letterSpacing="2">TASK</text>
+          <text x="185" y="37" textAnchor="middle" fill="white"     fontSize="11" fontFamily="sans-serif" fontWeight="900">luma3 포트폴리오 빌드</text>
+
+          {/* Claude — Orchestrator */}
+          <rect x="75" y="68" width="220" height="54" fill="white" stroke="#475569" strokeWidth="1.5"/>
+          <text x="185" y="84"  textAnchor="middle" fill="#475569" fontSize="7"   fontFamily="monospace" letterSpacing="1.5">ORCHESTRATOR · 판단</text>
+          <text x="185" y="99"  textAnchor="middle" fill="#1a1a1a" fontSize="12"  fontFamily="sans-serif" fontWeight="900">Claude Code</text>
+          <text x="185" y="113" textAnchor="middle" fill="#a3a3a3" fontSize="7.5" fontFamily="monospace">Research + Heavy code → Full orchestration</text>
+
+          {/* Gemini */}
+          <rect x="15" y="156" width="130" height="66" fill="white" stroke="#059669" strokeWidth="1" strokeOpacity="0.6"/>
+          <text x="80" y="173" textAnchor="middle" fill="#059669" fontSize="7"   fontFamily="monospace" letterSpacing="2">RESEARCH</text>
+          <text x="80" y="188" textAnchor="middle" fill="#1a1a1a" fontSize="11"  fontFamily="sans-serif" fontWeight="900">Gemini</text>
+          <text x="80" y="202" textAnchor="middle" fill="#a3a3a3" fontSize="7.5" fontFamily="monospace">Next.js 14 패턴 조사</text>
+          <text x="80" y="214" textAnchor="middle" fill="#a3a3a3" fontSize="7.5" fontFamily="monospace">디자인 레퍼런스 수집</text>
+
+          {/* Codex */}
+          <rect x="225" y="156" width="130" height="66" fill="white" stroke="#D97706" strokeWidth="1" strokeOpacity="0.6"/>
+          <text x="290" y="173" textAnchor="middle" fill="#D97706" fontSize="7"   fontFamily="monospace" letterSpacing="2">CODE</text>
+          <text x="290" y="188" textAnchor="middle" fill="#1a1a1a" fontSize="11"  fontFamily="sans-serif" fontWeight="900">Codex</text>
+          <text x="290" y="202" textAnchor="middle" fill="#a3a3a3" fontSize="7.5" fontFamily="monospace">컴포넌트 구현</text>
+          <text x="290" y="214" textAnchor="middle" fill="#a3a3a3" fontSize="7.5" fontFamily="monospace">Hero · Bento · Hub…</text>
+
+          {/* Claude — Review */}
+          <rect x="75" y="258" width="220" height="56" fill="white" stroke="#475569" strokeWidth="1.5"/>
+          <text x="185" y="275" textAnchor="middle" fill="#475569" fontSize="7"   fontFamily="monospace" letterSpacing="1.5">REVIEW · 조정</text>
+          <text x="185" y="290" textAnchor="middle" fill="#1a1a1a" fontSize="12"  fontFamily="sans-serif" fontWeight="900">Claude Code</text>
+          <text x="185" y="305" textAnchor="middle" fill="#a3a3a3" fontSize="7.5" fontFamily="monospace">방향 수정 후 재위임 or 승인</text>
+
+          {/* Deploy / Output */}
+          <rect x="115" y="346" width="140" height="36" fill="#1a1a1a"/>
+          <text x="185" y="360" textAnchor="middle" fill="#737373" fontSize="7"  fontFamily="monospace" letterSpacing="2">OUTPUT</text>
+          <text x="185" y="375" textAnchor="middle" fill="white"   fontSize="11" fontFamily="sans-serif" fontWeight="900">luma3.dev 배포</text>
+        </svg>
       </div>
     </motion.div>
   )
