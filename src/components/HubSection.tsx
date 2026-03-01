@@ -93,44 +93,32 @@ function DevelopmentBody() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-40px' }}
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-      className="flex flex-col md:flex-row"
     >
-      {/* Left: project info */}
-      <div className="w-full md:w-2/5 px-6 md:px-12 py-12 md:py-16 flex flex-col justify-center border-b md:border-b-0 md:border-r border-[#e5e5e5]">
-        <div className="flex gap-7 items-start">
+      {/* Top: project info */}
+      <div className="px-6 md:px-12 py-8 md:py-10 flex flex-col md:flex-row gap-8 md:gap-20 border-b border-[#e5e5e5]">
+        <div className="flex gap-7 items-start shrink-0">
           <span className="text-[10px] font-mono text-[#c3c3c3] mt-1.5 shrink-0">01</span>
-          <div>
-            <h3 className="text-3xl md:text-4xl font-black tracking-tighter text-[#1a1a1a] leading-[0.92] mb-5">
-              {featured.title}
-            </h3>
-            <p className="text-sm text-[#737373] font-light leading-relaxed mb-6">
-              {featured.description}
-            </p>
-            <div className="flex flex-wrap gap-1.5 mb-8">
-              {featured.tools.map((tool) => (
-                <span key={tool} className="px-2.5 py-1 text-[9px] font-bold uppercase tracking-wider text-[#737373] border border-[#e5e5e5]">
-                  {tool}
-                </span>
-              ))}
-            </div>
-            <div className="flex items-center gap-4">
-              <span className="text-[9px] font-mono text-[#a3a3a3] uppercase tracking-widest">{featured.year}</span>
-              <Link
-                href="/work/development"
-                className="group inline-flex items-center gap-2 border border-[#475569] px-5 py-2.5 hover:bg-[#475569] transition-colors duration-200"
-              >
-                <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#475569] group-hover:text-white transition-colors duration-200">
-                  View all
-                </span>
-                <ArrowUpRight size={11} className="text-[#475569] group-hover:text-white transition-colors duration-200" />
-              </Link>
-            </div>
+          <h3 className="text-3xl md:text-4xl font-black tracking-tighter text-[#1a1a1a] leading-[0.92]">
+            {featured.title}
+          </h3>
+        </div>
+        <div>
+          <p className="text-sm text-[#737373] font-light leading-relaxed mb-5">
+            {featured.description}
+          </p>
+          <div className="flex flex-wrap items-center gap-1.5">
+            {featured.tools.map((tool) => (
+              <span key={tool} className="px-2.5 py-1 text-[9px] font-bold uppercase tracking-wider text-[#737373] border border-[#e5e5e5]">
+                {tool}
+              </span>
+            ))}
+            <span className="text-[9px] font-mono text-[#c3c3c3] ml-3">{featured.year}</span>
           </div>
         </div>
       </div>
 
-      {/* Right: workflow diagram */}
-      <div className="w-full md:w-3/5 bg-[#F8F8F8] relative flex items-center justify-center p-8 md:p-14 min-h-[460px]">
+      {/* Bottom: full-width horizontal flowchart */}
+      <div className="bg-[#F8F8F8] relative flex items-center justify-center px-8 md:px-14 py-12 md:py-14 min-h-[280px] overflow-hidden">
         {/* grid background */}
         <div
           className="absolute inset-0 opacity-40 pointer-events-none"
@@ -140,97 +128,92 @@ function DevelopmentBody() {
           }}
         />
         {/* panel labels */}
-        <p className="absolute top-5 left-5 text-[8px] font-mono uppercase tracking-[0.25em] text-[#a3a3a3]">
+        <p className="absolute top-5 left-6 text-[8px] font-mono uppercase tracking-[0.25em] text-[#a3a3a3]">
           Example — luma3 포트폴리오 빌드
         </p>
-        <div className="absolute top-5 right-5 flex items-center gap-1.5">
+        <div className="absolute top-5 right-6 flex items-center gap-1.5">
           <span className="w-1.5 h-1.5 rounded-full bg-[#059669] animate-pulse" />
           <span className="text-[8px] font-mono uppercase tracking-[0.25em] text-[#059669]">Live System</span>
         </div>
 
-        {/* SVG flowchart */}
+        {/* SVG: horizontal flowchart */}
         <svg
-          viewBox="0 0 380 390"
-          className="relative w-full max-w-[340px]"
+          viewBox="0 0 860 240"
+          className="relative w-full max-w-5xl"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
           {/* ── Connector lines (drawn first, behind nodes) ── */}
 
           {/* Task → Claude */}
-          <line x1="185" y1="44"  x2="185" y2="68"  stroke="#cbd5e1" strokeWidth="1"/>
-          <polygon points="185,68 181,62 189,62" fill="#cbd5e1"/>
+          <line x1="120" y1="120" x2="155" y2="120" stroke="#cbd5e1" strokeWidth="1"/>
+          <polygon points="155,120 148,116 148,124" fill="#cbd5e1"/>
 
-          {/* Claude → branch split */}
-          <line x1="185" y1="122" x2="185" y2="140" stroke="#cbd5e1" strokeWidth="1"/>
-          <line x1="80"  y1="140" x2="290" y2="140" stroke="#cbd5e1" strokeWidth="1"/>
-          <line x1="80"  y1="140" x2="80"  y2="156" stroke="#cbd5e1" strokeWidth="1"/>
-          <line x1="290" y1="140" x2="290" y2="156" stroke="#cbd5e1" strokeWidth="1"/>
-          <polygon points="80,156 76,150 84,150"   fill="#cbd5e1"/>
-          <polygon points="290,156 286,150 294,150" fill="#cbd5e1"/>
+          {/* Claude → branch split at x=345 */}
+          <line x1="320" y1="120" x2="345" y2="120" stroke="#cbd5e1" strokeWidth="1"/>
+          <line x1="345" y1="57"  x2="345" y2="183" stroke="#cbd5e1" strokeWidth="1"/>
+          <line x1="345" y1="57"  x2="370" y2="57"  stroke="#cbd5e1" strokeWidth="1"/>
+          <line x1="345" y1="183" x2="370" y2="183" stroke="#cbd5e1" strokeWidth="1"/>
+          <polygon points="370,57  363,53  363,61"  fill="#cbd5e1"/>
+          <polygon points="370,183 363,179 363,187" fill="#cbd5e1"/>
 
-          {/* Workers → merge */}
-          <line x1="80"  y1="222" x2="80"  y2="242" stroke="#cbd5e1" strokeWidth="1"/>
-          <line x1="290" y1="222" x2="290" y2="242" stroke="#cbd5e1" strokeWidth="1"/>
-          <line x1="80"  y1="242" x2="290" y2="242" stroke="#cbd5e1" strokeWidth="1"/>
-          <line x1="185" y1="242" x2="185" y2="258" stroke="#cbd5e1" strokeWidth="1"/>
-          <polygon points="185,258 181,252 189,252" fill="#cbd5e1"/>
+          {/* Workers → merge at x=525 */}
+          <line x1="500" y1="57"  x2="525" y2="57"  stroke="#cbd5e1" strokeWidth="1"/>
+          <line x1="500" y1="183" x2="525" y2="183" stroke="#cbd5e1" strokeWidth="1"/>
+          <line x1="525" y1="57"  x2="525" y2="183" stroke="#cbd5e1" strokeWidth="1"/>
+          <line x1="525" y1="120" x2="555" y2="120" stroke="#cbd5e1" strokeWidth="1"/>
+          <polygon points="555,120 548,116 548,124" fill="#cbd5e1"/>
 
           {/* Review → Deploy */}
-          <line x1="185" y1="314" x2="185" y2="346" stroke="#cbd5e1" strokeWidth="1"/>
-          <polygon points="185,346 181,340 189,340" fill="#cbd5e1"/>
+          <line x1="720" y1="120" x2="740" y2="120" stroke="#cbd5e1" strokeWidth="1"/>
+          <polygon points="740,120 733,116 733,124" fill="#cbd5e1"/>
 
-          {/* Iterate: Review right → Codex right (dashed loop) */}
-          <path d="M 295,286 H 362 V 189 H 355" stroke="#cbd5e1" strokeWidth="1" strokeDasharray="3 3"/>
-          <polygon points="355,189 362,185 362,193" fill="#cbd5e1"/>
-          <text
-            x="369" y="237"
-            fill="#c3c3c3"
-            fontSize="7"
-            fontFamily="monospace"
-            textAnchor="middle"
-            transform="rotate(90, 369, 237)"
-          >
-            iterate
-          </text>
+          {/* Iterate: Review bottom → down → left → Codex bottom (dashed) */}
+          <path d="M 637,165 V 225 H 435 V 216" stroke="#cbd5e1" strokeWidth="1" strokeDasharray="3 3"/>
+          <polygon points="435,216 431,223 439,223" fill="#cbd5e1"/>
+          <text x="536" y="236" textAnchor="middle" fill="#c3c3c3" fontSize="8" fontFamily="monospace">iterate</text>
 
           {/* ── Nodes ── */}
 
           {/* Task */}
-          <rect x="115" y="8" width="140" height="36" fill="#1a1a1a"/>
-          <text x="185" y="22" textAnchor="middle" fill="#737373"   fontSize="7"  fontFamily="monospace" letterSpacing="2">TASK</text>
-          <text x="185" y="37" textAnchor="middle" fill="white"     fontSize="11" fontFamily="sans-serif" fontWeight="900">luma3 포트폴리오 빌드</text>
+          <rect x="10" y="98" width="110" height="44" fill="#1a1a1a"/>
+          <text x="65" y="115" textAnchor="middle" fill="#737373" fontSize="7"  fontFamily="monospace" letterSpacing="2">TASK</text>
+          <text x="65" y="132" textAnchor="middle" fill="white"   fontSize="11" fontFamily="sans-serif" fontWeight="900">luma3 빌드</text>
 
           {/* Claude — Orchestrator */}
-          <rect x="75" y="68" width="220" height="54" fill="white" stroke="#475569" strokeWidth="1.5"/>
-          <text x="185" y="84"  textAnchor="middle" fill="#475569" fontSize="7"   fontFamily="monospace" letterSpacing="1.5">ORCHESTRATOR · 판단</text>
-          <text x="185" y="99"  textAnchor="middle" fill="#1a1a1a" fontSize="12"  fontFamily="sans-serif" fontWeight="900">Claude Code</text>
-          <text x="185" y="113" textAnchor="middle" fill="#a3a3a3" fontSize="7.5" fontFamily="monospace">Research + Heavy code → Full orchestration</text>
+          <rect x="155" y="75" width="165" height="90" fill="white" stroke="#475569" strokeWidth="1.5"/>
+          <text x="237" y="93"  textAnchor="middle" fill="#475569" fontSize="7"   fontFamily="monospace" letterSpacing="1.5">ORCHESTRATOR · 판단</text>
+          <text x="237" y="110" textAnchor="middle" fill="#1a1a1a" fontSize="13"  fontFamily="sans-serif" fontWeight="900">Claude Code</text>
+          <text x="237" y="126" textAnchor="middle" fill="#a3a3a3" fontSize="7.5" fontFamily="monospace">Research + Heavy code</text>
+          <text x="237" y="139" textAnchor="middle" fill="#a3a3a3" fontSize="7.5" fontFamily="monospace">→ Full orchestration</text>
+          <text x="237" y="155" textAnchor="middle" fill="#c3c3c3" fontSize="7"   fontFamily="monospace">Claude Max plan · Opus 4.6</text>
 
           {/* Gemini */}
-          <rect x="15" y="156" width="130" height="66" fill="white" stroke="#059669" strokeWidth="1" strokeOpacity="0.6"/>
-          <text x="80" y="173" textAnchor="middle" fill="#059669" fontSize="7"   fontFamily="monospace" letterSpacing="2">RESEARCH</text>
-          <text x="80" y="188" textAnchor="middle" fill="#1a1a1a" fontSize="11"  fontFamily="sans-serif" fontWeight="900">Gemini</text>
-          <text x="80" y="202" textAnchor="middle" fill="#a3a3a3" fontSize="7.5" fontFamily="monospace">Next.js 14 패턴 조사</text>
-          <text x="80" y="214" textAnchor="middle" fill="#a3a3a3" fontSize="7.5" fontFamily="monospace">디자인 레퍼런스 수집</text>
+          <rect x="370" y="24" width="130" height="66" fill="white" stroke="#059669" strokeWidth="1" strokeOpacity="0.6"/>
+          <text x="435" y="41"  textAnchor="middle" fill="#059669" fontSize="7"   fontFamily="monospace" letterSpacing="2">RESEARCH</text>
+          <text x="435" y="57"  textAnchor="middle" fill="#1a1a1a" fontSize="12"  fontFamily="sans-serif" fontWeight="900">Gemini</text>
+          <text x="435" y="72"  textAnchor="middle" fill="#a3a3a3" fontSize="7.5" fontFamily="monospace">Next.js 14 패턴 · 디자인 레퍼런스</text>
+          <text x="435" y="83"  textAnchor="middle" fill="#c3c3c3" fontSize="7"   fontFamily="monospace">Flash 2.5 · 1,500 req/day</text>
 
           {/* Codex */}
-          <rect x="225" y="156" width="130" height="66" fill="white" stroke="#D97706" strokeWidth="1" strokeOpacity="0.6"/>
-          <text x="290" y="173" textAnchor="middle" fill="#D97706" fontSize="7"   fontFamily="monospace" letterSpacing="2">CODE</text>
-          <text x="290" y="188" textAnchor="middle" fill="#1a1a1a" fontSize="11"  fontFamily="sans-serif" fontWeight="900">Codex</text>
-          <text x="290" y="202" textAnchor="middle" fill="#a3a3a3" fontSize="7.5" fontFamily="monospace">컴포넌트 구현</text>
-          <text x="290" y="214" textAnchor="middle" fill="#a3a3a3" fontSize="7.5" fontFamily="monospace">Hero · Bento · Hub…</text>
+          <rect x="370" y="150" width="130" height="66" fill="white" stroke="#D97706" strokeWidth="1" strokeOpacity="0.6"/>
+          <text x="435" y="167" textAnchor="middle" fill="#D97706" fontSize="7"   fontFamily="monospace" letterSpacing="2">CODE</text>
+          <text x="435" y="183" textAnchor="middle" fill="#1a1a1a" fontSize="12"  fontFamily="sans-serif" fontWeight="900">Codex</text>
+          <text x="435" y="198" textAnchor="middle" fill="#a3a3a3" fontSize="7.5" fontFamily="monospace">Hero · BentoGrid · HubSection…</text>
+          <text x="435" y="209" textAnchor="middle" fill="#c3c3c3" fontSize="7"   fontFamily="monospace">gpt-5.3-codex · full-auto</text>
 
           {/* Claude — Review */}
-          <rect x="75" y="258" width="220" height="56" fill="white" stroke="#475569" strokeWidth="1.5"/>
-          <text x="185" y="275" textAnchor="middle" fill="#475569" fontSize="7"   fontFamily="monospace" letterSpacing="1.5">REVIEW · 조정</text>
-          <text x="185" y="290" textAnchor="middle" fill="#1a1a1a" fontSize="12"  fontFamily="sans-serif" fontWeight="900">Claude Code</text>
-          <text x="185" y="305" textAnchor="middle" fill="#a3a3a3" fontSize="7.5" fontFamily="monospace">방향 수정 후 재위임 or 승인</text>
+          <rect x="555" y="75" width="165" height="90" fill="white" stroke="#475569" strokeWidth="1.5"/>
+          <text x="637" y="93"  textAnchor="middle" fill="#475569" fontSize="7"   fontFamily="monospace" letterSpacing="1.5">REVIEW · 조정</text>
+          <text x="637" y="110" textAnchor="middle" fill="#1a1a1a" fontSize="13"  fontFamily="sans-serif" fontWeight="900">Claude Code</text>
+          <text x="637" y="126" textAnchor="middle" fill="#a3a3a3" fontSize="7.5" fontFamily="monospace">결과 검토 · 방향 수정</text>
+          <text x="637" y="139" textAnchor="middle" fill="#a3a3a3" fontSize="7.5" fontFamily="monospace">재위임 or 승인</text>
+          <text x="637" y="155" textAnchor="middle" fill="#c3c3c3" fontSize="7"   fontFamily="monospace">Sonnet 4.6 subagent</text>
 
           {/* Deploy / Output */}
-          <rect x="115" y="346" width="140" height="36" fill="#1a1a1a"/>
-          <text x="185" y="360" textAnchor="middle" fill="#737373" fontSize="7"  fontFamily="monospace" letterSpacing="2">OUTPUT</text>
-          <text x="185" y="375" textAnchor="middle" fill="white"   fontSize="11" fontFamily="sans-serif" fontWeight="900">luma3.dev 배포</text>
+          <rect x="740" y="98" width="110" height="44" fill="#1a1a1a"/>
+          <text x="795" y="115" textAnchor="middle" fill="#737373" fontSize="7"  fontFamily="monospace" letterSpacing="2">OUTPUT</text>
+          <text x="795" y="132" textAnchor="middle" fill="white"   fontSize="11" fontFamily="sans-serif" fontWeight="900">luma3.dev 배포</text>
         </svg>
       </div>
     </motion.div>
