@@ -41,44 +41,77 @@ function DesignBody() {
   const cat      = categories['design']
   const catWorks = works.filter((w) => w.category === 'design')
   const featured = catWorks.find((w) => w.featured) ?? catWorks[0]
-  const accent   = ACCENT['design']
+  const imageWorks = catWorks.filter((w) => w.imageSrc)
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-40px' }}
-      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-      className="px-6 md:px-12 py-10"
-    >
-      <div className="max-w-7xl grid md:grid-cols-3 gap-8">
-        <div>
+    <div className="flex flex-col md:flex-row border-b border-[#e5e5e5]">
+      {/* Left — description + MOD featured */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-40px' }}
+        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+        className="w-full md:w-[300px] shrink-0 border-b md:border-b-0 md:border-r border-[#e5e5e5] flex flex-col"
+      >
+        {/* Category desc */}
+        <div className="px-6 md:px-10 py-8 border-b border-[#e5e5e5]">
           <p className="text-sm text-[#737373] font-light leading-relaxed">{cat.description}</p>
         </div>
+
+        {/* MOD featured card */}
         {featured && (
-          <Link href="/work/design" className="group col-span-2">
-            <div className="border border-[#e5e5e5] hover:border-[#c3c3c3] bg-[#FAFAFA] hover:bg-white transition-all duration-200 p-6">
-              <p className="text-[9px] font-mono uppercase tracking-[0.2em] text-[#a3a3a3] mb-3">Featured</p>
-              <p className="text-base font-black uppercase tracking-tight text-[#1a1a1a] group-hover:text-[#1978e5] transition-colors duration-200 leading-tight mb-1">
-                {featured.title}
-              </p>
-              <p className="text-[10px] text-[#a3a3a3] font-mono mb-4">{featured.titleKo} · {featured.year}</p>
-              <p className="text-xs text-[#737373] leading-relaxed mb-5 line-clamp-2">{featured.description}</p>
-              <div className="flex items-center justify-between">
-                <div className="flex flex-wrap gap-1.5">
-                  {featured.tools.slice(0, 4).map((t) => (
-                    <span key={t} className="px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-[#a3a3a3] border border-[#e5e5e5]">{t}</span>
-                  ))}
-                </div>
-                <div className="w-7 h-7 flex items-center justify-center border border-[#e5e5e5] group-hover:border-[#1978e5] group-hover:bg-[#1978e5] transition-all duration-200 shrink-0">
-                  <ArrowUpRight size={12} className="text-[#a3a3a3] group-hover:text-white transition-colors duration-200" />
-                </div>
+          <Link href="/work/design" className="group flex-1 flex flex-col px-6 md:px-10 py-8 hover:bg-[#FAFAFA] transition-colors duration-200">
+            <p className="text-[9px] font-mono uppercase tracking-[0.2em] text-[#E11D48] mb-4">Featured</p>
+            <p className="text-base font-black uppercase tracking-tight text-[#1a1a1a] group-hover:text-[#1978e5] transition-colors duration-200 leading-tight mb-1">
+              {featured.title}
+            </p>
+            <p className="text-[10px] text-[#a3a3a3] font-mono mb-4">{featured.titleKo} · {featured.year}</p>
+            <p className="text-xs text-[#737373] leading-relaxed mb-6 flex-1">{featured.description}</p>
+            <div className="flex items-center justify-between mt-auto">
+              <div className="flex flex-wrap gap-1.5">
+                {featured.tools.slice(0, 3).map((t) => (
+                  <span key={t} className="px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-[#a3a3a3] border border-[#e5e5e5]">{t}</span>
+                ))}
+              </div>
+              <div className="w-7 h-7 flex items-center justify-center border border-[#e5e5e5] group-hover:border-[#1978e5] group-hover:bg-[#1978e5] transition-all duration-200 shrink-0">
+                <ArrowUpRight size={12} className="text-[#a3a3a3] group-hover:text-white transition-colors duration-200" />
               </div>
             </div>
           </Link>
         )}
+      </motion.div>
+
+      {/* Right — image grid */}
+      <div className="flex-1 grid grid-cols-2 gap-px bg-[#e5e5e5]">
+        {imageWorks.slice(0, 4).map((work, i) => (
+          <motion.div
+            key={work.id}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, margin: '-40px' }}
+            transition={{ duration: 0.4, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <Link href="/work/design" className="group relative block bg-white overflow-hidden aspect-[4/3]">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={work.imageSrc}
+                alt={work.thumbnailAlt}
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              {/* Overlay on hover */}
+              <div className="absolute inset-0 bg-[#1a1a1a]/0 group-hover:bg-[#1a1a1a]/60 transition-all duration-300 flex flex-col justify-end p-4">
+                <p className="text-white font-black text-sm leading-tight translate-y-3 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+                  {work.title}
+                </p>
+                <p className="text-[#a3a3a3] text-[10px] font-mono translate-y-3 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 delay-75">
+                  {work.year}
+                </p>
+              </div>
+            </Link>
+          </motion.div>
+        ))}
       </div>
-    </motion.div>
+    </div>
   )
 }
 
