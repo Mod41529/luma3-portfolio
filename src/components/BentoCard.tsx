@@ -83,20 +83,33 @@ function DevThumb() {
   )
 }
 
-// ── Business thumbnail: 4-column accent strips ───────────────────────────────
+// ── Business thumbnail: 4-column accent strips (individually clickable) ──────
 function StrategyThumb() {
   const domains = [
-    { label: '전략', labelEn: 'Strategy',    Icon: Compass,   color: '#B45309' },
-    { label: '재무', labelEn: 'Finance',     Icon: BarChart2, color: '#0369A1' },
-    { label: '마케팅', labelEn: 'Marketing', Icon: Megaphone, color: '#7C3AED' },
-    { label: '생산', labelEn: 'Operations',  Icon: Workflow,  color: '#059669' },
+    { label: '전략', labelEn: 'Strategy',    Icon: Compass,   color: '#B45309', anchor: 'business-전략' },
+    { label: '재무', labelEn: 'Finance',     Icon: BarChart2, color: '#0369A1', anchor: 'business-재무' },
+    { label: '마케팅', labelEn: 'Marketing', Icon: Megaphone, color: '#7C3AED', anchor: 'business-마케팅' },
+    { label: '생산', labelEn: 'Operations',  Icon: Workflow,  color: '#059669', anchor: 'business-생산' },
   ]
+
+  const handleClick = (e: React.MouseEvent, anchor: string) => {
+    e.preventDefault()
+    e.stopPropagation()
+    const el = document.getElementById(anchor)
+    if (el) el.scrollIntoView({ behavior: 'smooth' })
+    else window.location.href = `/#${anchor}`
+  }
+
   return (
     <div className="absolute inset-0 flex">
-      {domains.map(({ label, labelEn, Icon, color }, i) => (
+      {domains.map(({ label, labelEn, Icon, color, anchor }, i) => (
         <div
           key={label}
-          className="flex-1 flex flex-col items-center justify-center gap-3"
+          role="button"
+          tabIndex={0}
+          onClick={(e) => handleClick(e, anchor)}
+          onKeyDown={(e) => { if (e.key === 'Enter') handleClick(e as unknown as React.MouseEvent, anchor) }}
+          className="flex-1 flex flex-col items-center justify-center gap-3 cursor-pointer transition-all duration-200 hover:brightness-95 hover:scale-[1.02]"
           style={{
             backgroundColor: color + '12',
             borderRight: i < 3 ? '1px solid #e5e5e5' : 'none',
