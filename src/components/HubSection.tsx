@@ -1,9 +1,8 @@
 'use client'
 
-import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { ArrowUpRight, Compass, BarChart2, Megaphone, Workflow, ChevronDown } from 'lucide-react'
+import { ArrowUpRight, Compass, BarChart2, Megaphone, Workflow } from 'lucide-react'
 import { works, categories } from '@/data/works'
 import { CategoryId } from '@/types'
 
@@ -84,13 +83,21 @@ function DesignBody() {
 }
 
 // ── Development section body — orchestration diagram ─────────────────────────
+const DEV_AGENTS = [
+  { role: 'Research', name: 'Gemini',  color: '#059669', model: 'Flash · 1,500/day',  flag: '--yolo'                         },
+  { role: 'Judgment', name: 'Claude',  color: '#475569', model: 'Opus 4.6 · Max plan', flag: '--dangerously-skip-permissions' },
+  { role: 'Code',     name: 'Codex',   color: '#D97706', model: 'gpt-5.3-codex',       flag: '--full-auto'                    },
+]
+
+const ROUTING_RULES = [
+  { condition: '≤5 min · 1–3 files',       agent: 'Self',              color: '#475569' },
+  { condition: 'Pure research / docs',      agent: 'Gemini',            color: '#059669' },
+  { condition: 'Heavy code · no research',  agent: 'Codex',             color: '#D97706' },
+  { condition: 'Research + small code',     agent: 'Claude + Gemini',   color: '#7C3AED' },
+  { condition: 'Research + heavy code',     agent: 'Full system',        color: '#E11D48' },
+]
+
 function DevelopmentBody() {
-  const [howIMadeOpen, setHowIMadeOpen] = useState(false)
-  const [specsOpen, setSpecsOpen]       = useState(false)
-
-  const featured = works.find((w) => w.featured && w.category === 'development')
-  if (!featured) return null
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -99,50 +106,95 @@ function DevelopmentBody() {
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
       className="flex flex-col md:flex-row min-h-[520px]"
     >
-      {/* Left: orchestration diagram */}
-      <div className="w-full md:w-3/5 border-b md:border-b-0 md:border-r border-[#e5e5e5] bg-[#F0F0F0] relative flex items-center justify-center p-8 md:p-16 min-h-[320px] md:min-h-0">
+      {/* Left: architecture diagram */}
+      <div className="w-full md:w-3/5 border-b md:border-b-0 md:border-r border-[#e5e5e5] bg-[#F8F8F8] relative flex items-center justify-center p-8 md:p-16 min-h-[360px] md:min-h-0">
         <div
-          className="absolute inset-0 opacity-60 pointer-events-none"
+          className="absolute inset-0 opacity-50 pointer-events-none"
           style={{
             backgroundImage: 'linear-gradient(to right, #e5e5e5 1px, transparent 1px), linear-gradient(to bottom, #e5e5e5 1px, transparent 1px)',
             backgroundSize: '40px 40px',
           }}
         />
-        <div className="relative w-full max-w-lg font-mono">
-          {/* Orchestrator */}
-          <div className="border border-[#475569] bg-white px-5 py-3 mb-8 mx-auto w-fit">
-            <p className="text-[9px] uppercase tracking-[0.3em] text-[#475569] mb-0.5">Orchestrator</p>
-            <p className="text-sm font-black text-[#1a1a1a]">Claude Code</p>
+
+        {/* Live indicator */}
+        <div className="absolute top-5 right-5 flex items-center gap-1.5">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#059669] animate-pulse" />
+          <span className="text-[8px] font-mono uppercase tracking-[0.25em] text-[#059669]">Live System</span>
+        </div>
+
+        <div className="relative w-full max-w-[420px] font-mono">
+          {/* Orchestrator node */}
+          <div className="flex justify-center mb-1">
+            <div className="border-2 border-[#475569] bg-white px-6 py-3 text-center">
+              <p className="text-[8px] uppercase tracking-[0.3em] text-[#475569] mb-0.5">Orchestrator</p>
+              <p className="text-sm font-black text-[#1a1a1a]">Claude Code</p>
+              <p className="text-[8px] text-[#a3a3a3] mt-0.5">Opus 4.6 · Max plan</p>
+            </div>
           </div>
-          {/* Connectors */}
-          <div className="flex justify-center gap-0 mb-0 relative">
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-4 bg-[#cbd5e1]" />
-            <div className="absolute top-4 left-[20%] right-[20%] h-px bg-[#cbd5e1]" />
-            <div className="absolute top-4 left-[20%] w-px h-4 bg-[#cbd5e1]" />
-            <div className="absolute top-4 left-1/2 -translate-x-1/2 w-px h-4 bg-[#cbd5e1]" />
-            <div className="absolute top-4 right-[20%] w-px h-4 bg-[#cbd5e1]" />
-          </div>
+
+          {/* SVG connectors */}
+          <svg className="w-full" height="52" viewBox="0 0 420 52" preserveAspectRatio="none">
+            <line x1="210" y1="0"   x2="210" y2="26"  stroke="#cbd5e1" strokeWidth="1" />
+            <line x1="56"  y1="26"  x2="364" y2="26"  stroke="#cbd5e1" strokeWidth="1" />
+            <line x1="56"  y1="26"  x2="56"  y2="52"  stroke="#cbd5e1" strokeWidth="1" />
+            <line x1="210" y1="26"  x2="210" y2="52"  stroke="#cbd5e1" strokeWidth="1" />
+            <line x1="364" y1="26"  x2="364" y2="52"  stroke="#cbd5e1" strokeWidth="1" />
+          </svg>
+
           {/* Worker nodes */}
-          <div className="flex justify-between gap-3 mt-8 pt-1">
-            {[
-              { label: 'Research', name: 'Gemini', color: '#059669', note: '1,500 req/day' },
-              { label: 'Judgment', name: 'Claude', color: '#475569', note: 'Max plan' },
-              { label: 'Code',     name: 'Codex',  color: '#D97706', note: 'Heavy quota' },
-            ].map(({ label, name, color, note }) => (
-              <div key={name} className="flex-1 border px-3 py-2.5" style={{ borderColor: color }}>
-                <p className="text-[8px] uppercase tracking-[0.25em] mb-0.5" style={{ color }}>{label}</p>
+          <div className="flex justify-between gap-2">
+            {DEV_AGENTS.map(({ role, name, color, model, flag }) => (
+              <div key={name} className="flex-1 border bg-white px-2.5 py-2.5" style={{ borderColor: color + '60' }}>
+                <p className="text-[8px] uppercase tracking-[0.2em] mb-0.5" style={{ color }}>{role}</p>
                 <p className="text-xs font-black text-[#1a1a1a]">{name}</p>
-                <p className="text-[8px] text-[#a3a3a3] mt-1">{note}</p>
+                <p className="text-[8px] text-[#a3a3a3] mt-1 leading-snug">{model}</p>
+                <code className="text-[7px] text-[#c3c3c3] block mt-1.5 truncate">{flag}</code>
               </div>
             ))}
           </div>
-          {/* Queue status */}
-          <div className="mt-8 border border-[#e5e5e5] px-4 py-2 flex items-center justify-between">
-            <span className="text-[8px] uppercase tracking-[0.25em] text-[#a3a3a3]">Queue</span>
+
+          {/* Fallback chain */}
+          <div className="mt-5 border border-[#e5e5e5] bg-white px-4 py-3">
+            <p className="text-[7px] uppercase tracking-[0.25em] text-[#a3a3a3] mb-2.5">Fallback Chain</p>
+            <div className="space-y-1.5">
+              <div className="flex items-center gap-2">
+                <span className="text-[8px] font-bold w-12 shrink-0" style={{ color: '#D97706' }}>Code</span>
+                <div className="flex items-center gap-1 text-[8px]">
+                  {['Codex', 'Sonnet', 'Gemini'].map((a, i, arr) => (
+                    <span key={a} className="flex items-center gap-1">
+                      <span className="text-[#475569] font-medium">{a}</span>
+                      {i < arr.length - 1 && <span className="text-[#d4d4d4]">→</span>}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-[8px] font-bold w-12 shrink-0" style={{ color: '#059669' }}>Research</span>
+                <div className="flex items-center gap-1 text-[8px]">
+                  {['Gemini', 'Haiku', 'Codex'].map((a, i, arr) => (
+                    <span key={a} className="flex items-center gap-1">
+                      <span className="text-[#475569] font-medium">{a}</span>
+                      {i < arr.length - 1 && <span className="text-[#d4d4d4]">→</span>}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Queue states */}
+          <div className="mt-3 border border-[#e5e5e5] bg-white px-4 py-2 flex items-center justify-between">
+            <span className="text-[7px] uppercase tracking-[0.25em] text-[#a3a3a3]">Queue</span>
             <div className="flex gap-1.5">
-              {['dispatched', 'in_progress', 'complete'].map((s, i) => (
-                <span key={s} className="text-[8px] font-bold px-2 py-0.5 uppercase tracking-wide"
-                  style={{ color: ['#D97706','#475569','#059669'][i], backgroundColor: ['#D97706','#475569','#059669'][i] + '18' }}>
+              {(['dispatched', 'in_progress', 'complete'] as const).map((s, i) => (
+                <span
+                  key={s}
+                  className="text-[7px] font-bold px-1.5 py-0.5 uppercase tracking-wide"
+                  style={{
+                    color:           ['#D97706', '#475569', '#059669'][i],
+                    backgroundColor: ['#D97706', '#475569', '#059669'][i] + '18',
+                  }}
+                >
                   {s}
                 </span>
               ))}
@@ -151,94 +203,53 @@ function DevelopmentBody() {
         </div>
       </div>
 
-      {/* Right: project details */}
+      {/* Right: routing decision table */}
       <div className="w-full md:w-2/5 flex flex-col bg-[#FAFAFA]">
         <div className="flex items-center justify-between px-8 py-5 border-b border-[#e5e5e5]">
-          <span className="text-[10px] font-bold uppercase tracking-widest text-[#1a1a1a]">luma3 / Portfolio</span>
-          <Link href="/work/development" className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#475569] hover:opacity-70 transition-opacity flex items-center gap-1">
+          <span className="text-[10px] font-bold uppercase tracking-widest text-[#1a1a1a]">Routing Decision Flow</span>
+          <Link
+            href="/work/development"
+            className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#475569] hover:opacity-70 transition-opacity flex items-center gap-1"
+          >
             View all <ArrowUpRight size={9} />
           </Link>
         </div>
 
-        <div className="flex flex-col p-8 md:p-10 gap-7">
-          <div>
-            <h3 className="text-3xl md:text-4xl font-black tracking-tighter text-[#1a1a1a] uppercase leading-[0.9]">
-              {featured.title.split(' ').map((word, i, arr) => (
-                <span key={i}>{word}{i < arr.length - 1 && <br />}</span>
-              ))}
-            </h3>
-            <div className="flex items-center gap-4 mt-4">
-              <span className="text-xs font-medium text-[#737373] uppercase tracking-widest">Year: {featured.year}</span>
-              <div className="h-px w-8 bg-[#e5e5e5]" />
-              <span className="text-xs font-medium text-[#737373] uppercase tracking-widest">Status: Active</span>
-            </div>
-          </div>
+        <div className="flex flex-col px-8 py-7 gap-0 flex-1">
+          <p className="text-[8px] font-mono uppercase tracking-[0.3em] text-[#a3a3a3] mb-4">
+            Task type → Agent assignment
+          </p>
 
-          <div className="flex flex-wrap gap-2">
-            {featured.tools.map((tool) => (
-              <span key={tool} className="px-3 py-1 bg-[#f4f4f2] text-[10px] font-bold uppercase tracking-wider text-[#737373] border border-[#e5e5e5]">
-                {tool}
+          {ROUTING_RULES.map(({ condition, agent, color }, i) => (
+            <div
+              key={i}
+              className="flex items-center justify-between py-3 border-b border-[#f0f0f0]"
+            >
+              <div className="flex items-center gap-3">
+                <span className="text-[8px] font-mono text-[#d4d4d4] w-4 shrink-0">{String(i + 1).padStart(2, '0')}</span>
+                <span className="text-[11px] text-[#737373] leading-snug">{condition}</span>
+              </div>
+              <span
+                className="text-[8px] font-bold uppercase tracking-wide px-2 py-0.5 ml-3 shrink-0"
+                style={{ color, backgroundColor: color + '14' }}
+              >
+                {agent}
               </span>
+            </div>
+          ))}
+
+          {/* System meta */}
+          <div className="mt-auto pt-7 space-y-3 border-t border-[#f0f0f0] mt-6">
+            {[
+              { label: 'Status',  value: 'Active · ~60% complete' },
+              { label: 'Devices', value: 'Windows PC + Mac mini'  },
+              { label: 'Goal',    value: 'Ebook on multi-agent ops' },
+            ].map(({ label, value }) => (
+              <div key={label} className="flex items-baseline justify-between gap-4">
+                <span className="text-[8px] font-mono uppercase tracking-[0.25em] text-[#a3a3a3] shrink-0">{label}</span>
+                <span className="text-[10px] text-[#737373] text-right">{value}</span>
+              </div>
             ))}
-          </div>
-
-          <p className="text-sm leading-relaxed text-[#737373] font-light">{featured.description}</p>
-
-          {/* Accordions */}
-          <div className="border-t border-[#e5e5e5]">
-            <div className="border-b border-[#e5e5e5]">
-              <button
-                onClick={() => setHowIMadeOpen((o) => !o)}
-                className="w-full flex items-center justify-between py-4 text-left"
-              >
-                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#1a1a1a]">How I made this</span>
-                <motion.div animate={{ rotate: howIMadeOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
-                  <ChevronDown size={15} className="text-[#a3a3a3]" />
-                </motion.div>
-              </button>
-              <AnimatePresence initial={false}>
-                {howIMadeOpen && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: 'auto', opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-                    className="overflow-hidden"
-                  >
-                    <p className="text-sm text-[#737373] leading-relaxed pb-6">
-                      {featured.howIMadeThis.processNotes}
-                    </p>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-
-            <div className="border-b border-[#e5e5e5]">
-              <button
-                onClick={() => setSpecsOpen((o) => !o)}
-                className="w-full flex items-center justify-between py-4 text-left"
-              >
-                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#1a1a1a]">Technical Specs</span>
-                <motion.div animate={{ rotate: specsOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
-                  <ChevronDown size={15} className="text-[#a3a3a3]" />
-                </motion.div>
-              </button>
-              <AnimatePresence initial={false}>
-                {specsOpen && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: 'auto', opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-                    className="overflow-hidden"
-                  >
-                    <div className="pb-6 text-sm text-[#737373] leading-loose">
-                      {featured.howIMadeThis.tools.map((t) => <div key={t}>— {t}</div>)}
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
           </div>
         </div>
       </div>
