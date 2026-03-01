@@ -6,8 +6,8 @@ import { ArrowUpRight, Mail, Github } from 'lucide-react'
 const LINKS = [
   {
     label:    'Email',
-    handle:   'hello@luma3.dev',
-    href:     'mailto:hello@luma3.dev',
+    handle:   'yusung8307@gmail.com',
+    href:     'mailto:yusung8307@gmail.com',
     Icon:     Mail,
     accent:   '#1a1a1a',
     external: false,
@@ -85,12 +85,12 @@ export default function ContactSection() {
 
             {/* Primary email CTA */}
             <a
-              href="mailto:hello@luma3.dev"
+              href="mailto:yusung8307@gmail.com"
               className="group inline-flex items-center gap-3 border border-[#1a1a1a] px-6 py-3.5
                          hover:bg-[#1a1a1a] transition-colors duration-200"
             >
               <span className="text-sm font-bold uppercase tracking-[0.15em] text-[#1a1a1a] group-hover:text-white transition-colors duration-200">
-                hello@luma3.dev
+                yusung8307@gmail.com
               </span>
               <ArrowUpRight
                 size={14}

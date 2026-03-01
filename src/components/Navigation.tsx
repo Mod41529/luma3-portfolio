@@ -47,7 +47,7 @@ export default function Navigation() {
         <div className="flex items-center gap-4">
           {/* Desktop links */}
           <div className="hidden md:flex items-center gap-6 text-sm text-fg-muted">
-            <a href="mailto:hello@luma3.dev" className="hover:text-fg transition-colors duration-200">
+            <a href="mailto:yusung8307@gmail.com" className="hover:text-fg transition-colors duration-200">
               Contact
             </a>
             <a
@@ -119,7 +119,7 @@ export default function Navigation() {
               {/* Divider + external links */}
               <div className="border-t border-[#e5e5e5] p-3 flex gap-2">
                 <a
-                  href="mailto:hello@luma3.dev"
+                  href="mailto:yusung8307@gmail.com"
                   className="flex-1 text-center py-2.5 text-sm text-[#737373]
                              hover:text-[#1a1a1a] border border-[#e5e5e5] hover:border-[#c3c3c3]
                              transition-colors duration-150"

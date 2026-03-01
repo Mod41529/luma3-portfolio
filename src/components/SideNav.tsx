@@ -134,7 +134,7 @@ export default function SideNav() {
           About
         </Link>
         <a
-          href="mailto:hello@luma3.dev"
+          href="mailto:yusung8307@gmail.com"
           className="flex items-center gap-2.5 px-2 py-2 text-sm text-[#737373]
                      hover:text-[#1a1a1a] hover:bg-[#f4f4f2] rounded-sm transition-colors duration-150"
         >

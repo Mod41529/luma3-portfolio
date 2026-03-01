@@ -306,71 +306,93 @@ const BUSINESS_DOMAINS = [
   },
 ]
 
-function BusinessBody() {
+function DomainPanel({
+  id, label, labelEn, Icon, color, description, points, workIds, delay,
+}: typeof BUSINESS_DOMAINS[number] & { delay: number }) {
+  const domainWorks = works.filter((w) => workIds.includes(w.id))
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      id={id}
+      initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-40px' }}
-      transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-      className="px-6 md:px-12 py-10"
+      transition={{ duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] }}
+      className="bg-[#FAFAFA] p-8 md:p-10 flex flex-col gap-6 scroll-mt-8"
     >
-      <div className="max-w-7xl">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-[#e5e5e5] border border-[#e5e5e5]">
-          {BUSINESS_DOMAINS.map(({ id, label, labelEn, Icon, color, description, points, workIds }) => {
-            const domainWorks = works.filter((w) => workIds.includes(w.id))
-            return (
-              <div key={id} id={id} className="bg-[#FAFAFA] p-6 flex flex-col gap-4 scroll-mt-8">
-                {/* Icon + label */}
-                <div>
-                  <div className="w-10 h-10 flex items-center justify-center mb-3"
-                    style={{ backgroundColor: color + '10', border: `1px solid ${color}25` }}>
-                    <Icon size={20} strokeWidth={1.4} style={{ color }} />
-                  </div>
-                  <p className="text-sm font-black text-[#1a1a1a]">{label}</p>
-                  <p className="text-[8px] font-mono uppercase tracking-wider text-[#a3a3a3] mt-0.5">{labelEn}</p>
-                </div>
-
-                {/* Description */}
-                <p className="text-[11px] text-[#737373] leading-relaxed">{description}</p>
-
-                {/* 3 key points from Notion */}
-                <div className="space-y-2 flex-1">
-                  {points.map((point, i) => {
-                    const [title, ...rest] = point.split(' — ')
-                    return (
-                      <div key={i} className="flex items-start gap-2">
-                        <span className="text-[8px] font-bold font-mono mt-0.5 shrink-0" style={{ color }}>
-                          {String(i + 1).padStart(2, '0')}
-                        </span>
-                        <div>
-                          <p className="text-[9px] font-bold text-[#1a1a1a] leading-tight">{title}</p>
-                          <p className="text-[8px] text-[#a3a3a3] leading-snug mt-0.5">{rest.join(' — ')}</p>
-                        </div>
-                      </div>
-                    )
-                  })}
-                </div>
-
-                {/* Works */}
-                {domainWorks.length > 0 && (
-                  <div className="pt-3 border-t border-[#e5e5e5] space-y-1.5">
-                    {domainWorks.map((w) => (
-                      <Link key={w.id} href="/work/strategy" className="group flex items-start gap-1.5">
-                        <span className="w-1 h-1 rounded-full mt-1.5 shrink-0" style={{ backgroundColor: color }} />
-                        <span className="text-[10px] text-[#1a1a1a] font-medium group-hover:text-[#1978e5] transition-colors duration-150 leading-snug">
-                          {w.title}
-                        </span>
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
-            )
-          })}
+      {/* Icon + label */}
+      <div className="flex items-start gap-5">
+        <div
+          className="w-12 h-12 flex items-center justify-center shrink-0"
+          style={{ backgroundColor: color + '12', border: `1px solid ${color}30` }}
+        >
+          <Icon size={24} strokeWidth={1.3} style={{ color }} />
+        </div>
+        <div>
+          <p className="text-xl font-black tracking-tight text-[#1a1a1a]">{label}</p>
+          <p className="text-[9px] font-mono uppercase tracking-[0.3em] text-[#a3a3a3] mt-0.5">{labelEn}</p>
         </div>
       </div>
+
+      {/* Description */}
+      <p className="text-sm text-[#737373] leading-relaxed">{description}</p>
+
+      {/* 3 key points */}
+      <div className="space-y-3 flex-1">
+        {points.map((point, i) => {
+          const [title, ...rest] = point.split(' — ')
+          return (
+            <div key={i} className="flex items-start gap-3">
+              <span
+                className="text-[9px] font-bold font-mono mt-0.5 shrink-0 w-5 text-right"
+                style={{ color }}
+              >
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <div>
+                <p className="text-xs font-bold text-[#1a1a1a] leading-tight">{title}</p>
+                <p className="text-[10px] text-[#a3a3a3] leading-snug mt-0.5">{rest.join(' — ')}</p>
+              </div>
+            </div>
+          )
+        })}
+      </div>
+
+      {/* Works */}
+      {domainWorks.length > 0 && (
+        <div className="pt-4 border-t border-[#e5e5e5] space-y-2">
+          {domainWorks.map((w) => (
+            <Link key={w.id} href="/work/strategy" className="group flex items-center gap-2">
+              <span className="w-1 h-1 rounded-full shrink-0" style={{ backgroundColor: color }} />
+              <span className="text-xs text-[#1a1a1a] font-medium group-hover:text-[#1978e5] transition-colors duration-150">
+                {w.title}
+              </span>
+              <ArrowUpRight size={10} className="text-[#c3c3c3] group-hover:text-[#1978e5] transition-colors duration-150 ml-auto" />
+            </Link>
+          ))}
+        </div>
+      )}
     </motion.div>
+  )
+}
+
+function BusinessBody() {
+  const rows = [BUSINESS_DOMAINS.slice(0, 2), BUSINESS_DOMAINS.slice(2, 4)]
+  return (
+    <div className="px-6 md:px-12 py-10">
+      <div className="max-w-7xl space-y-px border border-[#e5e5e5] bg-[#e5e5e5]">
+        {rows.map((row, rowIdx) => (
+          <div key={rowIdx} className="grid grid-cols-1 md:grid-cols-2 gap-px bg-[#e5e5e5]">
+            {row.map((domain, colIdx) => (
+              <DomainPanel
+                key={domain.id}
+                {...domain}
+                delay={rowIdx * 0.1 + colIdx * 0.06}
+              />
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
   )
 }
 
