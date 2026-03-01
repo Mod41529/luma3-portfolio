@@ -136,84 +136,89 @@ function DevelopmentBody() {
           <span className="text-[8px] font-mono uppercase tracking-[0.25em] text-[#059669]">Live System</span>
         </div>
 
-        {/* SVG: horizontal flowchart */}
+        {/* SVG: horizontal flowchart
+             viewBox  0 0 840 205
+             center-y = 100
+             Nodes — all text verified to fit within rect bounds
+
+             Task       x=10   w=110  right=120   center=(65,100)
+             Claude판단  x=148  w=160  right=308   center=(228,100)
+             split at x=330  vertical 57→143
+             Gemini     x=352  w=126  right=478   center=(415,57)
+             Codex      x=352  w=126  right=478   center=(415,143) bottom=170
+             merge at x=500  vertical 57→143
+             Claude리뷰  x=522  w=160  right=682   center=(602,100) bottom=132
+             Output     x=722  w=110  right=832   center=(777,100)
+        */}
         <svg
-          viewBox="0 0 860 240"
+          viewBox="0 0 840 205"
           className="relative w-full max-w-5xl"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
-          {/* ── Connector lines (drawn first, behind nodes) ── */}
+          {/* ── Connectors (behind nodes) ── */}
 
           {/* Task → Claude */}
-          <line x1="120" y1="120" x2="155" y2="120" stroke="#cbd5e1" strokeWidth="1"/>
-          <polygon points="155,120 148,116 148,124" fill="#cbd5e1"/>
+          <line x1="120" y1="100" x2="148" y2="100" stroke="#cbd5e1" strokeWidth="1"/>
+          <polygon points="148,100 142,96 142,104" fill="#cbd5e1"/>
 
-          {/* Claude → branch split at x=345 */}
-          <line x1="320" y1="120" x2="345" y2="120" stroke="#cbd5e1" strokeWidth="1"/>
-          <line x1="345" y1="57"  x2="345" y2="183" stroke="#cbd5e1" strokeWidth="1"/>
-          <line x1="345" y1="57"  x2="370" y2="57"  stroke="#cbd5e1" strokeWidth="1"/>
-          <line x1="345" y1="183" x2="370" y2="183" stroke="#cbd5e1" strokeWidth="1"/>
-          <polygon points="370,57  363,53  363,61"  fill="#cbd5e1"/>
-          <polygon points="370,183 363,179 363,187" fill="#cbd5e1"/>
+          {/* Claude → split */}
+          <line x1="308" y1="100" x2="330" y2="100" stroke="#cbd5e1" strokeWidth="1"/>
+          <line x1="330" y1="57"  x2="330" y2="143" stroke="#cbd5e1" strokeWidth="1"/>
+          <line x1="330" y1="57"  x2="352" y2="57"  stroke="#cbd5e1" strokeWidth="1"/>
+          <line x1="330" y1="143" x2="352" y2="143" stroke="#cbd5e1" strokeWidth="1"/>
+          <polygon points="352,57  346,53  346,61"  fill="#cbd5e1"/>
+          <polygon points="352,143 346,139 346,147" fill="#cbd5e1"/>
 
-          {/* Workers → merge at x=525 */}
-          <line x1="500" y1="57"  x2="525" y2="57"  stroke="#cbd5e1" strokeWidth="1"/>
-          <line x1="500" y1="183" x2="525" y2="183" stroke="#cbd5e1" strokeWidth="1"/>
-          <line x1="525" y1="57"  x2="525" y2="183" stroke="#cbd5e1" strokeWidth="1"/>
-          <line x1="525" y1="120" x2="555" y2="120" stroke="#cbd5e1" strokeWidth="1"/>
-          <polygon points="555,120 548,116 548,124" fill="#cbd5e1"/>
+          {/* Workers → merge */}
+          <line x1="478" y1="57"  x2="500" y2="57"  stroke="#cbd5e1" strokeWidth="1"/>
+          <line x1="478" y1="143" x2="500" y2="143" stroke="#cbd5e1" strokeWidth="1"/>
+          <line x1="500" y1="57"  x2="500" y2="143" stroke="#cbd5e1" strokeWidth="1"/>
+          <line x1="500" y1="100" x2="522" y2="100" stroke="#cbd5e1" strokeWidth="1"/>
+          <polygon points="522,100 516,96 516,104" fill="#cbd5e1"/>
 
-          {/* Review → Deploy */}
-          <line x1="720" y1="120" x2="740" y2="120" stroke="#cbd5e1" strokeWidth="1"/>
-          <polygon points="740,120 733,116 733,124" fill="#cbd5e1"/>
+          {/* Review → Output */}
+          <line x1="682" y1="100" x2="722" y2="100" stroke="#cbd5e1" strokeWidth="1"/>
+          <polygon points="722,100 716,96 716,104" fill="#cbd5e1"/>
 
-          {/* Iterate: Review bottom → down → left → Codex bottom (dashed) */}
-          <path d="M 637,165 V 225 H 435 V 216" stroke="#cbd5e1" strokeWidth="1" strokeDasharray="3 3"/>
-          <polygon points="435,216 431,223 439,223" fill="#cbd5e1"/>
-          <text x="536" y="236" textAnchor="middle" fill="#c3c3c3" fontSize="8" fontFamily="monospace">iterate</text>
+          {/* Iterate: Review bottom (602,132) → down → left → Codex bottom (415,170) */}
+          <path d="M 602,132 V 185 H 415 V 170" stroke="#cbd5e1" strokeWidth="1" strokeDasharray="3 3"/>
+          <polygon points="415,170 411,177 419,177" fill="#cbd5e1"/>
+          <text x="508" y="196" textAnchor="middle" fill="#c3c3c3" fontSize="8" fontFamily="monospace">iterate</text>
 
           {/* ── Nodes ── */}
 
-          {/* Task */}
-          <rect x="10" y="98" width="110" height="44" fill="#1a1a1a"/>
-          <text x="65" y="115" textAnchor="middle" fill="#737373" fontSize="7"  fontFamily="monospace" letterSpacing="2">TASK</text>
-          <text x="65" y="132" textAnchor="middle" fill="white"   fontSize="11" fontFamily="sans-serif" fontWeight="900">luma3 빌드</text>
+          {/* Task  center=(65,100) */}
+          <rect x="10" y="78" width="110" height="44" fill="#1a1a1a"/>
+          <text x="65" y="93"  textAnchor="middle" fill="#6b7280" fontSize="7.5" fontFamily="monospace" letterSpacing="1.5">TASK</text>
+          <text x="65" y="111" textAnchor="middle" fill="white"   fontSize="12"  fontFamily="sans-serif" fontWeight="900">luma3 빌드</text>
 
-          {/* Claude — Orchestrator */}
-          <rect x="155" y="75" width="165" height="90" fill="white" stroke="#475569" strokeWidth="1.5"/>
-          <text x="237" y="93"  textAnchor="middle" fill="#475569" fontSize="7"   fontFamily="monospace" letterSpacing="1.5">ORCHESTRATOR · 판단</text>
-          <text x="237" y="110" textAnchor="middle" fill="#1a1a1a" fontSize="13"  fontFamily="sans-serif" fontWeight="900">Claude Code</text>
-          <text x="237" y="126" textAnchor="middle" fill="#a3a3a3" fontSize="7.5" fontFamily="monospace">Research + Heavy code</text>
-          <text x="237" y="139" textAnchor="middle" fill="#a3a3a3" fontSize="7.5" fontFamily="monospace">→ Full orchestration</text>
-          <text x="237" y="155" textAnchor="middle" fill="#c3c3c3" fontSize="7"   fontFamily="monospace">Claude Max plan · Opus 4.6</text>
+          {/* Claude — 판단  center=(228,100)  h=64 */}
+          <rect x="148" y="68" width="160" height="64" fill="white" stroke="#475569" strokeWidth="1.5"/>
+          <text x="228" y="85"  textAnchor="middle" fill="#475569" fontSize="7.5" fontFamily="monospace" letterSpacing="1">ORCHESTRATOR</text>
+          <text x="228" y="105" textAnchor="middle" fill="#1a1a1a" fontSize="15"  fontFamily="sans-serif" fontWeight="900">Claude Code</text>
+          <text x="228" y="122" textAnchor="middle" fill="#a3a3a3" fontSize="8"   fontFamily="monospace">판단 · 위임 결정</text>
 
-          {/* Gemini */}
-          <rect x="370" y="24" width="130" height="66" fill="white" stroke="#059669" strokeWidth="1" strokeOpacity="0.6"/>
-          <text x="435" y="41"  textAnchor="middle" fill="#059669" fontSize="7"   fontFamily="monospace" letterSpacing="2">RESEARCH</text>
-          <text x="435" y="57"  textAnchor="middle" fill="#1a1a1a" fontSize="12"  fontFamily="sans-serif" fontWeight="900">Gemini</text>
-          <text x="435" y="72"  textAnchor="middle" fill="#a3a3a3" fontSize="7.5" fontFamily="monospace">Next.js 14 패턴 · 디자인 레퍼런스</text>
-          <text x="435" y="83"  textAnchor="middle" fill="#c3c3c3" fontSize="7"   fontFamily="monospace">Flash 2.5 · 1,500 req/day</text>
+          {/* Gemini  center=(415,57)  h=50 */}
+          <rect x="352" y="32" width="126" height="50" fill="white" stroke="#059669" strokeWidth="1" strokeOpacity="0.7"/>
+          <text x="415" y="48"  textAnchor="middle" fill="#059669" fontSize="7.5" fontFamily="monospace" letterSpacing="1">RESEARCH</text>
+          <text x="415" y="68"  textAnchor="middle" fill="#1a1a1a" fontSize="14"  fontFamily="sans-serif" fontWeight="900">Gemini</text>
 
-          {/* Codex */}
-          <rect x="370" y="150" width="130" height="66" fill="white" stroke="#D97706" strokeWidth="1" strokeOpacity="0.6"/>
-          <text x="435" y="167" textAnchor="middle" fill="#D97706" fontSize="7"   fontFamily="monospace" letterSpacing="2">CODE</text>
-          <text x="435" y="183" textAnchor="middle" fill="#1a1a1a" fontSize="12"  fontFamily="sans-serif" fontWeight="900">Codex</text>
-          <text x="435" y="198" textAnchor="middle" fill="#a3a3a3" fontSize="7.5" fontFamily="monospace">Hero · BentoGrid · HubSection…</text>
-          <text x="435" y="209" textAnchor="middle" fill="#c3c3c3" fontSize="7"   fontFamily="monospace">gpt-5.3-codex · full-auto</text>
+          {/* Codex  center=(415,143)  h=50 */}
+          <rect x="352" y="118" width="126" height="50" fill="white" stroke="#D97706" strokeWidth="1" strokeOpacity="0.7"/>
+          <text x="415" y="134" textAnchor="middle" fill="#D97706" fontSize="7.5" fontFamily="monospace" letterSpacing="1">CODE</text>
+          <text x="415" y="154" textAnchor="middle" fill="#1a1a1a" fontSize="14"  fontFamily="sans-serif" fontWeight="900">Codex</text>
 
-          {/* Claude — Review */}
-          <rect x="555" y="75" width="165" height="90" fill="white" stroke="#475569" strokeWidth="1.5"/>
-          <text x="637" y="93"  textAnchor="middle" fill="#475569" fontSize="7"   fontFamily="monospace" letterSpacing="1.5">REVIEW · 조정</text>
-          <text x="637" y="110" textAnchor="middle" fill="#1a1a1a" fontSize="13"  fontFamily="sans-serif" fontWeight="900">Claude Code</text>
-          <text x="637" y="126" textAnchor="middle" fill="#a3a3a3" fontSize="7.5" fontFamily="monospace">결과 검토 · 방향 수정</text>
-          <text x="637" y="139" textAnchor="middle" fill="#a3a3a3" fontSize="7.5" fontFamily="monospace">재위임 or 승인</text>
-          <text x="637" y="155" textAnchor="middle" fill="#c3c3c3" fontSize="7"   fontFamily="monospace">Sonnet 4.6 subagent</text>
+          {/* Claude — 리뷰  center=(602,100)  h=64 */}
+          <rect x="522" y="68" width="160" height="64" fill="white" stroke="#475569" strokeWidth="1.5"/>
+          <text x="602" y="85"  textAnchor="middle" fill="#475569" fontSize="7.5" fontFamily="monospace" letterSpacing="1">REVIEW</text>
+          <text x="602" y="105" textAnchor="middle" fill="#1a1a1a" fontSize="15"  fontFamily="sans-serif" fontWeight="900">Claude Code</text>
+          <text x="602" y="122" textAnchor="middle" fill="#a3a3a3" fontSize="8"   fontFamily="monospace">검토 · 재위임 or 승인</text>
 
-          {/* Deploy / Output */}
-          <rect x="740" y="98" width="110" height="44" fill="#1a1a1a"/>
-          <text x="795" y="115" textAnchor="middle" fill="#737373" fontSize="7"  fontFamily="monospace" letterSpacing="2">OUTPUT</text>
-          <text x="795" y="132" textAnchor="middle" fill="white"   fontSize="11" fontFamily="sans-serif" fontWeight="900">luma3.dev 배포</text>
+          {/* Output  center=(777,100) */}
+          <rect x="722" y="78" width="110" height="44" fill="#1a1a1a"/>
+          <text x="777" y="93"  textAnchor="middle" fill="#6b7280" fontSize="7.5" fontFamily="monospace" letterSpacing="1.5">OUTPUT</text>
+          <text x="777" y="111" textAnchor="middle" fill="white"   fontSize="12"  fontFamily="sans-serif" fontWeight="900">luma3.dev</text>
         </svg>
       </div>
     </motion.div>
