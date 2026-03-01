@@ -93,7 +93,7 @@ function StrategyThumb() {
   ]
   return (
     <div className="absolute inset-0 flex items-center justify-center" style={{ backgroundColor: '#FAFAFA' }}>
-      <div className="grid grid-cols-2 gap-5">
+      <div className="flex gap-8">
         {domains.map(({ label, labelEn, Icon, color }) => (
           <div key={label} className="flex flex-col items-center gap-2">
             <div
