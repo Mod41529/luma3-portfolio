@@ -51,7 +51,7 @@ function VideoCard({
       viewport={{ once: true }}
       transition={{ duration: 0.35, delay: (index % 8) * 0.03 }}
       onClick={() => onClick(work)}
-      className="group relative aspect-square overflow-hidden cursor-pointer bg-[#111]"
+      className="group relative aspect-[9/16] overflow-hidden cursor-pointer bg-[#111]"
     >
       {/* Video / thumbnail */}
       {ready ? (
