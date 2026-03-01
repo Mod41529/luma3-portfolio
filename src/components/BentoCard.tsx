@@ -41,24 +41,40 @@ function DesignThumb() {
   )
 }
 
-// ── Development thumbnail: terminal / auto-invest ────────────────────────────
+// ── Development thumbnail: Multi-Agent Orchestration ─────────────────────────
 function DevThumb() {
   return (
-    <div className="absolute inset-0 p-5 font-mono overflow-hidden" style={{ backgroundColor: '#0F172A' }}>
+    <div className="absolute inset-0 p-4 font-mono overflow-hidden" style={{ backgroundColor: '#0F172A' }}>
       {/* Titlebar dots */}
-      <div className="flex gap-1.5 mb-4">
-        {[0, 1, 2].map((i) => <div key={i} className="w-2 h-2 rounded-full bg-[#334155]" />)}
+      <div className="flex gap-1.5 mb-3">
+        {[0, 1, 2].map((i) => <div key={i} className="w-1.5 h-1.5 rounded-full bg-[#334155]" />)}
       </div>
-      <div className="space-y-[5px] text-[9px] leading-relaxed">
-        <p><span className="text-[#1978e5]">$</span><span className="text-[#94a3b8]"> init portfolio_optimizer</span></p>
-        <p className="text-[#475569]">  loading market data...<span className="text-[#059669]"> done</span></p>
-        <p className="text-[#475569]">  running backtest...<span className="text-[#D97706]"> →</span></p>
-        <p className="text-[#64748b]">  α +12.3%  β 0.82</p>
-        <p className="text-[#64748b]">  Sharpe: 1.94</p>
-        <p className="mt-2 flex items-center gap-1.5">
-          <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#D97706]" />
-          <span className="text-[#94a3b8]">IN PROGRESS</span>
-        </p>
+
+      {/* Orchestrator node */}
+      <div className="border border-[#475569] px-3 py-1.5 mb-2 w-fit">
+        <p className="text-[7px] uppercase tracking-[0.25em] text-[#475569]">Orchestrator</p>
+        <p className="text-[10px] font-black text-white">Claude Code</p>
+      </div>
+
+      {/* Worker nodes */}
+      <div className="flex gap-1.5 mb-3">
+        {[
+          { label: 'Research', name: 'Gemini', color: '#059669' },
+          { label: 'Code', name: 'Codex', color: '#D97706' },
+        ].map(({ label, name, color }) => (
+          <div key={name} className="flex-1 border px-2 py-1" style={{ borderColor: color }}>
+            <p className="text-[7px] uppercase tracking-[0.2em]" style={{ color }}>{label}</p>
+            <p className="text-[9px] font-bold text-white">{name}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Queue status */}
+      <div className="flex gap-1">
+        {[['dispatched', '#D97706'], ['in_progress', '#475569'], ['complete', '#059669']].map(([s, c]) => (
+          <span key={s} className="text-[7px] font-bold px-1.5 py-0.5 uppercase tracking-wide"
+            style={{ color: c, backgroundColor: c + '18' }}>{s}</span>
+        ))}
       </div>
     </div>
   )
