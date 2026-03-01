@@ -77,23 +77,30 @@ function PhotoCard({
 
       {/* Hover overlay */}
       <div
-        className="absolute inset-0 bg-black/0 group-hover:bg-black/35
+        className="absolute inset-0 bg-black/0 group-hover:bg-black/40
                    transition-colors duration-300 pointer-events-none"
       />
 
-      {/* Info strip — slides up on hover */}
+      {/* Top-left: index number */}
+      <div className="absolute top-3 left-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <span className="text-[9px] font-mono text-white/50 uppercase tracking-widest">
+          {String(index + 1).padStart(2, '0')}
+        </span>
+      </div>
+
+      {/* Bottom: title + meta */}
       <div
-        className="absolute bottom-0 left-0 right-0 p-4
-                   translate-y-2 opacity-0
+        className="absolute bottom-0 left-0 right-0 p-3
+                   translate-y-1.5 opacity-0
                    group-hover:translate-y-0 group-hover:opacity-100
                    transition-all duration-300"
       >
-        <p className="text-[9px] font-mono uppercase tracking-[0.2em] text-white/60 mb-0.5">
-          {work.year} — {work.tools[0]}
-        </p>
-        <h3 className="text-sm font-black uppercase tracking-tight text-white leading-tight">
+        <h3 className="text-[11px] font-black uppercase tracking-tight text-white leading-tight mb-0.5">
           {work.title}
         </h3>
+        <p className="text-[8px] font-mono text-white/50 uppercase tracking-[0.2em]">
+          {work.year} · {work.tools[0]}
+        </p>
       </div>
     </motion.div>
   )
@@ -229,7 +236,7 @@ function DetailPanel({
   )
 }
 
-const INITIAL_PHOTO_COUNT = 6
+const INITIAL_PHOTO_COUNT = 4
 
 // ── Section ─────────────────────────────────────────────────────────────────
 export default function PhotoSection() {
@@ -263,10 +270,10 @@ export default function PhotoSection() {
         </Link>
       </div>
 
-      {/* Masonry grid — 4 CSS columns */}
+      {/* Masonry grid — 3 CSS columns */}
       <div
         className="p-px bg-[#e5e5e5]"
-        style={{ columns: '2 160px', columnGap: '1px' }}
+        style={{ columns: '3 180px', columnGap: '1px' }}
       >
         {visible.map((work, i) => (
           <PhotoCard key={work.id} work={work} index={i} onClick={setSelected} />
