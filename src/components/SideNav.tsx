@@ -14,8 +14,11 @@ const workLinks = [
   { label: 'Strategy',    sectionId: 'strategy' },
 ]
 
+const ALL_SECTIONS = [...workLinks.map(l => l.sectionId), 'about']
+
 export default function SideNav() {
-  const [visible, setVisible] = useState(false)
+  const [visible, setVisible]       = useState(false)
+  const [activeId, setActiveId]     = useState<string | null>(null)
   const pathname = usePathname()
 
   const scrollTo = (sectionId: string) => {
@@ -26,20 +29,40 @@ export default function SideNav() {
     }
   }
 
+  // ── Visibility on scroll ────────────────────────────────────────────────
   useEffect(() => {
-    // On sub-pages, always visible
-    if (pathname !== '/') {
-      setVisible(true)
-      return
-    }
-
-    const onScroll = () => {
-      setVisible(window.scrollY > window.innerHeight * 0.75)
-    }
+    if (pathname !== '/') { setVisible(true); return }
+    const onScroll = () => setVisible(window.scrollY > window.innerHeight * 0.75)
     window.addEventListener('scroll', onScroll, { passive: true })
-    // Run once to handle refresh position
     onScroll()
     return () => window.removeEventListener('scroll', onScroll)
+  }, [pathname])
+
+  // ── Intersection Observer — active section ──────────────────────────────
+  useEffect(() => {
+    if (pathname !== '/') return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        // Pick the entry closest to the center that's intersecting
+        const visible = entries
+          .filter(e => e.isIntersecting)
+          .sort((a, b) => {
+            const aCenter = Math.abs(a.boundingClientRect.top + a.boundingClientRect.height / 2 - window.innerHeight / 2)
+            const bCenter = Math.abs(b.boundingClientRect.top + b.boundingClientRect.height / 2 - window.innerHeight / 2)
+            return aCenter - bCenter
+          })
+        if (visible.length > 0) setActiveId(visible[0].target.id)
+      },
+      { rootMargin: '-25% 0px -25% 0px', threshold: 0 }
+    )
+
+    ALL_SECTIONS.forEach(id => {
+      const el = document.getElementById(id)
+      if (el) observer.observe(el)
+    })
+
+    return () => observer.disconnect()
   }, [pathname])
 
   return (
@@ -62,11 +85,8 @@ export default function SideNav() {
         {/* Main */}
         <button
           onClick={() => {
-            if (pathname === '/') {
-              window.scrollTo({ top: 0, behavior: 'smooth' })
-            } else {
-              window.location.href = '/'
-            }
+            if (pathname === '/') window.scrollTo({ top: 0, behavior: 'smooth' })
+            else window.location.href = '/'
           }}
           className="flex items-center gap-2.5 px-2 py-2 text-sm font-medium w-full text-left
                      text-[#1a1a1a] hover:bg-[#f4f4f2] rounded-sm transition-colors duration-150 mb-1"
@@ -80,26 +100,37 @@ export default function SideNav() {
           Work
         </p>
 
-        {workLinks.map(({ label, sectionId }) => (
-          <button
-            key={sectionId}
-            onClick={() => scrollTo(sectionId)}
-            className="flex items-center gap-2.5 px-2 py-2 text-sm rounded-sm w-full text-left
-                       text-[#737373] hover:text-[#1a1a1a] hover:bg-[#f4f4f2]
-                       transition-colors duration-150 group"
-          >
-            <span className="w-1 h-1 rounded-full shrink-0 bg-[#e5e5e5] group-hover:bg-[#a3a3a3] transition-colors" />
-            {label}
-          </button>
-        ))}
+        {workLinks.map(({ label, sectionId }) => {
+          const isActive = activeId === sectionId
+          return (
+            <button
+              key={sectionId}
+              onClick={() => scrollTo(sectionId)}
+              className="flex items-center gap-2.5 px-2 py-2 text-sm rounded-sm w-full text-left
+                         transition-colors duration-150 group"
+              style={{
+                backgroundColor: isActive ? '#F0F0F0' : 'transparent',
+                color: isActive ? '#1978e5' : '#737373',
+              }}
+            >
+              <span
+                className="w-1 h-1 rounded-full shrink-0 transition-colors duration-150"
+                style={{ backgroundColor: isActive ? '#1978e5' : '#e5e5e5' }}
+              />
+              <span className={`transition-colors duration-150 ${isActive ? 'font-semibold' : 'group-hover:text-[#1a1a1a]'}`}>
+                {label}
+              </span>
+            </button>
+          )
+        })}
 
         {/* Divider */}
         <div className="h-px bg-[#e5e5e5] my-3 mx-2" />
 
         <Link
           href="/#about"
-          className="flex items-center gap-2.5 px-2 py-2 text-sm text-[#737373]
-                     hover:text-[#1a1a1a] hover:bg-[#f4f4f2] rounded-sm transition-colors duration-150"
+          className={`flex items-center gap-2.5 px-2 py-2 text-sm rounded-sm transition-colors duration-150
+                      ${activeId === 'about' ? 'text-[#1978e5] font-semibold bg-[#F0F0F0]' : 'text-[#737373] hover:text-[#1a1a1a] hover:bg-[#f4f4f2]'}`}
         >
           About
         </Link>
