@@ -4,7 +4,7 @@ import BentoGrid from '@/components/BentoGrid'
 import FeaturedWork from '@/components/FeaturedWork'
 import VideoSection from '@/components/VideoSection'
 import MusicSection from '@/components/MusicSection'
-import HubSection from '@/components/HubSection'
+import { DesignSection, DevelopmentSection, BusinessSection } from '@/components/HubSection'
 
 export default function Home() {
   return (
@@ -21,7 +21,9 @@ export default function Home() {
           <BentoGrid />
           <VideoSection />
           <MusicSection />
-          <HubSection />
+          <DesignSection />
+          <DevelopmentSection />
+          <BusinessSection />
           <FeaturedWork />
 
           {/* About */}
