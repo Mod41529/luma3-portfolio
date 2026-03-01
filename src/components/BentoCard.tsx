@@ -3,7 +3,7 @@
 import { useRef, useState } from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { ArrowUpRight, Play, Pause } from 'lucide-react'
+import { ArrowUpRight, Play, Pause, Target, TrendingUp, Megaphone, Settings2 } from 'lucide-react'
 import { CategoryConfig } from '@/types'
 
 interface BentoCardProps {
@@ -23,104 +23,91 @@ function fmt(s: number) {
   return `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`
 }
 
-// ── Design thumbnail: MOD card back aesthetic ────────────────────────────────
+// ── Design thumbnail: MOD logo on plain background ───────────────────────────
 function DesignThumb() {
   return (
-    <div className="absolute inset-0 flex items-center justify-center" style={{ backgroundColor: '#F2EDD7' }}>
-      {/* Inset border frame */}
-      <div className="absolute inset-5 border border-[#C8BFA0]/50 pointer-events-none" />
-      {/* Centered double-chevron logo */}
-      <div className="flex flex-col items-center gap-3">
-        <svg viewBox="0 0 80 52" width="64" height="42" style={{ color: '#2B3A52' }} aria-hidden="true">
-          <polyline points="2,46 40,6 78,46" fill="none" stroke="currentColor" strokeWidth="3" strokeLinejoin="round" />
-          <polyline points="10,46 40,14 70,46" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
-        </svg>
-        <p className="text-[8px] font-mono uppercase tracking-[0.5em]" style={{ color: '#2B3A52' }}>MOD</p>
-      </div>
+    <div className="absolute inset-0 flex items-center justify-center">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src="/mod-logo.png" alt="MOD" className="w-20 h-auto" style={{ opacity: 0.88 }} />
     </div>
   )
 }
 
-// ── Development thumbnail: Multi-Agent Orchestration ─────────────────────────
+// ── Development thumbnail: AI Agent triangle ─────────────────────────────────
 function DevThumb() {
   return (
-    <div className="absolute inset-0 p-4 font-mono overflow-hidden" style={{ backgroundColor: '#0F172A' }}>
-      {/* Titlebar dots */}
-      <div className="flex gap-1.5 mb-3">
-        {[0, 1, 2].map((i) => <div key={i} className="w-1.5 h-1.5 rounded-full bg-[#334155]" />)}
-      </div>
+    <div className="absolute inset-0 flex items-center justify-center" style={{ backgroundColor: '#0F172A' }}>
+      {/* Triangle layout: Claude top-center, Gemini bottom-left, Codex bottom-right */}
+      <div className="relative w-36 h-32">
+        {/* Connector lines */}
+        <svg className="absolute inset-0 w-full h-full" viewBox="0 0 144 128" aria-hidden="true">
+          <line x1="72" y1="24" x2="20" y2="104" stroke="#334155" strokeWidth="1" strokeDasharray="3 3" />
+          <line x1="72" y1="24" x2="124" y2="104" stroke="#334155" strokeWidth="1" strokeDasharray="3 3" />
+          <line x1="20" y1="104" x2="124" y2="104" stroke="#334155" strokeWidth="1" strokeDasharray="3 3" />
+        </svg>
 
-      {/* Orchestrator node */}
-      <div className="border border-[#475569] px-3 py-1.5 mb-2 w-fit">
-        <p className="text-[7px] uppercase tracking-[0.25em] text-[#475569]">Orchestrator</p>
-        <p className="text-[10px] font-black text-white">Claude Code</p>
-      </div>
-
-      {/* Worker nodes */}
-      <div className="flex gap-1.5 mb-3">
-        {[
-          { label: 'Research', name: 'Gemini', color: '#059669' },
-          { label: 'Code', name: 'Codex', color: '#D97706' },
-        ].map(({ label, name, color }) => (
-          <div key={name} className="flex-1 border px-2 py-1" style={{ borderColor: color }}>
-            <p className="text-[7px] uppercase tracking-[0.2em]" style={{ color }}>{label}</p>
-            <p className="text-[9px] font-bold text-white">{name}</p>
+        {/* Claude — top center */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1">
+          <div className="w-9 h-9 rounded-full flex items-center justify-center" style={{ backgroundColor: '#D97706' }}>
+            {/* Anthropic "A" */}
+            <svg viewBox="0 0 20 20" width="18" height="18" fill="white" aria-hidden="true">
+              <polygon points="10,2 17,16 14.5,16 10,7 5.5,16 3,16" />
+            </svg>
           </div>
-        ))}
-      </div>
+          <p className="text-[7px] font-mono text-[#94A3B8]">Claude</p>
+        </div>
 
-      {/* Queue status */}
-      <div className="flex gap-1">
-        {[['dispatched', '#D97706'], ['in_progress', '#475569'], ['complete', '#059669']].map(([s, c]) => (
-          <span key={s} className="text-[7px] font-bold px-1.5 py-0.5 uppercase tracking-wide"
-            style={{ color: c, backgroundColor: c + '18' }}>{s}</span>
-        ))}
+        {/* Gemini — bottom left */}
+        <div className="absolute bottom-0 left-0 flex flex-col items-center gap-1">
+          <div className="w-9 h-9 rounded-full flex items-center justify-center" style={{ backgroundColor: '#1A73E8' }}>
+            {/* Gemini star */}
+            <svg viewBox="0 0 20 20" width="17" height="17" fill="white" aria-hidden="true">
+              <path d="M10 2 Q10.6 10 18 10 Q10.6 10 10 18 Q9.4 10 2 10 Q9.4 10 10 2Z" />
+            </svg>
+          </div>
+          <p className="text-[7px] font-mono text-[#94A3B8]">Gemini</p>
+        </div>
+
+        {/* Codex — bottom right */}
+        <div className="absolute bottom-0 right-0 flex flex-col items-center gap-1">
+          <div className="w-9 h-9 rounded-full flex items-center justify-center" style={{ backgroundColor: '#1a1a1a', border: '1px solid #334155' }}>
+            {/* OpenAI swirl simplified */}
+            <svg viewBox="0 0 20 20" width="16" height="16" fill="white" aria-hidden="true">
+              <path d="M10 3a7 7 0 1 1 0 14A7 7 0 0 1 10 3zm0 2a5 5 0 1 0 0 10A5 5 0 0 0 10 5zm0 2a3 3 0 1 1 0 6 3 3 0 0 1 0-6z" />
+            </svg>
+          </div>
+          <p className="text-[7px] font-mono text-[#94A3B8]">Codex</p>
+        </div>
       </div>
     </div>
   )
 }
 
-// ── Strategy thumbnail: Research-driven quarterly review ─────────────────────
+// ── Business thumbnail: 4-domain icon grid ───────────────────────────────────
 function StrategyThumb() {
-  const hypotheses = [
-    '메시지 → 의사결정 단축',
-    'PoC 중단 기준 명시',
-    '탐색 / 활용 분리',
+  const domains = [
+    { label: '전략', labelEn: 'Strategy',    Icon: Target,    color: '#B45309' },
+    { label: '재무', labelEn: 'Finance',     Icon: TrendingUp, color: '#0369A1' },
+    { label: '마케팅', labelEn: 'Marketing', Icon: Megaphone, color: '#7C3AED' },
+    { label: '생산', labelEn: 'Operations',  Icon: Settings2, color: '#059669' },
   ]
   return (
-    <div className="absolute inset-0 p-5 flex flex-col gap-3" style={{ backgroundColor: '#FEFCE8' }}>
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <p className="text-[8px] font-mono uppercase tracking-[0.35em] text-[#a3a3a3]">Strategy</p>
-        <span className="text-[8px] font-mono uppercase tracking-widest" style={{ color: '#B45309' }}>Q1 2026</span>
-      </div>
-
-      {/* Research sources */}
-      <div className="flex gap-1.5 flex-wrap">
-        {['NBER', 'arXiv', 'SV Cases'].map(tag => (
-          <span key={tag} className="px-1.5 py-0.5 text-[7px] font-mono uppercase tracking-wider border"
-            style={{ borderColor: '#B45309', color: '#B45309', opacity: 0.6 }}>
-            {tag}
-          </span>
-        ))}
-      </div>
-
-      {/* Hypotheses */}
-      <div className="flex-1 space-y-1.5">
-        {hypotheses.map((h, i) => (
-          <div key={i} className="flex items-start gap-2">
-            <span className="text-[7px] font-mono mt-0.5 shrink-0" style={{ color: '#B45309' }}>H{i + 1}</span>
-            <p className="text-[8px] font-mono leading-tight" style={{ color: '#B45309', opacity: 0.55 }}>{h}</p>
+    <div className="absolute inset-0 flex items-center justify-center" style={{ backgroundColor: '#FAFAFA' }}>
+      <div className="grid grid-cols-2 gap-5">
+        {domains.map(({ label, labelEn, Icon, color }) => (
+          <div key={label} className="flex flex-col items-center gap-2">
+            <div
+              className="w-10 h-10 flex items-center justify-center"
+              style={{ backgroundColor: color + '12', border: `1px solid ${color}30` }}
+            >
+              <Icon size={18} strokeWidth={1.5} style={{ color }} />
+            </div>
+            <div className="text-center">
+              <p className="text-[9px] font-bold" style={{ color }}>{label}</p>
+              <p className="text-[7px] font-mono text-[#a3a3a3] uppercase tracking-wider">{labelEn}</p>
+            </div>
           </div>
         ))}
-      </div>
-
-      {/* 2-week gate progress */}
-      <div>
-        <p className="text-[7px] font-mono uppercase tracking-widest text-[#c3c3c3] mb-1">2-Week Gate</p>
-        <div className="h-[2px] bg-[#e5e5e5] w-full">
-          <div className="h-full" style={{ width: '60%', backgroundColor: '#B45309' }} />
-        </div>
       </div>
     </div>
   )
