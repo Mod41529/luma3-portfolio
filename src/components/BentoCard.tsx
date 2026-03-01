@@ -3,7 +3,7 @@
 import { useRef, useState } from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { ArrowUpRight, Play, Pause, Target, TrendingUp, Megaphone, Settings2 } from 'lucide-react'
+import { ArrowUpRight, Play, Pause, Compass, BarChart2, Megaphone, Workflow } from 'lucide-react'
 import { CategoryConfig } from '@/types'
 
 interface BentoCardProps {
@@ -83,32 +83,32 @@ function DevThumb() {
   )
 }
 
-// ── Business thumbnail: 4-domain icon grid ───────────────────────────────────
+// ── Business thumbnail: 4-column accent strips ───────────────────────────────
 function StrategyThumb() {
   const domains = [
-    { label: '전략', labelEn: 'Strategy',    Icon: Target,    color: '#B45309' },
-    { label: '재무', labelEn: 'Finance',     Icon: TrendingUp, color: '#0369A1' },
+    { label: '전략', labelEn: 'Strategy',    Icon: Compass,   color: '#B45309' },
+    { label: '재무', labelEn: 'Finance',     Icon: BarChart2, color: '#0369A1' },
     { label: '마케팅', labelEn: 'Marketing', Icon: Megaphone, color: '#7C3AED' },
-    { label: '생산', labelEn: 'Operations',  Icon: Settings2, color: '#059669' },
+    { label: '생산', labelEn: 'Operations',  Icon: Workflow,  color: '#059669' },
   ]
   return (
-    <div className="absolute inset-0 flex items-center justify-center" style={{ backgroundColor: '#FAFAFA' }}>
-      <div className="flex gap-8">
-        {domains.map(({ label, labelEn, Icon, color }) => (
-          <div key={label} className="flex flex-col items-center gap-2">
-            <div
-              className="w-10 h-10 flex items-center justify-center"
-              style={{ backgroundColor: color + '12', border: `1px solid ${color}30` }}
-            >
-              <Icon size={18} strokeWidth={1.5} style={{ color }} />
-            </div>
-            <div className="text-center">
-              <p className="text-[9px] font-bold" style={{ color }}>{label}</p>
-              <p className="text-[7px] font-mono text-[#a3a3a3] uppercase tracking-wider">{labelEn}</p>
-            </div>
+    <div className="absolute inset-0 flex">
+      {domains.map(({ label, labelEn, Icon, color }, i) => (
+        <div
+          key={label}
+          className="flex-1 flex flex-col items-center justify-center gap-3"
+          style={{
+            backgroundColor: color + '12',
+            borderRight: i < 3 ? '1px solid #e5e5e5' : 'none',
+          }}
+        >
+          <Icon size={38} strokeWidth={1.3} style={{ color }} />
+          <div className="text-center">
+            <p className="text-sm font-bold" style={{ color }}>{label}</p>
+            <p className="text-[8px] font-mono text-[#a3a3a3] uppercase tracking-wider mt-0.5">{labelEn}</p>
           </div>
-        ))}
-      </div>
+        </div>
+      ))}
     </div>
   )
 }
