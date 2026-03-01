@@ -378,20 +378,18 @@ function DomainPanel({
 function BusinessBody() {
   const rows = [BUSINESS_DOMAINS.slice(0, 2), BUSINESS_DOMAINS.slice(2, 4)]
   return (
-    <div className="px-6 md:px-12 py-10">
-      <div className="max-w-7xl space-y-px border border-[#e5e5e5] bg-[#e5e5e5]">
-        {rows.map((row, rowIdx) => (
-          <div key={rowIdx} className="grid grid-cols-1 md:grid-cols-2 gap-px bg-[#e5e5e5]">
-            {row.map((domain, colIdx) => (
-              <DomainPanel
-                key={domain.id}
-                {...domain}
-                delay={rowIdx * 0.1 + colIdx * 0.06}
-              />
-            ))}
-          </div>
-        ))}
-      </div>
+    <div className="space-y-px border-b border-[#e5e5e5] bg-[#e5e5e5]">
+      {rows.map((row, rowIdx) => (
+        <div key={rowIdx} className="grid grid-cols-1 md:grid-cols-2 gap-px bg-[#e5e5e5]">
+          {row.map((domain, colIdx) => (
+            <DomainPanel
+              key={domain.id}
+              {...domain}
+              delay={rowIdx * 0.1 + colIdx * 0.06}
+            />
+          ))}
+        </div>
+      ))}
     </div>
   )
 }
