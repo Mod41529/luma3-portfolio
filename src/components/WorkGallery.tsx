@@ -11,17 +11,30 @@ interface WorkGalleryProps {
   category: CategoryConfig
 }
 
+// Background colors matched to each design image's dominant tone (mirrors HubSection)
+const DESIGN_IMG_BG: Record<string, string> = {
+  d2: '#0a0a0a',
+  d3: '#0a0a0a',
+  d4: '#1a2744',
+  d5: '#f5f0e8',
+}
+
 // ── Thumbnail area — picks the right visual per category ──────────────────
 function WorkThumbnail({ work, accent, bg }: { work: WorkItem; accent: string; bg: string }) {
-  // Photo: show imageSrc directly
+  // Image: design works → portrait + object-contain; others → landscape + object-cover
   if (work.imageSrc) {
+    const isDesign = work.category === 'design'
+    const cardBg   = isDesign ? (DESIGN_IMG_BG[work.id] ?? '#F4F4F2') : undefined
     return (
-      <div className="aspect-video relative overflow-hidden">
+      <div
+        className={`${isDesign ? 'aspect-[3/4]' : 'aspect-video'} relative overflow-hidden`}
+        style={cardBg ? { backgroundColor: cardBg } : undefined}
+      >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={work.imageSrc}
           alt={work.thumbnailAlt}
-          className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
+          className={`w-full h-full ${isDesign ? 'object-contain p-4' : 'object-cover'} group-hover:scale-[1.03] transition-transform duration-500`}
         />
         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/15 transition-colors duration-300" />
       </div>
