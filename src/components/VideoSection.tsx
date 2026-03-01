@@ -8,7 +8,7 @@ import { works } from '@/data/works'
 import { WorkItem } from '@/types'
 
 const videoWorks = works.filter((w) => w.category === 'video')
-const INITIAL_COUNT = 4
+const INITIAL_COUNT = 3
 
 // alternating wide pattern: index 0,2,4… = col-span-2; 1,3,5… = col-span-1
 const isWide = (i: number) => i % 2 === 0
@@ -58,7 +58,7 @@ function VideoCard({
       onClick={() => onClick(work)}
       className={`relative overflow-hidden cursor-pointer bg-[#F0F0F0] group
                   ${wide ? 'md:col-span-2' : 'md:col-span-1'}`}
-      style={{ aspectRatio: '16/9' }}
+      style={{ aspectRatio: wide ? '16/9' : '1/1' }}
     >
       {hasFile ? (
         <video

@@ -15,6 +15,7 @@ interface BentoCardProps {
   audioTitle?: string
   audioTitleKo?: string
   imageSrc?: string
+  wide?: boolean
 }
 
 function fmt(s: number) {
@@ -22,9 +23,73 @@ function fmt(s: number) {
   return `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`
 }
 
+// ── Design thumbnail: MOD card back aesthetic ────────────────────────────────
+function DesignThumb() {
+  return (
+    <div className="absolute inset-0 flex items-center justify-center" style={{ backgroundColor: '#F2EDD7' }}>
+      {/* Inset border frame */}
+      <div className="absolute inset-5 border border-[#C8BFA0]/50 pointer-events-none" />
+      {/* Centered double-chevron logo */}
+      <div className="flex flex-col items-center gap-3">
+        <svg viewBox="0 0 80 52" width="64" height="42" style={{ color: '#2B3A52' }} aria-hidden="true">
+          <polyline points="2,46 40,6 78,46" fill="none" stroke="currentColor" strokeWidth="3" strokeLinejoin="round" />
+          <polyline points="10,46 40,14 70,46" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
+        </svg>
+        <p className="text-[8px] font-mono uppercase tracking-[0.5em]" style={{ color: '#2B3A52' }}>MOD</p>
+      </div>
+    </div>
+  )
+}
+
+// ── Development thumbnail: terminal / auto-invest ────────────────────────────
+function DevThumb() {
+  return (
+    <div className="absolute inset-0 p-5 font-mono overflow-hidden" style={{ backgroundColor: '#0F172A' }}>
+      {/* Titlebar dots */}
+      <div className="flex gap-1.5 mb-4">
+        {[0, 1, 2].map((i) => <div key={i} className="w-2 h-2 rounded-full bg-[#334155]" />)}
+      </div>
+      <div className="space-y-[5px] text-[9px] leading-relaxed">
+        <p><span className="text-[#1978e5]">$</span><span className="text-[#94a3b8]"> init portfolio_optimizer</span></p>
+        <p className="text-[#475569]">  loading market data...<span className="text-[#059669]"> done</span></p>
+        <p className="text-[#475569]">  running backtest...<span className="text-[#D97706]"> →</span></p>
+        <p className="text-[#64748b]">  α +12.3%  β 0.82</p>
+        <p className="text-[#64748b]">  Sharpe: 1.94</p>
+        <p className="mt-2 flex items-center gap-1.5">
+          <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#D97706]" />
+          <span className="text-[#94a3b8]">IN PROGRESS</span>
+        </p>
+      </div>
+    </div>
+  )
+}
+
+// ── Strategy thumbnail: OKR framework grid ───────────────────────────────────
+function StrategyThumb() {
+  const items = [
+    { label: 'Objective', val: 'Market Entry', accent: '#B45309' },
+    { label: 'KR 1', val: '+40% Revenue', accent: '#a3a3a3' },
+    { label: 'KR 2', val: '3 New Channels', accent: '#a3a3a3' },
+    { label: 'KR 3', val: 'ROI > 2.5×', accent: '#a3a3a3' },
+  ]
+  return (
+    <div className="absolute inset-0 p-5 flex flex-col" style={{ backgroundColor: '#FEFCE8' }}>
+      <p className="text-[8px] font-mono uppercase tracking-[0.35em] text-[#a3a3a3] mb-3">OKR Framework</p>
+      <div className="grid grid-cols-2 gap-px bg-[#e5e5e5] flex-1 border border-[#e5e5e5]">
+        {items.map(({ label, val, accent }) => (
+          <div key={label} className="bg-[#FEFCE8] p-2.5 flex flex-col justify-between">
+            <p className="text-[7px] font-mono uppercase tracking-widest text-[#c3c3c3]">{label}</p>
+            <p className="text-[9px] font-semibold mt-1" style={{ color: accent }}>{val}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 export default function BentoCard({
   category, index, className = '',
-  videoSrc, audioSrc, audioTitle, audioTitleKo, imageSrc,
+  videoSrc, audioSrc, audioTitle, audioTitleKo, imageSrc, wide = false,
 }: BentoCardProps) {
   const audioRef = useRef<HTMLAudioElement>(null)
   const [playing, setPlaying] = useState(false)
@@ -36,18 +101,14 @@ export default function BentoCard({
     e.stopPropagation()
     const audio = audioRef.current
     if (!audio) return
-    if (playing) {
-      audio.pause()
-      setPlaying(false)
-    } else {
-      audio.play().catch(() => {})
-      setPlaying(true)
-    }
+    if (playing) { audio.pause(); setPlaying(false) }
+    else { audio.play().catch(() => {}); setPlaying(true) }
   }
 
   const isVideo = !!videoSrc
   const isMusic = !!audioSrc
   const isPhoto = !!imageSrc
+  const hasSpecialBg = isVideo || isPhoto
 
   return (
     <motion.div
@@ -61,17 +122,13 @@ export default function BentoCard({
         <div
           className="group relative h-full overflow-hidden cursor-pointer transition-colors duration-200"
           style={{ backgroundColor: '#FAFAFA' }}
-          onMouseEnter={e => { if (!isVideo && !isPhoto) e.currentTarget.style.backgroundColor = '#F0F0F0' }}
-          onMouseLeave={e => { if (!isVideo && !isPhoto) e.currentTarget.style.backgroundColor = '#FAFAFA' }}
+          onMouseEnter={e => { if (!hasSpecialBg && !isMusic) e.currentTarget.style.backgroundColor = '#F0F0F0' }}
+          onMouseLeave={e => { if (!hasSpecialBg && !isMusic) e.currentTarget.style.backgroundColor = '#FAFAFA' }}
         >
           {/* ── Video background ── */}
           {isVideo && (
             <>
-              <video
-                src={videoSrc}
-                autoPlay muted loop playsInline
-                className="absolute inset-0 w-full h-full object-cover"
-              />
+              <video src={videoSrc} autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover" />
               <div className="absolute inset-0 bg-black/50 group-hover:bg-black/40 transition-colors duration-300" />
             </>
           )}
@@ -80,38 +137,103 @@ export default function BentoCard({
           {isPhoto && (
             <>
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={imageSrc}
-                alt=""
-                className="absolute inset-0 w-full h-full object-cover"
-              />
+              <img src={imageSrc} alt="" className="absolute inset-0 w-full h-full object-cover" />
               <div className="absolute inset-0 bg-black/50 group-hover:bg-black/40 transition-colors duration-300" />
             </>
           )}
+
+          {/* ── Category-specific static thumbnails ── */}
+          {!isVideo && !isMusic && !isPhoto && category.id === 'design'      && <DesignThumb />}
+          {!isVideo && !isMusic && !isPhoto && category.id === 'development' && <DevThumb />}
+          {!isVideo && !isMusic && !isPhoto && category.id === 'strategy'    && <StrategyThumb />}
 
           {/* ── Category label — top-left ── */}
           <div className="absolute top-5 left-5 right-5 flex items-start justify-between z-10">
             <p
               className="text-[10px] tracking-[0.22em] uppercase font-medium font-mono"
-              style={{ color: (isVideo || isPhoto) ? 'rgba(255,255,255,0.75)' : category.accent }}
+              style={{ color: hasSpecialBg ? 'rgba(255,255,255,0.75)' : category.accent }}
             >
               {category.nameEn}
             </p>
             <div
               className="w-6 h-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-150 shrink-0"
-              style={{ color: (isVideo || isPhoto) ? 'white' : category.accent }}
+              style={{ color: hasSpecialBg ? 'white' : category.accent }}
             >
               <ArrowUpRight size={14} strokeWidth={1.5} />
             </div>
           </div>
 
-          {/* ── Music player (center) ── */}
+          {/* ── Shared audio element ── */}
           {isMusic && (
+            <audio
+              ref={audioRef}
+              src={audioSrc}
+              preload="metadata"
+              onLoadedMetadata={() => setDuration(audioRef.current?.duration ?? 0)}
+              onTimeUpdate={() => {
+                const a = audioRef.current
+                if (a) setProgress(a.duration ? a.currentTime / a.duration : 0)
+              }}
+              onEnded={() => setPlaying(false)}
+            />
+          )}
+
+          {/* ── Music player — wide (horizontal) ── */}
+          {isMusic && wide && (
+            <div className="absolute inset-0 flex items-center gap-5 z-10 px-6">
+              {/* Waveform bars */}
+              <div className="flex items-end gap-[3px] h-8 shrink-0">
+                {[0.4, 0.7, 1, 0.6, 0.8, 0.5, 0.9, 0.65, 0.4, 0.75].map((h, i) => (
+                  <div
+                    key={i}
+                    className="w-[3px] rounded-full transition-colors duration-300"
+                    style={{ height: `${h * 100}%`, backgroundColor: playing ? category.accent : '#d4d4d4' }}
+                  />
+                ))}
+              </div>
+
+              {/* Play/Pause */}
+              <button
+                onClick={togglePlay}
+                className="w-10 h-10 border flex items-center justify-center shrink-0 hover:opacity-70 transition-opacity"
+                style={{ borderColor: category.accent }}
+                aria-label={playing ? 'Pause' : 'Play'}
+              >
+                {playing
+                  ? <Pause size={14} style={{ color: category.accent }} />
+                  : <Play size={14} style={{ color: category.accent }} className="ml-0.5" />
+                }
+              </button>
+
+              {/* Track info */}
+              <div className="flex-1 min-w-0">
+                {audioTitle && (
+                  <p className="text-[11px] font-bold uppercase tracking-wider text-[#1a1a1a] truncate">{audioTitle}</p>
+                )}
+                {audioTitleKo && (
+                  <p className="text-[9px] text-[#a3a3a3] font-mono mt-0.5">{audioTitleKo}</p>
+                )}
+              </div>
+
+              {/* Progress + time */}
+              <div className="w-28 shrink-0">
+                <div className="h-[2px] bg-[#e5e5e5] w-full">
+                  <div className="h-full transition-none" style={{ width: `${progress * 100}%`, backgroundColor: category.accent }} />
+                </div>
+                <div className="flex justify-between mt-1.5">
+                  <span className="text-[9px] font-mono text-[#a3a3a3]">{fmt(progress * duration)}</span>
+                  <span className="text-[9px] font-mono text-[#a3a3a3]">{fmt(duration)}</span>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* ── Music player — narrow (vertical, original) ── */}
+          {isMusic && !wide && (
             <div className="absolute inset-0 flex flex-col justify-center items-center z-10 px-6 gap-4">
               <button
                 onClick={togglePlay}
-                className="w-12 h-12 border flex items-center justify-center
-                           hover:opacity-70 transition-opacity duration-150"
+                className="w-12 h-12 border flex items-center justify-center hover:opacity-70 transition-opacity duration-150"
                 style={{ borderColor: category.accent }}
                 aria-label={playing ? 'Pause' : 'Play'}
               >
@@ -123,61 +245,38 @@ export default function BentoCard({
 
               {audioTitle && (
                 <div className="text-center">
-                  <p className="text-[11px] font-bold uppercase tracking-wider text-[#1a1a1a] leading-tight">
-                    {audioTitle}
-                  </p>
-                  {audioTitleKo && (
-                    <p className="text-[9px] text-[#a3a3a3] font-mono mt-0.5">{audioTitleKo}</p>
-                  )}
+                  <p className="text-[11px] font-bold uppercase tracking-wider text-[#1a1a1a] leading-tight">{audioTitle}</p>
+                  {audioTitleKo && <p className="text-[9px] text-[#a3a3a3] font-mono mt-0.5">{audioTitleKo}</p>}
                 </div>
               )}
 
               <div className="w-full">
                 <div className="h-[2px] bg-[#e5e5e5] w-full">
-                  <div
-                    className="h-full transition-none"
-                    style={{ width: `${progress * 100}%`, backgroundColor: category.accent }}
-                  />
+                  <div className="h-full transition-none" style={{ width: `${progress * 100}%`, backgroundColor: category.accent }} />
                 </div>
                 <div className="flex justify-between mt-1.5">
                   <span className="text-[9px] font-mono text-[#a3a3a3]">{fmt(progress * duration)}</span>
                   <span className="text-[9px] font-mono text-[#a3a3a3]">{fmt(duration)}</span>
                 </div>
               </div>
-
-              <audio
-                ref={audioRef}
-                src={audioSrc}
-                preload="metadata"
-                onLoadedMetadata={() => setDuration(audioRef.current?.duration ?? 0)}
-                onTimeUpdate={() => {
-                  const a = audioRef.current
-                  if (a) setProgress(a.duration ? a.currentTime / a.duration : 0)
-                }}
-                onEnded={() => setPlaying(false)}
-              />
             </div>
           )}
 
           {/* ── Bottom text block ── */}
           <div className="absolute bottom-5 left-5 right-5 z-10">
-            <p className={`text-base font-medium leading-tight mb-1.5
-                          ${(isVideo || isPhoto) ? 'text-white' : 'text-[#1a1a1a]'}`}>
+            <p className={`text-base font-medium leading-tight mb-1.5 ${hasSpecialBg ? 'text-white' : 'text-[#1a1a1a]'}`}>
               {category.nameKo}
             </p>
-            <p className={`text-xs leading-relaxed line-clamp-2
-                          ${(isVideo || isPhoto) ? 'text-white/70' : 'text-[#737373]'}`}>
+            <p className={`text-xs leading-relaxed line-clamp-2 ${hasSpecialBg ? 'text-white/70' : 'text-[#737373]'}`}>
               {category.description}
             </p>
           </div>
 
-          {/* ── Accent tint on hover (default cards only) ── */}
+          {/* ── Accent tint on hover (plain cards only) ── */}
           {!isVideo && !isMusic && !isPhoto && (
             <div
               className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-200"
-              style={{
-                backgroundImage: `radial-gradient(circle at 80% 20%, ${category.accent}0f 0%, transparent 60%)`,
-              }}
+              style={{ backgroundImage: `radial-gradient(circle at 80% 20%, ${category.accent}0f 0%, transparent 60%)` }}
             />
           )}
         </div>

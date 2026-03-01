@@ -26,6 +26,7 @@ export default function BentoGrid() {
               category={categories[id]}
               index={index}
               className={className}
+              wide={id === 'music'}
               videoSrc={id === 'video' ? featuredVideo?.videoSrc : undefined}
               audioSrc={id === 'music' ? featuredMusic?.audioSrc : undefined}
               audioTitle={id === 'music' ? featuredMusic?.title : undefined}
