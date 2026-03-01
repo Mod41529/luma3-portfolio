@@ -3,7 +3,6 @@ import Hero from '@/components/Hero'
 import BentoGrid from '@/components/BentoGrid'
 import FeaturedWork from '@/components/FeaturedWork'
 import VideoSection from '@/components/VideoSection'
-import PhotoSection from '@/components/PhotoSection'
 import MusicSection from '@/components/MusicSection'
 import HubSection from '@/components/HubSection'
 
@@ -21,7 +20,6 @@ export default function Home() {
         <div className="md:pl-[200px]">
           <BentoGrid />
           <VideoSection />
-          <PhotoSection />
           <MusicSection />
           <HubSection />
           <FeaturedWork />

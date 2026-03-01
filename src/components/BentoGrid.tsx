@@ -7,13 +7,11 @@ const gridConfig: { id: CategoryId; className: string }[] = [
   { id: 'music',       className: 'bento-music' },
   { id: 'design',      className: 'bento-design' },
   { id: 'development', className: 'bento-development' },
-  { id: 'photography', className: 'bento-photography' },
   { id: 'strategy',    className: 'bento-strategy' },
 ]
 
 const featuredVideo = works.find(w => w.id === 'v4')
 const featuredMusic = works.find(w => w.id === 'm5') ?? works.find(w => w.category === 'music')
-const featuredPhoto = works.find(w => w.id === 'p6')
 
 export default function BentoGrid() {
   return (
@@ -31,7 +29,6 @@ export default function BentoGrid() {
               audioSrc={id === 'music' ? featuredMusic?.audioSrc : undefined}
               audioTitle={id === 'music' ? featuredMusic?.title : undefined}
               audioTitleKo={id === 'music' ? featuredMusic?.titleKo : undefined}
-              imageSrc={id === 'photography' ? featuredPhoto?.imageSrc : undefined}
             />
           ))}
         </div>

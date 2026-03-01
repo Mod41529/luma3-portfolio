@@ -7,7 +7,6 @@ import { usePathname } from 'next/navigation'
 
 const workLinks = [
   { label: 'Video',       sectionId: 'video' },
-  { label: 'Photography', sectionId: 'photography' },
   { label: 'Music',       sectionId: 'music' },
   { label: 'Design',      sectionId: 'design' },
   { label: 'Development', sectionId: 'development' },
