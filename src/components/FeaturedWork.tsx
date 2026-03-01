@@ -46,24 +46,50 @@ export default function FeaturedWork() {
             }}
           />
 
-          {/* Visual placeholder — replace with actual thumbnail later */}
-          <div className="relative w-full h-full border border-[#e5e5e5] bg-white flex flex-col items-start justify-end p-8 min-h-[280px]">
-            <div
-              className="absolute inset-0 pointer-events-none"
-              style={{
-                backgroundImage: `radial-gradient(circle at 80% 20%, ${category.accent}18 0%, transparent 60%)`,
-              }}
-            />
-            <p
-              className="text-[10px] font-bold tracking-[0.3em] uppercase mb-1"
-              style={{ color: category.accent }}
-            >
-              {category.nameEn} / {category.nameKo}
-            </p>
-            <h3 className="text-2xl font-black tracking-tight text-[#1a1a1a] leading-tight">
-              {featured.title}
-            </h3>
-            <p className="text-xs text-[#a3a3a3] mt-1">{featured.thumbnailAlt}</p>
+          {/* Agent orchestration diagram */}
+          <div className="relative w-full max-w-lg font-mono">
+            {/* Orchestrator node */}
+            <div className="border border-[#475569] bg-white px-5 py-3 mb-8 mx-auto w-fit">
+              <p className="text-[9px] uppercase tracking-[0.3em] text-[#475569] mb-0.5">Orchestrator</p>
+              <p className="text-sm font-black text-[#1a1a1a]">Claude Code</p>
+            </div>
+
+            {/* Connector lines */}
+            <div className="flex justify-center gap-0 mb-0 relative">
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-4 bg-[#cbd5e1]" />
+              <div className="absolute top-4 left-[20%] right-[20%] h-px bg-[#cbd5e1]" />
+              <div className="absolute top-4 left-[20%] w-px h-4 bg-[#cbd5e1]" />
+              <div className="absolute top-4 left-1/2 -translate-x-1/2 w-px h-4 bg-[#cbd5e1]" />
+              <div className="absolute top-4 right-[20%] w-px h-4 bg-[#cbd5e1]" />
+            </div>
+
+            {/* Worker nodes */}
+            <div className="flex justify-between gap-3 mt-8 pt-1">
+              {[
+                { label: 'Research', name: 'Gemini', color: '#059669', note: '1,500 req/day' },
+                { label: 'Judgment', name: 'Claude', color: '#475569', note: 'Max plan' },
+                { label: 'Code', name: 'Codex', color: '#D97706', note: 'Heavy quota' },
+              ].map(({ label, name, color, note }) => (
+                <div key={name} className="flex-1 border px-3 py-2.5" style={{ borderColor: color }}>
+                  <p className="text-[8px] uppercase tracking-[0.25em] mb-0.5" style={{ color }}>{label}</p>
+                  <p className="text-xs font-black text-[#1a1a1a]">{name}</p>
+                  <p className="text-[8px] text-[#a3a3a3] mt-1">{note}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* Queue status bar */}
+            <div className="mt-8 border border-[#e5e5e5] px-4 py-2 flex items-center justify-between">
+              <span className="text-[8px] uppercase tracking-[0.25em] text-[#a3a3a3]">Queue</span>
+              <div className="flex gap-1.5">
+                {['dispatched', 'in_progress', 'complete'].map((s, i) => (
+                  <span key={s} className="text-[8px] font-bold px-2 py-0.5 uppercase tracking-wide"
+                    style={{ color: ['#D97706','#475569','#059669'][i], backgroundColor: ['#D97706','#475569','#059669'][i] + '18' }}>
+                    {s}
+                  </span>
+                ))}
+              </div>
+            </div>
           </div>
         </motion.div>
 

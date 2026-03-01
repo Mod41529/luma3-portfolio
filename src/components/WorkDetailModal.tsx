@@ -1,14 +1,93 @@
 'use client'
 
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, ChevronDown } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { X, ChevronDown, Play, Music2 } from 'lucide-react'
+import { useEffect, useState, useRef } from 'react'
 import { WorkItem } from '@/types'
 import { categories } from '@/data/works'
 
 interface WorkDetailModalProps {
   work: WorkItem | null
   onClose: () => void
+}
+
+// ── Media panel — shows the right visual per work type ───────────────────
+function MediaPanel({ work, accent, bg }: { work: WorkItem; accent: string; bg: string }) {
+  const videoRef = useRef<HTMLVideoElement>(null)
+
+  // Photo
+  if (work.imageSrc) {
+    return (
+      <div className="w-full h-full relative overflow-hidden" style={{ backgroundColor: bg }}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={work.imageSrc}
+          alt={work.thumbnailAlt}
+          className="w-full h-full object-cover"
+        />
+      </div>
+    )
+  }
+
+  // Video — autoplay muted in modal
+  if (work.videoSrc) {
+    return (
+      <div className="w-full h-full relative overflow-hidden bg-black">
+        <video
+          ref={videoRef}
+          src={work.videoSrc}
+          poster={work.thumbnailSrc}
+          autoPlay muted loop playsInline
+          className="w-full h-full object-cover"
+        />
+        {/* Play icon hint */}
+        <div className="absolute bottom-4 right-4 flex items-center gap-1.5
+                        bg-black/40 backdrop-blur-sm px-2.5 py-1.5">
+          <Play size={10} className="text-white" fill="white" />
+          <span className="text-[9px] font-mono text-white/80 uppercase tracking-widest">
+            Autoplay
+          </span>
+        </div>
+      </div>
+    )
+  }
+
+  // Music — dark waveform visual
+  if (work.audioSrc) {
+    return (
+      <div className="w-full h-full flex flex-col items-center justify-center gap-4"
+           style={{ backgroundColor: '#111821' }}>
+        <Music2 size={28} style={{ color: accent }} className="opacity-50" />
+        <div className="flex items-center gap-[3px] h-12">
+          {[0.3,0.6,1,0.7,0.5,0.9,0.4,0.8,0.6,1,0.5,0.7,0.3,0.9,0.6,0.4,0.8,1,0.5,0.7].map((h, i) => (
+            <div key={i} className="w-[3px] rounded-full opacity-30"
+                 style={{ height: `${h * 100}%`, backgroundColor: accent }} />
+          ))}
+        </div>
+        <span className="text-[10px] font-mono uppercase tracking-[0.3em] opacity-30"
+              style={{ color: accent }}>
+          {work.title}
+        </span>
+      </div>
+    )
+  }
+
+  // Design / Dev / Strategy — accent gradient placeholder
+  return (
+    <div className="w-full h-full flex flex-col items-start justify-end p-10"
+         style={{ backgroundColor: bg }}>
+      <div className="absolute inset-0 pointer-events-none"
+           style={{ backgroundImage: `radial-gradient(circle at 20% 80%, ${accent}22 0%, transparent 65%)` }} />
+      <span className="text-[9px] font-bold uppercase tracking-[0.3em] mb-3 opacity-60"
+            style={{ color: accent }}>
+        {work.year}
+      </span>
+      <p className="text-2xl font-black uppercase tracking-tight leading-tight"
+         style={{ color: accent }}>
+        {work.title}
+      </p>
+    </div>
+  )
 }
 
 export default function WorkDetailModal({ work, onClose }: WorkDetailModalProps) {
@@ -67,19 +146,13 @@ export default function WorkDetailModal({ work, onClose }: WorkDetailModalProps)
             className="fixed inset-4 md:inset-8 lg:inset-14 z-[101] bg-bg rounded-2xl overflow-hidden flex flex-col md:flex-row shadow-2xl"
             style={{ maxHeight: 'calc(100vh - 2rem)' }}
           >
-            {/* Left — visual placeholder */}
-            <div
-              className="md:flex-1 flex items-center justify-center p-8 md:p-12 min-h-[200px] md:min-h-0"
-              style={{ backgroundColor: category.bg }}
-            >
-              <div
-                className="w-full aspect-video rounded-xl flex items-center justify-center max-w-lg"
-                style={{ backgroundColor: `${category.accent}18` }}
-              >
-                <span className="text-xs text-fg-subtle font-mono text-center px-4">
-                  {work.thumbnailAlt}
-                </span>
-              </div>
+            {/* Left — actual media */}
+            <div className="md:flex-1 relative min-h-[220px] md:min-h-0 overflow-hidden">
+              <MediaPanel
+                work={work}
+                accent={category.accent}
+                bg={category.bg}
+              />
             </div>
 
             {/* Right — details */}

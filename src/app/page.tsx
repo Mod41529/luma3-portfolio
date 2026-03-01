@@ -49,7 +49,7 @@ export default function Home() {
           {/* Footer */}
           <footer className="px-6 md:px-12 py-8 border-t border-[#e5e5e5]">
             <div className="max-w-5xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-              <span className="font-mono text-[10px] text-[#a3a3a3]">© 2025 luma3</span>
+              <span className="font-mono text-[10px] text-[#a3a3a3]">© 2026 luma3</span>
               <div className="flex items-center gap-6 text-sm text-[#737373]">
                 <a
                   href="mailto:hello@luma3.dev"

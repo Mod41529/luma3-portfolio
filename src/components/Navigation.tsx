@@ -21,7 +21,7 @@ export default function Navigation() {
 
       <div className="flex items-center gap-6 text-sm text-fg-muted">
         <a
-          href="mailto:hello@mangam.dev"
+          href="mailto:hello@luma3.dev"
           className="hover:text-fg transition-colors duration-200"
         >
           Contact

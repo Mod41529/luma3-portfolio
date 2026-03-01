@@ -115,7 +115,7 @@ export default function SideNav() {
       {/* Bottom */}
       <div className="px-6 py-5 border-t border-[#e5e5e5]">
         <span className="text-[9px] font-mono text-[#c3c3c3] uppercase tracking-widest">
-          © 2025 luma3
+          © 2026 luma3
         </span>
       </div>
     </motion.aside>
