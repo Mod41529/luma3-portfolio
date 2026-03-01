@@ -1,7 +1,6 @@
 import SideNav from '@/components/SideNav'
 import Hero from '@/components/Hero'
 import BentoGrid from '@/components/BentoGrid'
-import FeaturedWork from '@/components/FeaturedWork'
 import VideoSection from '@/components/VideoSection'
 import MusicSection from '@/components/MusicSection'
 import { DesignSection, DevelopmentSection, BusinessSection } from '@/components/HubSection'
@@ -24,7 +23,6 @@ export default function Home() {
           <DesignSection />
           <DevelopmentSection />
           <BusinessSection />
-          <FeaturedWork />
 
           {/* About */}
           <section id="about" className="px-6 md:px-12 py-16 md:py-20 border-t border-[#e5e5e5]">
@@ -51,10 +49,7 @@ export default function Home() {
             <div className="max-w-5xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <span className="font-mono text-[10px] text-[#a3a3a3]">© 2026 luma3</span>
               <div className="flex items-center gap-6 text-sm text-[#737373]">
-                <a
-                  href="mailto:hello@luma3.dev"
-                  className="hover:text-[#1a1a1a] transition-colors duration-200"
-                >
+                <a href="mailto:hello@luma3.dev" className="hover:text-[#1a1a1a] transition-colors duration-200">
                   hello@luma3.dev
                 </a>
                 <a

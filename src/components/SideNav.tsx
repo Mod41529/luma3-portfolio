@@ -10,7 +10,7 @@ const workLinks = [
   { label: 'Music',       sectionId: 'music' },
   { label: 'Design',      sectionId: 'design' },
   { label: 'Development', sectionId: 'development' },
-  { label: 'Strategy',    sectionId: 'strategy' },
+  { label: 'Business',    sectionId: 'strategy' },
 ]
 
 const ALL_SECTIONS = [...workLinks.map(l => l.sectionId), 'about']
