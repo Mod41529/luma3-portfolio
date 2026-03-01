@@ -5,28 +5,37 @@ import { ArrowUpRight, Mail, Github } from 'lucide-react'
 
 const LINKS = [
   {
-    label:   'Email',
-    handle:  'hello@luma3.dev',
-    href:    'mailto:hello@luma3.dev',
-    Icon:    Mail,
-    accent:  '#1a1a1a',
+    label:    'Email',
+    handle:   'hello@luma3.dev',
+    href:     'mailto:hello@luma3.dev',
+    Icon:     Mail,
+    accent:   '#1a1a1a',
+    external: false,
   },
   {
-    label:   'GitHub',
-    handle:  'Mod41529',
-    href:    'https://github.com/Mod41529',
-    Icon:    Github,
-    accent:  '#1a1a1a',
+    label:    'GitHub',
+    handle:   'Mod41529',
+    href:     'https://github.com/Mod41529',
+    Icon:     Github,
+    accent:   '#1a1a1a',
     external: true,
   },
   {
-    label:   'LinkedIn',
-    handle:  'yusung-jun',
-    href:    'https://www.linkedin.com/in/yusung-jun-b09952279/',
-    // LinkedIn icon via SVG path
-    Icon:    null,
-    accent:  '#0A66C2',
+    label:    'LinkedIn',
+    handle:   'yusung-jun',
+    href:     'https://www.linkedin.com/in/yusung-jun-b09952279/',
+    Icon:     null,
+    accent:   '#0A66C2',
     external: true,
+  },
+  {
+    label:    'Blog',
+    handle:   'cretablog',
+    href:     'https://blog.naver.com/cretablog',
+    Icon:     null,
+    accent:   '#03C75A',
+    external: true,
+    isNaver:  true,
   },
 ]
 
@@ -34,6 +43,14 @@ function LinkedInIcon({ size = 18 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
       <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+    </svg>
+  )
+}
+
+function NaverIcon({ size = 18 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M16.273 12.845L7.376 0H0v24h7.727V11.155L16.624 24H24V0h-7.727z"/>
     </svg>
   )
 }
@@ -109,7 +126,9 @@ export default function ContactSection() {
                             style={{ color: accent }}>
                         {Icon
                           ? <Icon size={13} strokeWidth={1.8} />
-                          : <LinkedInIcon size={13} />
+                          : (LINKS.find(l => l.handle === handle)?.isNaver
+                              ? <NaverIcon size={13} />
+                              : <LinkedInIcon size={13} />)
                         }
                       </span>
                       <div>

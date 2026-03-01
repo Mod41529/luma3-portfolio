@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 
 const BACKGROUND = [
   { label: 'University',   value: 'Sungkyunkwan University — Global Business Administration' },
-  { label: 'Field',        value: 'Business Strategy & Finance · KICPA Candidate' },
+  { label: 'Field',        value: 'Business Strategy & Finance' },
   { label: 'Operations',   value: 'AI-powered Creative Operations' },
   { label: 'Location',     value: 'Seoul, Korea' },
 ]
@@ -100,7 +100,7 @@ export default function AboutSection() {
             <div className="space-y-2.5">
               {[
                 'Building luma3 — a multi-discipline creative portfolio',
-                'Preparing for KICPA — expanding financial modeling depth',
+                'Deepening financial modeling and business analysis frameworks',
                 'Developing a multi-agent orchestration system (Claude + Codex + Gemini)',
               ].map((item, i) => (
                 <div key={i} className="flex items-start gap-3">
