@@ -2,65 +2,59 @@
 
 import { useRef, useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, ChevronDown, Play, ArrowUpRight } from 'lucide-react'
+import { X, ChevronDown, ArrowUpRight } from 'lucide-react'
 import Link from 'next/link'
 import { works } from '@/data/works'
 import { WorkItem } from '@/types'
 
 const videoWorks = works.filter((w) => w.category === 'video')
-const INITIAL_COUNT = 3
 
-// alternating wide pattern: index 0,2,4… = col-span-2; 1,3,5… = col-span-1
-const isWide = (i: number) => i % 2 === 0
-
-// ── Video Card ──────────────────────────────────────────────────────────────
+// ── Video Card ───────────────────────────────────────────────────────────────
 function VideoCard({
   work,
   index,
-  wide,
   onClick,
 }: {
   work: WorkItem
   index: number
-  wide: boolean
   onClick: (w: WorkItem) => void
 }) {
-  const videoRef = useRef<HTMLVideoElement>(null)
-  const [hasFile, setHasFile] = useState(false)
+  const videoRef  = useRef<HTMLVideoElement>(null)
+  const [ready, setReady] = useState(false)
 
+  // Check file exists, then autoplay via IntersectionObserver
   useEffect(() => {
     if (!work.videoSrc) return
     fetch(work.videoSrc, { method: 'HEAD' })
-      .then((r) => setHasFile(r.ok))
-      .catch(() => setHasFile(false))
+      .then((r) => { if (r.ok) setReady(true) })
+      .catch(() => {})
   }, [work.videoSrc])
 
   useEffect(() => {
     const video = videoRef.current
-    if (!video || !hasFile) return
+    if (!video || !ready) return
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) video.play().catch(() => {})
         else video.pause()
       },
-      { threshold: 0.3 }
+      { threshold: 0.15 }
     )
     observer.observe(video)
     return () => observer.disconnect()
-  }, [hasFile])
+  }, [ready])
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-40px' }}
-      transition={{ duration: 0.5, delay: (index % 4) * 0.06, ease: [0.22, 1, 0.36, 1] }}
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.35, delay: (index % 8) * 0.03 }}
       onClick={() => onClick(work)}
-      className={`relative overflow-hidden cursor-pointer bg-[#F0F0F0] group
-                  ${wide ? 'md:col-span-2' : 'md:col-span-1'}`}
-      style={{ aspectRatio: wide ? '16/9' : '1/1' }}
+      className="group relative aspect-square overflow-hidden cursor-pointer bg-[#111]"
     >
-      {hasFile ? (
+      {/* Video / thumbnail */}
+      {ready ? (
         <video
           ref={videoRef}
           src={work.videoSrc}
@@ -68,44 +62,36 @@ function VideoCard({
           muted loop playsInline preload="metadata"
           className="w-full h-full object-cover"
         />
+      ) : work.thumbnailSrc ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={work.thumbnailSrc}
+          alt={work.thumbnailAlt}
+          className="w-full h-full object-cover"
+        />
       ) : (
-        <div className="w-full h-full flex items-end p-4 relative">
-          <div
-            className="absolute inset-0 pointer-events-none"
-            style={{
-              backgroundImage:
-                'linear-gradient(to right, #e5e5e5 1px, transparent 1px), linear-gradient(to bottom, #e5e5e5 1px, transparent 1px)',
-              backgroundSize: '28px 28px',
-              opacity: 0.6,
-            }}
-          />
-          <div className="relative flex items-center gap-2">
-            <div className="w-8 h-8 border border-[#e5e5e5] flex items-center justify-center bg-white">
-              <Play size={12} className="text-[#a3a3a3] ml-0.5" />
-            </div>
-            <p className="text-[9px] font-mono text-[#a3a3a3] uppercase tracking-widest">No file</p>
-          </div>
-        </div>
+        <div className="w-full h-full bg-[#1a1a1a]" />
       )}
 
-      {/* Hover overlay */}
-      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300" />
-
-      {/* Labels */}
-      <div className="absolute bottom-0 left-0 right-0 p-3 translate-y-1 group-hover:translate-y-0
-                      opacity-0 group-hover:opacity-100 transition-all duration-300">
-        <p className="text-[9px] font-mono uppercase tracking-[0.2em] text-white/60 mb-0.5">
-          {work.year} — {work.tools[0]}
-        </p>
-        <h3 className="text-sm font-black text-white uppercase tracking-tight leading-tight">
+      {/* Hover overlay — title only, slides up */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent
+                      opacity-0 group-hover:opacity-100 transition-opacity duration-250" />
+      <div className="absolute bottom-0 left-0 right-0 p-3
+                      translate-y-2 opacity-0
+                      group-hover:translate-y-0 group-hover:opacity-100
+                      transition-all duration-250">
+        <p className="text-white text-[11px] font-black uppercase tracking-tight leading-tight">
           {work.title}
-        </h3>
+        </p>
+        <p className="text-white/50 text-[9px] font-mono mt-0.5">
+          {work.year} · {work.tools[0]}
+        </p>
       </div>
     </motion.div>
   )
 }
 
-// ── Detail Panel ────────────────────────────────────────────────────────────
+// ── Detail Panel (slide-up from bottom) ─────────────────────────────────────
 function DetailPanel({ work, onClose }: { work: WorkItem; onClose: () => void }) {
   const [howOpen, setHowOpen] = useState(true)
 
@@ -124,23 +110,25 @@ function DetailPanel({ work, onClose }: { work: WorkItem; onClose: () => void })
       className="fixed bottom-0 left-0 right-0 z-[200] md:left-[200px]
                  bg-[#FAFAFA] border-t border-[#e5e5e5] max-h-[60vh] overflow-y-auto"
     >
+      {/* Header */}
       <div className="sticky top-0 bg-[#FAFAFA]/95 backdrop-blur-sm border-b border-[#e5e5e5]
                       px-6 md:px-10 py-4 flex items-center justify-between z-10">
-        <div className="flex items-center gap-4">
-          <span className="text-[9px] font-mono uppercase tracking-[0.25em] text-[#1978e5]">Video</span>
-          <span className="text-[#e5e5e5]">—</span>
-          <h2 className="text-sm font-black uppercase tracking-tight text-[#1a1a1a]">{work.title}</h2>
-          <span className="text-[10px] text-[#a3a3a3] font-mono">{work.year}</span>
+        <div className="flex items-center gap-4 min-w-0">
+          <span className="text-[9px] font-mono uppercase tracking-[0.25em] text-[#D97706] shrink-0">Video</span>
+          <span className="text-[#e5e5e5] shrink-0">—</span>
+          <h2 className="text-sm font-black uppercase tracking-tight text-[#1a1a1a] truncate">{work.title}</h2>
+          <span className="text-[10px] text-[#a3a3a3] font-mono shrink-0">{work.year}</span>
         </div>
         <button
           onClick={onClose}
           className="w-8 h-8 flex items-center justify-center text-[#a3a3a3]
-                     hover:text-[#1a1a1a] hover:bg-[#f0f0f0] transition-colors"
+                     hover:text-[#1a1a1a] hover:bg-[#f0f0f0] transition-colors ml-4 shrink-0"
         >
           <X size={14} />
         </button>
       </div>
 
+      {/* Body */}
       <div className="px-6 md:px-10 py-6 grid md:grid-cols-2 gap-8 max-w-4xl">
         <div className="space-y-5">
           <p className="text-sm text-[#737373] font-light leading-relaxed">{work.description}</p>
@@ -201,14 +189,10 @@ function DetailPanel({ work, onClose }: { work: WorkItem; onClose: () => void })
   )
 }
 
-// ── Section ─────────────────────────────────────────────────────────────────
+// ── Section ──────────────────────────────────────────────────────────────────
 export default function VideoSection() {
   const [selected, setSelected] = useState<WorkItem | null>(null)
-  const [showMore, setShowMore] = useState(false)
   const handleClose = useCallback(() => setSelected(null), [])
-
-  const visible = showMore ? videoWorks : videoWorks.slice(0, INITIAL_COUNT)
-  const remaining = videoWorks.length - INITIAL_COUNT
 
   return (
     <section id="video" className="border-t border-[#e5e5e5]">
@@ -223,41 +207,19 @@ export default function VideoSection() {
         </div>
         <Link
           href="/work/video"
-          className="flex items-center gap-1.5 text-[10px] text-[#737373] hover:text-[#1978e5]
-                     transition-colors duration-150 group"
+          className="flex items-center gap-1 text-[9px] font-bold uppercase tracking-[0.25em]
+                     text-[#D97706] transition-colors duration-150"
         >
-          <span className="uppercase tracking-[0.2em] font-bold">View all</span>
-          <ArrowUpRight size={11} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-150" />
+          View all <ArrowUpRight size={10} strokeWidth={2} />
         </Link>
       </div>
 
-      {/* 3-col masonry-style grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-[#e5e5e5] p-px">
-        {visible.map((work, i) => (
-          <VideoCard
-            key={work.id}
-            work={work}
-            index={i}
-            wide={isWide(i)}
-            onClick={setSelected}
-          />
+      {/* Uniform 4-col grid — Midjourney explore style */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-[#e5e5e5]">
+        {videoWorks.map((work, i) => (
+          <VideoCard key={work.id} work={work} index={i} onClick={setSelected} />
         ))}
       </div>
-
-      {/* View More */}
-      {!showMore && remaining > 0 && (
-        <div className="flex justify-center py-6 border-t border-[#e5e5e5]">
-          <button
-            onClick={() => setShowMore(true)}
-            className="flex items-center gap-3 px-7 py-2.5 border border-[#e5e5e5]
-                       text-[10px] font-bold uppercase tracking-[0.3em] text-[#737373]
-                       hover:border-[#1a1a1a] hover:text-[#1a1a1a] transition-colors duration-150"
-          >
-            View More
-            <span className="text-[#a3a3a3] font-mono">+{remaining}</span>
-          </button>
-        </div>
-      )}
 
       {/* Detail panel */}
       <AnimatePresence>
