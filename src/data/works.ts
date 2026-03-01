@@ -633,18 +633,18 @@ export const works: WorkItem[] = [
   {
     id: 's1',
     category: 'strategy',
-    title: 'OKR-ROI Framework',
-    titleKo: 'OKR-ROI 프레임워크',
-    year: 2024,
-    tools: ['Notion', 'Excel', 'Figma'],
+    title: 'Strategy Operating System',
+    titleKo: '전략 운영 시스템',
+    year: 2026,
+    tools: ['Notion', 'NBER', 'Claude'],
     description:
-      'A framework connecting OKR goal-setting with financial ROI measurement for small teams.',
+      'A quarterly research-to-action pipeline: NBER papers and Silicon Valley cases distilled into hypotheses with explicit stop criteria, applied to Planby.',
     descriptionKo:
-      '소규모 팀을 위한 OKR 목표 설정과 재무 ROI 측정을 연결하는 프레임워크.',
+      'NBER 논문·실리콘밸리 사례를 분기별로 추적해 가설로 전환하고 중단 기준을 명시해 Planby 실무에 적용하는 전략 운영 체계.',
     howIMadeThis: {
-      tools: ['Notion', 'Microsoft Excel', 'Figma'],
+      tools: ['Notion', 'NBER Working Papers', 'arXiv', 'Claude as analyst'],
       processNotes:
-        'Built through 6 months of iteration with Planby. Key insight: OKRs and financial metrics live in parallel universes — this bridges them with a shared scoring layer.',
+        'Each quarter: read 3–5 academic papers (NBER/arXiv) + 2 SV case studies → extract 3 actionable hypotheses → define stop criteria → run 2-week A/B gates → distill into Explore vs Exploit operating rhythm. Built on the insight that exploration and exploitation, when mixed, reduce learning efficiency (NBER w32424).',
     },
     thumbnailAlt: 'Strategic framework visualization',
     featured: true,

@@ -64,24 +64,47 @@ function DevThumb() {
   )
 }
 
-// ── Strategy thumbnail: OKR framework grid ───────────────────────────────────
+// ── Strategy thumbnail: Research-driven quarterly review ─────────────────────
 function StrategyThumb() {
-  const items = [
-    { label: 'Objective', val: 'Market Entry', accent: '#B45309' },
-    { label: 'KR 1', val: '+40% Revenue', accent: '#a3a3a3' },
-    { label: 'KR 2', val: '3 New Channels', accent: '#a3a3a3' },
-    { label: 'KR 3', val: 'ROI > 2.5×', accent: '#a3a3a3' },
+  const hypotheses = [
+    '메시지 → 의사결정 단축',
+    'PoC 중단 기준 명시',
+    '탐색 / 활용 분리',
   ]
   return (
-    <div className="absolute inset-0 p-5 flex flex-col" style={{ backgroundColor: '#FEFCE8' }}>
-      <p className="text-[8px] font-mono uppercase tracking-[0.35em] text-[#a3a3a3] mb-3">OKR Framework</p>
-      <div className="grid grid-cols-2 gap-px bg-[#e5e5e5] flex-1 border border-[#e5e5e5]">
-        {items.map(({ label, val, accent }) => (
-          <div key={label} className="bg-[#FEFCE8] p-2.5 flex flex-col justify-between">
-            <p className="text-[7px] font-mono uppercase tracking-widest text-[#c3c3c3]">{label}</p>
-            <p className="text-[9px] font-semibold mt-1" style={{ color: accent }}>{val}</p>
+    <div className="absolute inset-0 p-5 flex flex-col gap-3" style={{ backgroundColor: '#FEFCE8' }}>
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <p className="text-[8px] font-mono uppercase tracking-[0.35em] text-[#a3a3a3]">Strategy</p>
+        <span className="text-[8px] font-mono uppercase tracking-widest" style={{ color: '#B45309' }}>Q1 2026</span>
+      </div>
+
+      {/* Research sources */}
+      <div className="flex gap-1.5 flex-wrap">
+        {['NBER', 'arXiv', 'SV Cases'].map(tag => (
+          <span key={tag} className="px-1.5 py-0.5 text-[7px] font-mono uppercase tracking-wider border"
+            style={{ borderColor: '#B45309', color: '#B45309', opacity: 0.6 }}>
+            {tag}
+          </span>
+        ))}
+      </div>
+
+      {/* Hypotheses */}
+      <div className="flex-1 space-y-1.5">
+        {hypotheses.map((h, i) => (
+          <div key={i} className="flex items-start gap-2">
+            <span className="text-[7px] font-mono mt-0.5 shrink-0" style={{ color: '#B45309' }}>H{i + 1}</span>
+            <p className="text-[8px] font-mono leading-tight" style={{ color: '#B45309', opacity: 0.55 }}>{h}</p>
           </div>
         ))}
+      </div>
+
+      {/* 2-week gate progress */}
+      <div>
+        <p className="text-[7px] font-mono uppercase tracking-widest text-[#c3c3c3] mb-1">2-Week Gate</p>
+        <div className="h-[2px] bg-[#e5e5e5] w-full">
+          <div className="h-full" style={{ width: '60%', backgroundColor: '#B45309' }} />
+        </div>
       </div>
     </div>
   )
