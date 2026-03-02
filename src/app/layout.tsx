@@ -11,6 +11,11 @@ export const metadata: Metadata = {
     title: 'LUMA3',
     description: 'I think in systems, create in layers.',
     siteName: 'LUMA3 Portfolio',
+    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'LUMA3 Portfolio' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: ['/og-image.png'],
   },
 }
 
