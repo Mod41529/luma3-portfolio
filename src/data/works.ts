@@ -448,6 +448,48 @@ export const works: WorkItem[] = [
     thumbnailSrc: '/images/thumbnails/v17.jpg',
     aspectRatio: '720/544',
   },
+  {
+    id: 'v18',
+    category: 'video',
+    title: 'Lemon ASMR',
+    titleKo: '레몬 ASMR',
+    year: 2026,
+    tools: ['Kling', 'Suno'],
+    description:
+      'A short ASMR clip — lemon slices in water, close-up textures, soft ambient sound.',
+    descriptionKo:
+      '레몬 슬라이스와 물의 클로즈업 텍스처. 소프트 앰비언트 사운드와 함께한 ASMR 쇼트.',
+    howIMadeThis: {
+      tools: ['Kling AI', 'Suno'],
+      prompt:
+        'Close-up of lemon slices dropping into water, slow motion, satisfying ASMR textures, soft natural lighting',
+      processNotes:
+        'Generated with Kling for the visual and paired with a minimal ambient track from Suno. Focused on texture — the translucent rind, water ripples, citrus color.',
+    },
+    thumbnailAlt: 'Close-up of lemon slice in water',
+    videoSrc: '/videos/v18.mp4',
+    aspectRatio: '9/16',
+  },
+  {
+    id: 'v19',
+    category: 'video',
+    title: 'Video Generation Complete',
+    titleKo: '영상 생성 완료',
+    year: 2026,
+    tools: ['Kling', 'Midjourney'],
+    description:
+      'An AI-generated cinematic sequence — testing the limits of current video generation models.',
+    descriptionKo:
+      'AI 영상 생성 모델의 가능성을 탐색한 시네마틱 시퀀스.',
+    howIMadeThis: {
+      tools: ['Kling AI', 'Midjourney v6'],
+      processNotes:
+        'Explored prompt-to-video pipelines with Kling. Multiple iterations on motion quality, temporal consistency, and cinematic framing.',
+    },
+    thumbnailAlt: 'AI-generated cinematic video frame',
+    videoSrc: '/videos/v19.mp4',
+    aspectRatio: '16/9',
+  },
 
   // ─── Music ───────────────────────────────────────────────────────────────
   {
