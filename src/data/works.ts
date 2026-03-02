@@ -734,6 +734,42 @@ export const works: WorkItem[] = [
     imageSrc: '/images/design/logo-meongnayang.png',
     aspectRatio: '1/1',
   },
+  {
+    id: 'd9',
+    category: 'design',
+    title: 'AI Concept Word Cloud',
+    titleKo: 'AI 개념 워드클라우드',
+    year: 2026,
+    tools: ['Python', 'wordcloud', 'matplotlib'],
+    description: 'A visual map of 200+ AI/ML concepts rendered as a word cloud — size encodes relative prominence in the field.',
+    descriptionKo: '200개 이상의 AI·ML 개념을 빈도 기반 크기로 시각화한 워드클라우드.',
+    howIMadeThis: {
+      tools: ['Python', 'wordcloud', 'matplotlib'],
+      processNotes:
+        'Generated programmatically using Python\'s wordcloud library. Terms were curated from AI research papers and industry vocabulary, then color-mapped by semantic category.',
+    },
+    thumbnailAlt: 'Colorful word cloud of AI and machine learning concepts',
+    imageSrc: '/images/design/wordcloud-ai.png',
+    aspectRatio: '1/1',
+  },
+  {
+    id: 'd10',
+    category: 'design',
+    title: 'Maze — Algorithmic Generation',
+    titleKo: '미로 — 알고리즘 생성',
+    year: 2026,
+    tools: ['Python', 'Pillow'],
+    description: 'A procedurally generated maze using recursive backtracking. Entry top-left, exit bottom-right.',
+    descriptionKo: '재귀 백트래킹 알고리즘으로 절차적 생성한 미로. 입구 좌상단, 출구 우하단.',
+    howIMadeThis: {
+      tools: ['Python', 'Pillow'],
+      processNotes:
+        'Implemented recursive backtracking (DFS) to carve passages through a grid. The result is a perfect maze — exactly one solution path — rendered to PNG via Pillow.',
+    },
+    thumbnailAlt: 'Black and white algorithmic maze with entry and exit markers',
+    imageSrc: '/images/design/maze.png',
+    aspectRatio: '1/1',
+  },
 
   // ─── Development ─────────────────────────────────────────────────────────
   {
