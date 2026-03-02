@@ -1,143 +1,256 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
+import { useState, useCallback, useEffect } from 'react'
 import Link from 'next/link'
-import { ArrowUpRight, Compass, BarChart2, Megaphone, Workflow } from 'lucide-react'
+import { ArrowUpRight, X, ChevronDown, Compass, BarChart2, Megaphone, Workflow } from 'lucide-react'
 import { works, categories } from '@/data/works'
-import { CategoryId } from '@/types'
+import { CategoryId, WorkItem } from '@/types'
 
 const ACCENT: Record<string, string> = {
   design:      '#E11D48',
   development: '#475569',
-  strategy:    '#B45309',
+  business:    '#B45309',
 }
 
 // ── Shared section header strip ───────────────────────────────────────────────
 function SectionHeader({ categoryId }: { categoryId: CategoryId }) {
   const cat      = categories[categoryId]
   const catWorks = works.filter((w) => w.category === categoryId)
-  const accent   = ACCENT[categoryId]
   return (
-    <div className="px-6 md:px-12 py-5 flex items-baseline justify-between border-b border-[#e5e5e5]">
+    <div className="px-6 md:px-12 py-5 flex items-baseline border-b border-[#e5e5e5]">
       <div className="flex items-baseline gap-4">
         <h2 className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#1a1a1a]">{cat.nameEn}</h2>
         <span className="text-[10px] text-[#a3a3a3] font-mono">
           {String(catWorks.length).padStart(2, '0')} works
         </span>
       </div>
-      <Link
-        href={`/work/${categoryId}`}
-        className="flex items-center gap-1 text-[9px] font-bold uppercase tracking-[0.25em] transition-colors duration-200"
-        style={{ color: accent }}
-      >
-        View all <ArrowUpRight size={10} strokeWidth={2} />
-      </Link>
     </div>
   )
 }
 
-// ── Design section body ───────────────────────────────────────────────────────
-// Background colors matched to each image's dominant tone
+// ── Design section — image card ───────────────────────────────────────────────
 const DESIGN_IMG_BG: Record<string, string> = {
-  d2: '#0a0a0a',   // AI Orchestration — dark/black
-  d3: '#0a0a0a',   // Physical AI — dark/black
-  d4: '#1a2744',   // IGNITION — dark navy
-  d5: '#f5f0e8',   // 종훈 청과 logo — warm cream
+  d2: '#0a0a0a',
+  d3: '#0a0a0a',
+  d4: '#1a2744',
+  d5: '#f5f0e8',
+  d6: '#0d0d0d',
+  d7: '#0d0d0d',
+  d8: '#ede8e0',
 }
 
-function DesignBody() {
-  const cat        = categories['design']
-  const catWorks   = works.filter((w) => w.category === 'design')
-  const featured   = catWorks.find((w) => w.featured) ?? catWorks[0]
-  const imageWorks = catWorks.filter((w) => w.imageSrc)
+function DesignCard({
+  work,
+  index,
+  onClick,
+}: {
+  work: WorkItem
+  index: number
+  onClick: (w: WorkItem) => void
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.35, delay: (index % 8) * 0.04 }}
+      onClick={() => onClick(work)}
+      className="group relative w-full overflow-hidden cursor-pointer"
+      style={{
+        aspectRatio: work.aspectRatio ?? '3/4',
+        backgroundColor: DESIGN_IMG_BG[work.id] ?? '#F4F4F2',
+      }}
+    >
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={work.imageSrc}
+        alt={work.thumbnailAlt}
+        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+      />
+      {/* Hover overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent
+                      opacity-0 group-hover:opacity-100 transition-opacity duration-250" />
+      <div className="absolute bottom-0 left-0 right-0 p-3
+                      translate-y-2 opacity-0
+                      group-hover:translate-y-0 group-hover:opacity-100
+                      transition-all duration-250">
+        <p className="text-white text-[11px] font-black uppercase tracking-tight leading-tight">
+          {work.title}
+        </p>
+        <p className="text-white/50 text-[9px] font-mono mt-0.5">
+          {work.year} · {work.tools[0]}
+        </p>
+      </div>
+    </motion.div>
+  )
+}
+
+// ── Design detail panel ────────────────────────────────────────────────────────
+function DesignDetailPanel({ work, onClose }: { work: WorkItem; onClose: () => void }) {
+  const [howOpen, setHowOpen] = useState(true)
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose()
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [onClose])
 
   return (
-    <div className="border-b border-[#e5e5e5]">
-      {/* Top strip — description + MOD featured */}
-      <div className="flex flex-col md:flex-row border-b border-[#e5e5e5]">
-        {/* Left: category description */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-40px' }}
-          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-          className="flex-1 px-6 md:px-12 py-8 border-b md:border-b-0 md:border-r border-[#e5e5e5]"
+    <motion.div
+      initial={{ opacity: 0, y: 40 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 40 }}
+      transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+      className="fixed bottom-0 left-0 right-0 z-[200] md:left-[200px]
+                 bg-[#FAFAFA] border-t border-[#e5e5e5] max-h-[60vh] overflow-y-auto"
+    >
+      <div className="sticky top-0 bg-[#FAFAFA]/95 backdrop-blur-sm border-b border-[#e5e5e5]
+                      px-6 md:px-10 py-4 flex items-center justify-between z-10">
+        <div className="flex items-center gap-4 min-w-0">
+          <span className="text-[9px] font-mono uppercase tracking-[0.25em] text-[#E11D48] shrink-0">Design</span>
+          <span className="text-[#e5e5e5] shrink-0">—</span>
+          <h2 className="text-sm font-black uppercase tracking-tight text-[#1a1a1a] truncate">{work.title}</h2>
+          <span className="text-[10px] text-[#a3a3a3] font-mono shrink-0">{work.year}</span>
+        </div>
+        <button
+          onClick={onClose}
+          className="w-8 h-8 flex items-center justify-center text-[#a3a3a3]
+                     hover:text-[#1a1a1a] hover:bg-[#f0f0f0] transition-colors ml-4 shrink-0"
         >
-          <p className="text-[9px] font-mono uppercase tracking-[0.3em] text-[#a3a3a3] mb-3">Category</p>
-          <p className="text-sm text-[#737373] font-light leading-relaxed">{cat.description}</p>
-        </motion.div>
+          <X size={14} />
+        </button>
+      </div>
 
-        {/* Right: MOD featured */}
-        {featured && (
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-40px' }}
-            transition={{ duration: 0.5, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
-            className="flex-1"
+      <div className="px-6 md:px-10 py-6 grid md:grid-cols-2 gap-8 max-w-4xl">
+        <div className="space-y-5">
+          <p className="text-sm text-[#737373] font-light leading-relaxed">{work.description}</p>
+          <p className="text-sm text-[#a3a3a3] leading-relaxed">{work.descriptionKo}</p>
+          <div className="flex flex-wrap gap-2 pt-1">
+            {work.tools.map((t) => (
+              <span key={t} className="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider
+                                       text-[#737373] border border-[#e5e5e5] bg-[#f4f4f2]">
+                {t}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <button
+            onClick={() => setHowOpen((o) => !o)}
+            className="w-full flex items-center justify-between py-3 border-b border-[#e5e5e5] text-left"
           >
-            <Link href="/work/design" className="group flex flex-col h-full px-6 md:px-12 py-8 hover:bg-[#FAFAFA] transition-colors duration-200">
-              <p className="text-[9px] font-mono uppercase tracking-[0.2em] text-[#E11D48] mb-3">Featured</p>
-              <p className="text-base font-black uppercase tracking-tight text-[#1a1a1a] group-hover:text-[#1978e5] transition-colors duration-200 leading-tight mb-1">
-                {featured.title}
-              </p>
-              <p className="text-[10px] text-[#a3a3a3] font-mono mb-3">{featured.titleKo} · {featured.year}</p>
-              <p className="text-xs text-[#737373] leading-relaxed mb-5 line-clamp-2">{featured.description}</p>
-              <div className="flex items-center justify-between mt-auto">
-                <div className="flex flex-wrap gap-1.5">
-                  {featured.tools.slice(0, 3).map((t) => (
-                    <span key={t} className="px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-[#a3a3a3] border border-[#e5e5e5]">{t}</span>
-                  ))}
+            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#1a1a1a]">
+              How I made this
+            </span>
+            <motion.div animate={{ rotate: howOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
+              <ChevronDown size={14} className="text-[#a3a3a3]" />
+            </motion.div>
+          </button>
+          <AnimatePresence initial={false}>
+            {howOpen && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.22 }}
+                className="overflow-hidden"
+              >
+                <div className="py-5 space-y-4">
+                  {work.howIMadeThis.prompt && (
+                    <div>
+                      <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#a3a3a3] mb-2">Prompt</p>
+                      <pre className="bg-[#111821] text-[#94a3b8] text-[11px] font-mono
+                                      leading-relaxed p-4 whitespace-pre-wrap break-words">
+                        <span className="text-[#1978e5] italic block mb-1">// AI Prompt</span>
+                        {work.howIMadeThis.prompt}
+                      </pre>
+                    </div>
+                  )}
+                  <div>
+                    <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#a3a3a3] mb-2">Process</p>
+                    <p className="text-xs text-[#737373] leading-relaxed">{work.howIMadeThis.processNotes}</p>
+                  </div>
                 </div>
-                <div className="w-7 h-7 flex items-center justify-center border border-[#e5e5e5] group-hover:border-[#1978e5] group-hover:bg-[#1978e5] transition-all duration-200 shrink-0">
-                  <ArrowUpRight size={12} className="text-[#a3a3a3] group-hover:text-white transition-colors duration-200" />
-                </div>
-              </div>
-            </Link>
-          </motion.div>
-        )}
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </div>
+    </motion.div>
+  )
+}
+
+// ── Design section body ───────────────────────────────────────────────────────
+function DesignBody() {
+  const [selected, setSelected] = useState<WorkItem | null>(null)
+  const handleClose = useCallback(() => setSelected(null), [])
+  const imageWorks = works.filter((w) => w.category === 'design' && w.imageSrc)
+
+  return (
+    <>
+      {/* Masonry — CSS columns, natural aspect ratios */}
+      <div className="relative border-b border-[#e5e5e5]">
+        <div
+          className="bg-[#e5e5e5]"
+          style={{
+            columns: '4 180px',
+            columnGap: '1px',
+            padding: '1px',
+            paddingBottom: '160px',
+          }}
+        >
+          {imageWorks.map((work, i) => (
+            <div key={work.id} className="break-inside-avoid mb-px">
+              <DesignCard work={work} index={i} onClick={setSelected} />
+            </div>
+          ))}
+        </div>
+
+        {/* Fade — solid #fafafa covers grey column gaps, fades into content above */}
+        <div
+          className="absolute bottom-0 left-0 right-0 h-72 pointer-events-none"
+          style={{ background: 'linear-gradient(to top, #fafafa 0%, #fafafa 30%, transparent 75%)' }}
+        />
+
+        {/* View more button */}
+        <div className="absolute bottom-8 left-0 right-0 flex justify-center">
+          <Link href="/work/design" className="group flex flex-col items-center gap-2">
+            <div className="flex items-center gap-4">
+              <div className="h-px w-10 bg-[#c3c3c3] group-hover:w-16 transition-all duration-300" />
+              <span className="font-mono text-[10px] uppercase tracking-[0.35em] text-[#737373]
+                               group-hover:text-[#1a1a1a] transition-colors duration-200">
+                View more
+              </span>
+              <div className="h-px w-10 bg-[#c3c3c3] group-hover:w-16 transition-all duration-300" />
+            </div>
+            <motion.div
+              animate={{ y: [0, 3, 0] }}
+              transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
+              className="text-[#c3c3c3] group-hover:text-[#1a1a1a] transition-colors duration-200"
+            >
+              <ArrowUpRight size={12} strokeWidth={1.5} className="rotate-90" />
+            </motion.div>
+          </Link>
+        </div>
       </div>
 
-      {/* Bottom — image gallery (4 portrait cards) */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-[#e5e5e5]">
-        {imageWorks.slice(0, 4).map((work, i) => {
-          const isDark = (DESIGN_IMG_BG[work.id] ?? '#fff').startsWith('#0') || DESIGN_IMG_BG[work.id] === '#1a2744'
-          return (
+      {/* Detail panel */}
+      <AnimatePresence>
+        {selected && (
+          <>
             <motion.div
-              key={work.id}
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.5, delay: i * 0.07, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <Link
-                href="/work/design"
-                className="group relative flex items-center justify-center overflow-hidden aspect-[3/4]"
-                style={{ backgroundColor: DESIGN_IMG_BG[work.id] ?? '#F4F4F2' }}
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={work.imageSrc}
-                  alt={work.thumbnailAlt}
-                  className="w-full h-full object-contain p-3 transition-transform duration-500 group-hover:scale-[1.03]"
-                />
-                {/* Hover overlay */}
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4"
-                  style={{ background: isDark ? 'linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 60%)' : 'linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 60%)' }}
-                >
-                  <p className="text-white font-black text-xs leading-tight translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-                    {work.title}
-                  </p>
-                  <p className="text-white/60 text-[9px] font-mono translate-y-2 group-hover:translate-y-0 transition-transform duration-300 delay-[40ms]">
-                    {work.year}
-                  </p>
-                </div>
-              </Link>
-            </motion.div>
-          )
-        })}
-      </div>
-    </div>
+              key="design-backdrop"
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+              onClick={handleClose}
+              className="fixed inset-0 z-[199] bg-black/20 backdrop-blur-[2px]"
+            />
+            <DesignDetailPanel key="design-panel" work={selected} onClose={handleClose} />
+          </>
+        )}
+      </AnimatePresence>
+    </>
   )
 }
 
@@ -177,7 +290,7 @@ function DevelopmentBody() {
       </div>
 
       {/* Bottom: full-width horizontal flowchart */}
-      <div className="bg-[#F8F8F8] relative flex items-center justify-center px-8 md:px-14 py-12 md:py-14 min-h-[280px] overflow-hidden">
+      <div className="bg-[#F8F8F8] relative flex items-center justify-center px-6 md:px-10 py-16 md:py-24 min-h-[380px] overflow-hidden">
         {/* grid background */}
         <div
           className="absolute inset-0 opacity-40 pointer-events-none"
@@ -195,6 +308,76 @@ function DevelopmentBody() {
           <span className="text-[8px] font-mono uppercase tracking-[0.25em] text-[#059669]">Live System</span>
         </div>
 
+        {/* SVG: vertical flowchart — mobile only */}
+        <svg
+          viewBox="0 0 300 430"
+          className="md:hidden relative w-full"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          {/* Task */}
+          <rect x="90" y="10" width="120" height="44" fill="#1a1a1a"/>
+          <text x="150" y="26" textAnchor="middle" fill="#6b7280" fontSize="7.5" fontFamily="monospace" letterSpacing="1.5">TASK</text>
+          <text x="150" y="44" textAnchor="middle" fill="white" fontSize="12" fontFamily="sans-serif" fontWeight="900">luma3 빌드</text>
+
+          {/* Task → Claude */}
+          <line x1="150" y1="54" x2="150" y2="74" stroke="#cbd5e1" strokeWidth="1"/>
+          <polygon points="150,74 146,68 154,68" fill="#cbd5e1"/>
+
+          {/* Claude 판단 */}
+          <rect x="20" y="74" width="260" height="68" fill="white" stroke="#475569" strokeWidth="1.5"/>
+          <text x="150" y="91" textAnchor="middle" fill="#475569" fontSize="7.5" fontFamily="monospace" letterSpacing="1">ORCHESTRATOR</text>
+          <text x="150" y="112" textAnchor="middle" fill="#1a1a1a" fontSize="15" fontFamily="sans-serif" fontWeight="900">Claude Code</text>
+          <text x="150" y="130" textAnchor="middle" fill="#a3a3a3" fontSize="8" fontFamily="monospace">판단 · 위임 결정</text>
+
+          {/* Split */}
+          <line x1="150" y1="142" x2="150" y2="158" stroke="#cbd5e1" strokeWidth="1"/>
+          <line x1="80"  y1="158" x2="220" y2="158" stroke="#cbd5e1" strokeWidth="1"/>
+          <line x1="80"  y1="158" x2="80"  y2="174" stroke="#cbd5e1" strokeWidth="1"/>
+          <line x1="220" y1="158" x2="220" y2="174" stroke="#cbd5e1" strokeWidth="1"/>
+          <polygon points="80,174  76,168  84,168"  fill="#cbd5e1"/>
+          <polygon points="220,174 216,168 224,168" fill="#cbd5e1"/>
+
+          {/* Gemini */}
+          <rect x="14" y="174" width="132" height="56" fill="white" stroke="#059669" strokeWidth="1" strokeOpacity="0.7"/>
+          <text x="80" y="191" textAnchor="middle" fill="#059669" fontSize="7.5" fontFamily="monospace" letterSpacing="1">RESEARCH</text>
+          <text x="80" y="211" textAnchor="middle" fill="#1a1a1a" fontSize="14" fontFamily="sans-serif" fontWeight="900">Gemini</text>
+          <text x="80" y="226" textAnchor="middle" fill="#a3a3a3" fontSize="7.5" fontFamily="monospace">리서치 · 분석</text>
+
+          {/* Codex */}
+          <rect x="154" y="174" width="132" height="56" fill="white" stroke="#D97706" strokeWidth="1" strokeOpacity="0.7"/>
+          <text x="220" y="191" textAnchor="middle" fill="#D97706" fontSize="7.5" fontFamily="monospace" letterSpacing="1">CODE</text>
+          <text x="220" y="211" textAnchor="middle" fill="#1a1a1a" fontSize="14" fontFamily="sans-serif" fontWeight="900">Codex</text>
+          <text x="220" y="226" textAnchor="middle" fill="#a3a3a3" fontSize="7.5" fontFamily="monospace">코드 구현</text>
+
+          {/* Merge */}
+          <line x1="80"  y1="230" x2="80"  y2="252" stroke="#cbd5e1" strokeWidth="1"/>
+          <line x1="220" y1="230" x2="220" y2="252" stroke="#cbd5e1" strokeWidth="1"/>
+          <line x1="80"  y1="252" x2="220" y2="252" stroke="#cbd5e1" strokeWidth="1"/>
+          <line x1="150" y1="252" x2="150" y2="272" stroke="#cbd5e1" strokeWidth="1"/>
+          <polygon points="150,272 146,266 154,266" fill="#cbd5e1"/>
+
+          {/* Claude 리뷰 */}
+          <rect x="20" y="272" width="260" height="68" fill="white" stroke="#475569" strokeWidth="1.5"/>
+          <text x="150" y="289" textAnchor="middle" fill="#475569" fontSize="7.5" fontFamily="monospace" letterSpacing="1">REVIEW</text>
+          <text x="150" y="310" textAnchor="middle" fill="#1a1a1a" fontSize="15" fontFamily="sans-serif" fontWeight="900">Claude Code</text>
+          <text x="150" y="328" textAnchor="middle" fill="#a3a3a3" fontSize="8" fontFamily="monospace">검토 · 재위임 or 승인</text>
+
+          {/* Review → Output */}
+          <line x1="150" y1="340" x2="150" y2="358" stroke="#cbd5e1" strokeWidth="1"/>
+          <polygon points="150,358 146,352 154,352" fill="#cbd5e1"/>
+
+          {/* Output */}
+          <rect x="90" y="358" width="120" height="44" fill="#1a1a1a"/>
+          <text x="150" y="374" textAnchor="middle" fill="#6b7280" fontSize="7.5" fontFamily="monospace" letterSpacing="1.5">OUTPUT</text>
+          <text x="150" y="392" textAnchor="middle" fill="white" fontSize="12" fontFamily="sans-serif" fontWeight="900">luma3.dev</text>
+
+          {/* Iterate dashed */}
+          <path d="M 280,306 H 292 V 211 H 286" stroke="#cbd5e1" strokeWidth="1" strokeDasharray="3 3"/>
+          <polygon points="286,211 282,218 290,218" fill="#cbd5e1"/>
+          <text x="292" y="262" textAnchor="middle" fill="#c3c3c3" fontSize="7" fontFamily="monospace" transform="rotate(90 292 262)">iterate</text>
+        </svg>
+
         {/* SVG: horizontal flowchart
              viewBox  0 0 840 205
              center-y = 100
@@ -211,7 +394,7 @@ function DevelopmentBody() {
         */}
         <svg
           viewBox="0 0 840 205"
-          className="relative w-full max-w-5xl"
+          className="hidden md:block relative w-full max-w-7xl"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -399,7 +582,7 @@ function DomainPanel({
       {domainWorks.length > 0 && (
         <div className="pt-4 border-t border-[#e5e5e5] space-y-2">
           {domainWorks.map((w) => (
-            <Link key={w.id} href="/work/strategy" className="group flex items-center gap-2">
+            <Link key={w.id} href="/work/business" className="group flex items-center gap-2">
               <span className="w-1 h-1 rounded-full shrink-0" style={{ backgroundColor: color }} />
               <span className="text-xs text-[#1a1a1a] font-medium group-hover:text-[#1978e5] transition-colors duration-150">
                 {w.title}
@@ -453,8 +636,8 @@ export function DevelopmentSection() {
 
 export function BusinessSection() {
   return (
-    <section id="strategy" className="border-t border-[#e5e5e5]">
-      <SectionHeader categoryId="strategy" />
+    <section id="business" className="border-t border-[#e5e5e5]">
+      <SectionHeader categoryId="business" />
       <BusinessBody />
     </section>
   )

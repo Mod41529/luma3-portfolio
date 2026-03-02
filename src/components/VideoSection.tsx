@@ -2,7 +2,7 @@
 
 import { useRef, useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, ChevronDown, ArrowUpRight } from 'lucide-react'
+import { X, ChevronDown, ArrowUpRight, ArrowDown } from 'lucide-react'
 import Link from 'next/link'
 import { works } from '@/data/works'
 import { WorkItem } from '@/types'
@@ -49,9 +49,10 @@ function VideoCard({
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.35, delay: (index % 8) * 0.03 }}
+      transition={{ duration: 0.35, delay: (index % 12) * 0.03 }}
       onClick={() => onClick(work)}
-      className="group relative aspect-[9/16] overflow-hidden cursor-pointer bg-[#111]"
+      className="group relative w-full overflow-hidden cursor-pointer bg-[#111]"
+      style={{ aspectRatio: work.aspectRatio ?? '16/9' }}
     >
       {/* Video / thumbnail */}
       {ready ? (
@@ -197,7 +198,7 @@ export default function VideoSection() {
   return (
     <section id="video" className="border-t border-[#e5e5e5]">
       {/* Header */}
-      <div className="px-6 md:px-12 py-5 flex items-center justify-between border-b border-[#e5e5e5]">
+      <div className="px-6 md:px-12 py-5 flex items-center border-b border-[#e5e5e5]">
         <div className="flex items-baseline gap-4">
           <h2 className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#1a1a1a]">Video</h2>
           <span className="text-[10px] text-[#a3a3a3] font-mono">
@@ -205,20 +206,53 @@ export default function VideoSection() {
           </span>
           <span className="text-[10px] text-[#a3a3a3] italic hidden md:inline">Autoplay · muted</span>
         </div>
-        <Link
-          href="/work/video"
-          className="flex items-center gap-1 text-[9px] font-bold uppercase tracking-[0.25em]
-                     text-[#D97706] transition-colors duration-150"
-        >
-          View all <ArrowUpRight size={10} strokeWidth={2} />
-        </Link>
       </div>
 
-      {/* Uniform 4-col grid — Midjourney explore style */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-[#e5e5e5]">
-        {videoWorks.map((work, i) => (
-          <VideoCard key={work.id} work={work} index={i} onClick={setSelected} />
-        ))}
+      {/* Masonry — CSS columns, natural aspect ratios */}
+      <div className="relative">
+        {/* pb-40 creates space at bottom so short columns' grey bg is covered by fade */}
+        <div
+          className="bg-[#e5e5e5] pb-40"
+          style={{
+            columns: '4 180px',
+            columnGap: '1px',
+            padding: '1px',
+            paddingBottom: '160px',
+          }}
+        >
+          {videoWorks.map((work, i) => (
+            <div key={work.id} className="break-inside-avoid mb-px">
+              <VideoCard work={work} index={i} onClick={setSelected} />
+            </div>
+          ))}
+        </div>
+
+        {/* Fade — solid #fafafa at bottom covers grey gaps, fades into content above */}
+        <div
+          className="absolute bottom-0 left-0 right-0 h-72 pointer-events-none"
+          style={{ background: 'linear-gradient(to top, #fafafa 0%, #fafafa 30%, transparent 75%)' }}
+        />
+
+        {/* View more button */}
+        <div className="absolute bottom-8 left-0 right-0 flex justify-center">
+          <Link href="/work/video" className="group flex flex-col items-center gap-2">
+            <div className="flex items-center gap-4">
+              <div className="h-px w-10 bg-[#c3c3c3] group-hover:w-16 transition-all duration-300" />
+              <span className="font-mono text-[10px] uppercase tracking-[0.35em] text-[#737373]
+                               group-hover:text-[#1a1a1a] transition-colors duration-200">
+                View more
+              </span>
+              <div className="h-px w-10 bg-[#c3c3c3] group-hover:w-16 transition-all duration-300" />
+            </div>
+            <motion.div
+              animate={{ y: [0, 3, 0] }}
+              transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
+              className="text-[#c3c3c3] group-hover:text-[#1a1a1a] transition-colors duration-200"
+            >
+              <ArrowUpRight size={12} strokeWidth={1.5} className="rotate-90" />
+            </motion.div>
+          </Link>
+        </div>
       </div>
 
       {/* Detail panel */}

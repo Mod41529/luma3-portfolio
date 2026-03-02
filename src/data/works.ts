@@ -51,8 +51,8 @@ export const categories: Record<CategoryId, CategoryConfig> = {
     bg: '#F1F5F9',
     textColor: '#1E293B',
   },
-  strategy: {
-    id: 'strategy',
+  business: {
+    id: 'business',
     nameEn: 'Business',
     nameKo: '비즈니스',
     description: 'Strategy, finance, marketing, and operations — end-to-end business thinking.',
@@ -70,7 +70,7 @@ export const works: WorkItem[] = [
     category: 'video',
     title: 'Temporal Drift',
     titleKo: '시간의 흐름',
-    year: 2024,
+    year: 2026,
     tools: ['After Effects', 'Premiere Pro', 'Sora'],
     description:
       'A short film exploring the boundary between memory and imagination, generated through a combination of AI footage and hand-edited transitions.',
@@ -86,6 +86,7 @@ export const works: WorkItem[] = [
     thumbnailAlt: 'Dragon flying above colorful sunset sky',
     videoSrc: '/videos/v1.mp4',
     thumbnailSrc: '/images/thumbnails/v1.jpg',
+    aspectRatio: '1/1',
     featured: true,
   },
   {
@@ -109,6 +110,7 @@ export const works: WorkItem[] = [
     thumbnailAlt: 'Glowing microscopic cells',
     videoSrc: '/videos/v2.mp4',
     thumbnailSrc: '/images/thumbnails/v2.jpg',
+    aspectRatio: '1/1',
   },
   {
     id: 'v3',
@@ -131,6 +133,7 @@ export const works: WorkItem[] = [
     thumbnailAlt: 'Child releasing colorful balloons into sky',
     videoSrc: '/videos/v3.mp4',
     thumbnailSrc: '/images/thumbnails/v3.jpg',
+    aspectRatio: '16/9',
   },
   {
     id: 'v4',
@@ -153,6 +156,7 @@ export const works: WorkItem[] = [
     thumbnailAlt: 'Diver in bioluminescent deep sea',
     videoSrc: '/videos/v4.mp4',
     thumbnailSrc: '/images/thumbnails/v4.jpg',
+    aspectRatio: '4/3',
   },
   {
     id: 'v5',
@@ -175,6 +179,7 @@ export const works: WorkItem[] = [
     thumbnailAlt: 'Orange supercar on mountain road at sunset',
     videoSrc: '/videos/v5.mp4',
     thumbnailSrc: '/images/thumbnails/v5.jpg',
+    aspectRatio: '4/3',
   },
   {
     id: 'v6',
@@ -197,6 +202,7 @@ export const works: WorkItem[] = [
     thumbnailAlt: 'Colorful liquid paint explosion on black background',
     videoSrc: '/videos/v6.mp4',
     thumbnailSrc: '/images/thumbnails/v6.jpg',
+    aspectRatio: '4/3',
     featured: true,
   },
   {
@@ -220,6 +226,237 @@ export const works: WorkItem[] = [
     thumbnailAlt: 'Fashion model on colorful urban street',
     videoSrc: '/videos/v7.mp4',
     thumbnailSrc: '/images/thumbnails/v7.jpg',
+    aspectRatio: '4/3',
+  },
+  {
+    id: 'v8',
+    category: 'video',
+    title: 'Iron Will',
+    titleKo: '강철 의지',
+    year: 2026,
+    tools: ['Midjourney', 'Kling'],
+    description:
+      'An athlete grinding through push-ups in raw black-and-white — discipline stripped of all decoration.',
+    descriptionKo:
+      '흑백으로 담아낸 운동선수의 팔굽혀펴기. 장식 없이 드러나는 의지.',
+    howIMadeThis: {
+      tools: ['Midjourney v6', 'Kling AI'],
+      prompt:
+        'Athletic man doing push-ups, black and white, dramatic lighting, close-up, raw and gritty, cinematic',
+      processNotes:
+        'Shot in monochrome to strip away all distraction. The tight framing puts focus entirely on the physical effort.',
+    },
+    thumbnailAlt: 'Athlete doing push-ups in black and white',
+    videoSrc: '/videos/v8.mp4',
+    thumbnailSrc: '/images/thumbnails/v8.jpg',
+    aspectRatio: '512/768',
+  },
+  {
+    id: 'v9',
+    category: 'video',
+    title: 'Bioluminescent Shore',
+    titleKo: '발광의 해안',
+    year: 2026,
+    tools: ['Midjourney', 'Kling'],
+    description:
+      "Waves glow neon blue as they break on a dark shore — nature's own light show.",
+    descriptionKo:
+      '어두운 해안으로 부서지는 네온블루 파도. 자연이 만든 빛의 쇼.',
+    howIMadeThis: {
+      tools: ['Midjourney v6', 'Kling AI'],
+      prompt:
+        'Bioluminescent ocean waves crashing on dark beach at night, glowing blue, magical, long exposure style',
+      processNotes:
+        'The challenge was sustaining the glow intensity through the wave motion. Kling handled the particle dispersal naturally.',
+    },
+    thumbnailAlt: 'Glowing bioluminescent waves on dark beach',
+    videoSrc: '/videos/v9.mp4',
+    thumbnailSrc: '/images/thumbnails/v9.jpg',
+    aspectRatio: '832/464',
+  },
+  {
+    id: 'v10',
+    category: 'video',
+    title: 'Silent Advance',
+    titleKo: '침묵의 전진',
+    year: 2026,
+    tools: ['Midjourney', 'Kling'],
+    description:
+      'Special forces move through dense jungle fog — tension built from restraint, not action.',
+    descriptionKo:
+      '짙은 정글 안개 속 특수부대의 이동. 행동이 아닌 절제로 만들어낸 긴장감.',
+    howIMadeThis: {
+      tools: ['Midjourney v6', 'Kling AI'],
+      prompt:
+        'Elite special forces soldiers moving through dense jungle fog, tactical gear, cinematic, muted colors, tense atmosphere',
+      processNotes:
+        'Kept the motion slow and deliberate. The fog layer added natural depth without any post-processing.',
+    },
+    thumbnailAlt: 'Special forces in jungle fog',
+    videoSrc: '/videos/v10.mp4',
+    thumbnailSrc: '/images/thumbnails/v10.jpg',
+    aspectRatio: '560/704',
+  },
+  {
+    id: 'v11',
+    category: 'video',
+    title: 'Garage Session',
+    titleKo: '차고 세션',
+    year: 2026,
+    tools: ['Midjourney', 'Kling'],
+    description:
+      'An indie rock band plays in a dim garage — raw energy, worn amps, real sweat.',
+    descriptionKo:
+      '어두운 차고에서 연주하는 인디 밴드. 날것의 에너지, 낡은 앰프, 진짜 땀.',
+    howIMadeThis: {
+      tools: ['Midjourney v6', 'Kling AI'],
+      prompt:
+        'Indie rock band playing in dimly lit garage, vintage amps, gritty atmosphere, warm tungsten light, documentary style',
+      processNotes:
+        'The tungsten warmth was key — cool light would have killed the intimacy. Kling captured the subtle instrument vibration well.',
+    },
+    thumbnailAlt: 'Indie rock band playing in a garage',
+    videoSrc: '/videos/v11.mp4',
+    thumbnailSrc: '/images/thumbnails/v11.jpg',
+    aspectRatio: '832/464',
+  },
+  {
+    id: 'v12',
+    category: 'video',
+    title: 'Edge of Everything',
+    titleKo: '모든 것의 끝에서',
+    year: 2026,
+    tools: ['Midjourney', 'Kling'],
+    description:
+      "A lone figure stands at the cliff's edge as waves crash hundreds of feet below — scale as emotion.",
+    descriptionKo:
+      '수백 피트 아래로 파도가 부서지는 절벽 끝에 선 고독한 인물. 감정으로서의 규모.',
+    howIMadeThis: {
+      tools: ['Midjourney v6', 'Kling AI'],
+      prompt:
+        'Lone silhouette standing at dramatic cliff edge, crashing ocean waves far below, overcast sky, cinematic wide shot, solitude',
+      processNotes:
+        'The vertical framing emphasizes the height and isolation. Kling added cloud movement and wave spray that made the scale feel real.',
+    },
+    thumbnailAlt: 'Lone figure at dramatic cliff edge above ocean',
+    videoSrc: '/videos/v12.mp4',
+    thumbnailSrc: '/images/thumbnails/v12.jpg',
+    aspectRatio: '464/832',
+  },
+  {
+    id: 'v13',
+    category: 'video',
+    title: 'Summit Calm',
+    titleKo: '정상의 고요',
+    year: 2026,
+    tools: ['Midjourney', 'Kling'],
+    description:
+      'Snow-covered peaks emerge from a sea of clouds at golden hour — silence made visible.',
+    descriptionKo:
+      '황금빛 시간, 구름 바다 위로 솟은 설봉. 눈에 보이는 침묵.',
+    howIMadeThis: {
+      tools: ['Midjourney v6', 'Kling AI'],
+      prompt:
+        'Snow-capped mountain peaks above clouds at golden hour, aerial view, serene, cinematic, warm orange light',
+      processNotes:
+        'The slow cloud drift was the only motion needed. Kling kept it subtle — any faster and the serenity would have been lost.',
+    },
+    thumbnailAlt: 'Snow-capped mountain peaks above clouds at golden hour',
+    videoSrc: '/videos/v13.mp4',
+    thumbnailSrc: '/images/thumbnails/v13.jpg',
+    aspectRatio: '832/464',
+  },
+  {
+    id: 'v14',
+    category: 'video',
+    title: 'Mach',
+    titleKo: '마하',
+    year: 2026,
+    tools: ['Midjourney', 'Kling'],
+    description:
+      'A fighter jet tears through open sky at ultra-wide — speed that makes silence feel loud.',
+    descriptionKo:
+      '초광각으로 담은 전투기의 하늘 질주. 침묵이 소음처럼 느껴지는 속도.',
+    howIMadeThis: {
+      tools: ['Midjourney v6', 'Kling AI'],
+      prompt:
+        'Fighter jet flying at high speed through clear blue sky, ultra-wide angle, motion blur, cinematic, dramatic',
+      processNotes:
+        'The ultra-wide crop was deliberate — more sky emphasizes the isolation and velocity. Kling nailed the contrail and blur.',
+    },
+    thumbnailAlt: 'Fighter jet flying through clear blue sky',
+    videoSrc: '/videos/v14.mp4',
+    thumbnailSrc: '/images/thumbnails/v14.jpg',
+    aspectRatio: '928/400',
+  },
+  {
+    id: 'v15',
+    category: 'video',
+    title: 'The Pass',
+    titleKo: '더 패스',
+    year: 2026,
+    tools: ['Midjourney', 'Kling'],
+    description:
+      'A chef plates a dish with surgical precision — craft visible in every gesture.',
+    descriptionKo:
+      '정밀한 손길로 플레이팅하는 셰프. 모든 동작에서 보이는 장인 정신.',
+    howIMadeThis: {
+      tools: ['Midjourney v6', 'Kling AI'],
+      prompt:
+        'Professional chef plating a fine dining dish, close-up hands, warm kitchen light, cinematic, precise movements',
+      processNotes:
+        'Square format felt right for the intimacy of the close-up. The warm kitchen light required no color grading.',
+    },
+    thumbnailAlt: 'Chef plating a fine dining dish',
+    videoSrc: '/videos/v15.mp4',
+    thumbnailSrc: '/images/thumbnails/v15.jpg',
+    aspectRatio: '1/1',
+  },
+  {
+    id: 'v16',
+    category: 'video',
+    title: 'Coastal Run',
+    titleKo: '해안 질주',
+    year: 2026,
+    tools: ['Midjourney', 'Kling'],
+    description:
+      'A lone runner traces the coastline at dawn — the rhythm of breath against breaking waves.',
+    descriptionKo:
+      '새벽 해안선을 달리는 단독 러너. 파도 소리와 호흡의 리듬.',
+    howIMadeThis: {
+      tools: ['Midjourney v6', 'Kling AI'],
+      prompt:
+        'Runner on coastal path at dawn, ocean beside them, soft morning light, cinematic, solitude and motion',
+      processNotes:
+        'The 3:2 crop mirrors a classic film still. Dawn light needed no enhancement — the scene was already perfect.',
+    },
+    thumbnailAlt: 'Runner on coastal path at dawn',
+    videoSrc: '/videos/v16.mp4',
+    thumbnailSrc: '/images/thumbnails/v16.jpg',
+    aspectRatio: '3/2',
+  },
+  {
+    id: 'v17',
+    category: 'video',
+    title: 'Form & Function',
+    titleKo: '형태와 기능',
+    year: 2026,
+    tools: ['Midjourney', 'Kling'],
+    description:
+      'Brutalist architecture shot from below — geometry as power, concrete as poetry.',
+    descriptionKo:
+      '하부에서 올려본 브루탈리즘 건축. 권력으로서의 기하학, 시로서의 콘크리트.',
+    howIMadeThis: {
+      tools: ['Midjourney v6', 'Kling AI'],
+      prompt:
+        'Brutalist concrete architecture shot from below, dramatic perspective, geometric patterns, overcast sky, architectural photography',
+      processNotes:
+        'The low angle was essential — it transforms familiar concrete into something monolithic. Cloud movement added life to an otherwise static subject.',
+    },
+    thumbnailAlt: 'Brutalist architecture shot from below',
+    videoSrc: '/videos/v17.mp4',
+    thumbnailSrc: '/images/thumbnails/v17.jpg',
+    aspectRatio: '720/544',
   },
 
   // ─── Music ───────────────────────────────────────────────────────────────
@@ -228,7 +465,7 @@ export const works: WorkItem[] = [
     category: 'music',
     title: 'Still Water',
     titleKo: '고요한 물',
-    year: 2024,
+    year: 2026,
     tools: ['SUNO', 'Udio', 'Logic Pro'],
     description:
       'A meditative ambient track blending AI-generated instrumentation with hand-edited arrangements.',
@@ -249,7 +486,7 @@ export const works: WorkItem[] = [
     category: 'music',
     title: 'Compound Interest',
     titleKo: '복리',
-    year: 2024,
+    year: 2026,
     tools: ['SUNO', 'Ableton'],
     description:
       'An electronic track where the beat structure mirrors compound interest curves — slow start, exponential build.',
@@ -270,7 +507,7 @@ export const works: WorkItem[] = [
     category: 'music',
     title: 'Seoul 3AM',
     titleKo: '서울 새벽 3시',
-    year: 2023,
+    year: 2026,
     tools: ['Udio', 'FL Studio'],
     description: 'A lo-fi hip-hop track capturing the mood of walking through Seoul at 3am.',
     descriptionKo: '새벽 3시 서울을 걷는 분위기를 담은 로파이 힙합.',
@@ -289,7 +526,7 @@ export const works: WorkItem[] = [
     category: 'music',
     title: 'All Ways Awake',
     titleKo: '언제나 깨어',
-    year: 2025,
+    year: 2026,
     tools: ['SUNO', 'Ableton'],
     description:
       'A late-night electronic piece — restless energy captured in layered synths and a driving rhythm that never quite settles.',
@@ -308,7 +545,7 @@ export const works: WorkItem[] = [
     category: 'music',
     title: 'Distorted Daydream',
     titleKo: '왜곡된 백일몽',
-    year: 2025,
+    year: 2026,
     tools: ['SUNO', 'Logic Pro'],
     description:
       'Clave-driven rhythm mutated through distortion — a percussive daydream that blurs the line between structure and chaos.',
@@ -325,11 +562,32 @@ export const works: WorkItem[] = [
     audioSrc: '/audio/m5.mp3',
   },
   {
+    id: 'm7',
+    category: 'music',
+    title: 'Cafe Session',
+    titleKo: '카페 세션',
+    year: 2026,
+    tools: ['SUNO'],
+    description:
+      'A jazz hip-hop groove built on piano and brushed drums — the kind of track that makes a cafe feel like the right place to think.',
+    descriptionKo:
+      '피아노와 브러시 드럼 중심의 재즈 힙합. 카페에서 생각하기 좋은 순간을 위한 곡.',
+    howIMadeThis: {
+      tools: ['SUNO'],
+      prompt:
+        'jazz hip-hop, cafe vibe, catchy piano riff, punchy boom-bap drums, finger snaps, upright bass, vinyl crackle, no trumpet, no horns, melodic piano loop, head-nodding groove, 90bpm, instrumental',
+      processNotes:
+        'Generated with a hook-forward prompt — wanted the piano to carry the melody without any brass. Kept the boom-bap drums punchy to balance the softness of the chords.',
+    },
+    thumbnailAlt: 'Jazz piano waveform',
+    audioSrc: '/audio/bento-music.mp3',
+  },
+  {
     id: 'm6',
     category: 'music',
     title: 'luv4',
     titleKo: 'luv4',
-    year: 2025,
+    year: 2026,
     tools: ['SUNO', 'Udio'],
     description:
       'A short, unpolished love song — the fourth draft that finally felt honest.',
@@ -350,7 +608,7 @@ export const works: WorkItem[] = [
     category: 'photography',
     title: 'Market Hours',
     titleKo: '시장의 시간',
-    year: 2023,
+    year: 2026,
     tools: ['Fujifilm X-T5', 'Lightroom'],
     description: 'Documentary portrait series shot in traditional Korean markets.',
     descriptionKo: '한국 전통 시장에서 촬영한 다큐멘터리 포트레이트 시리즈.',
@@ -367,7 +625,7 @@ export const works: WorkItem[] = [
     category: 'photography',
     title: 'Light Studies',
     titleKo: '빛의 연구',
-    year: 2024,
+    year: 2026,
     tools: ['iPhone 15 Pro', 'Darkroom'],
     description: 'Minimal compositions studying how light transforms everyday objects.',
     descriptionKo: '빛이 일상 사물을 변환하는 방식을 연구하는 미니멀 구성.',
@@ -384,7 +642,7 @@ export const works: WorkItem[] = [
     category: 'photography',
     title: 'Smoke & Light',
     titleKo: '연기와 빛',
-    year: 2024,
+    year: 2026,
     tools: ['Midjourney', 'Lightroom'],
     description: 'High-contrast editorial exploring the tension between shadow and dramatic colored light.',
     descriptionKo: '그림자와 극적인 빛의 긴장감을 탐구하는 하이 콘트라스트 에디토리얼.',
@@ -401,7 +659,7 @@ export const works: WorkItem[] = [
     category: 'photography',
     title: 'Arcane',
     titleKo: '아케인',
-    year: 2024,
+    year: 2026,
     tools: ['Midjourney', 'Photoshop'],
     description: 'A wizard mid-spell — swirling multicolored energy rendered with photorealistic detail.',
     descriptionKo: '주문 시전 중인 마법사 — 다채로운 에너지를 포토리얼리스틱하게 렌더링.',
@@ -525,7 +783,7 @@ export const works: WorkItem[] = [
     category: 'design',
     title: 'MOD Card System',
     titleKo: 'MOD 카드 시스템',
-    year: 2024,
+    year: 2026,
     tools: ['Illustrator', 'InDesign', 'Figma'],
     description:
       'A 54-card thinking framework deck for structured brainstorming and decision-making. Physically produced.',
@@ -544,7 +802,7 @@ export const works: WorkItem[] = [
     category: 'design',
     title: 'AI Orchestration Poster',
     titleKo: 'AI 오케스트레이션 포스터',
-    year: 2025,
+    year: 2026,
     tools: ['Figma', 'Photoshop'],
     description: 'Editorial poster introducing the Claude + Gemini + ChatGPT orchestration pipeline.',
     descriptionKo: 'Claude · Gemini · ChatGPT 오케스트레이션 파이프라인을 소개하는 에디토리얼 포스터.',
@@ -554,13 +812,14 @@ export const works: WorkItem[] = [
     },
     thumbnailAlt: 'AI orchestration dark poster with monitor mockup',
     imageSrc: '/images/design/poster-orchestration.png',
+    aspectRatio: '1080/1350',
   },
   {
     id: 'd3',
     category: 'design',
     title: 'Physical AI',
     titleKo: 'Physical AI',
-    year: 2025,
+    year: 2026,
     tools: ['Figma', 'Midjourney'],
     description: 'Instagram editorial poster on Physical AI — robotics and embodied intelligence in Korea 2030.',
     descriptionKo: 'Physical AI와 로보틱스를 주제로 한 인스타그램 에디토리얼 포스터.',
@@ -570,13 +829,14 @@ export const works: WorkItem[] = [
     },
     thumbnailAlt: 'Physical AI poster with robotic hand on black background',
     imageSrc: '/images/design/poster-physical-ai.png',
+    aspectRatio: '1080/1440',
   },
   {
     id: 'd4',
     category: 'design',
     title: 'IGNITION!',
     titleKo: 'IGNITION!',
-    year: 2024,
+    year: 2026,
     tools: ['Figma', 'Illustrator'],
     description: 'Motivational poster card with bold typography and fire illustration.',
     descriptionKo: '강렬한 타이포그래피와 불꽃 일러스트를 활용한 모티베이션 포스터 카드.',
@@ -586,13 +846,14 @@ export const works: WorkItem[] = [
     },
     thumbnailAlt: 'IGNITION! fire poster card on navy background',
     imageSrc: '/images/design/card-ignition.png',
+    aspectRatio: '857/1200',
   },
   {
     id: 'd5',
     category: 'design',
     title: '종훈 청과 Brand Identity',
     titleKo: '종훈 청과 브랜드 아이덴티티',
-    year: 2024,
+    year: 2026,
     tools: ['Illustrator', 'Figma'],
     description: 'Logo and brand identity for an organic fruit juice brand.',
     descriptionKo: '유기농 과일 주스 브랜드의 로고 및 브랜드 아이덴티티.',
@@ -602,6 +863,61 @@ export const works: WorkItem[] = [
     },
     thumbnailAlt: '종훈 청과 organic juice brand logo with fruit wreath',
     imageSrc: '/images/design/logo-jonghun.png',
+    aspectRatio: '1556/2000',
+  },
+  {
+    id: 'd6',
+    category: 'design',
+    title: 'AI Tech Innovations — Business Card (Front)',
+    titleKo: 'AI Tech Innovations 명함 앞면',
+    year: 2026,
+    tools: ['Figma', 'Illustrator'],
+    description: 'Business card front for an AI technology firm — clean, dark, and technical.',
+    descriptionKo: 'AI 기술 회사의 명함 앞면 — 클린하고 다크한 테크 무드.',
+    howIMadeThis: {
+      tools: ['Figma', 'Adobe Illustrator'],
+      processNotes:
+        'Dark background with precise typographic grid. The circuit-board motif reinforces the AI/tech identity without being heavy-handed.',
+    },
+    thumbnailAlt: 'AI Tech Innovations business card front',
+    imageSrc: '/images/design/card-ai-tech-1.png',
+    aspectRatio: '1050/600',
+  },
+  {
+    id: 'd7',
+    category: 'design',
+    title: 'AI Tech Innovations — Business Card (Back)',
+    titleKo: 'AI Tech Innovations 명함 뒷면',
+    year: 2026,
+    tools: ['Figma', 'Illustrator'],
+    description: 'Business card back — logo lockup and contact details on a dark field.',
+    descriptionKo: 'AI Tech Innovations 명함 뒷면 — 로고와 연락처.',
+    howIMadeThis: {
+      tools: ['Figma', 'Adobe Illustrator'],
+      processNotes:
+        'Kept the back minimal — logo centered, contact details below. Consistent dark palette ties front and back together as a system.',
+    },
+    thumbnailAlt: 'AI Tech Innovations business card back',
+    imageSrc: '/images/design/card-ai-tech-2.png',
+    aspectRatio: '1050/600',
+  },
+  {
+    id: 'd8',
+    category: 'design',
+    title: '멍냥 Brand Identity',
+    titleKo: '멍냥 브랜드 아이덴티티',
+    year: 2026,
+    tools: ['Illustrator', 'Midjourney'],
+    description: 'Logo and banner for a pet brand — warm, playful, and handcrafted in feel.',
+    descriptionKo: '반려동물 브랜드 멍냥의 로고 및 배너. 따뜻하고 유쾌한 손그림 무드.',
+    howIMadeThis: {
+      tools: ['Adobe Illustrator', 'Midjourney'],
+      processNotes:
+        'Illustrated characters were generated with Midjourney and refined in Illustrator. The rounded Korean lettering was custom-drawn to match the soft, friendly tone of the brand.',
+    },
+    thumbnailAlt: '멍냥 pet brand logo with illustrated dogs and cats',
+    imageSrc: '/images/design/logo-meongnayang.png',
+    aspectRatio: '1/1',
   },
 
   // ─── Development ─────────────────────────────────────────────────────────
@@ -610,7 +926,7 @@ export const works: WorkItem[] = [
     category: 'development',
     title: 'Multi-Agent Orchestration',
     titleKo: '멀티에이전트 오케스트레이션',
-    year: 2025,
+    year: 2026,
     tools: ['Claude Code', 'Bash', 'Python', 'YAML'],
     description:
       'A personal orchestration system managing Claude, Codex, and Gemini as specialized worker agents.',
@@ -629,7 +945,7 @@ export const works: WorkItem[] = [
     category: 'development',
     title: 'Notion Database CLI',
     titleKo: 'Notion 데이터베이스 CLI',
-    year: 2024,
+    year: 2026,
     tools: ['Python', 'Notion API', 'Claude API'],
     description:
       'CLI tools for managing personal and company Notion workspaces programmatically.',
@@ -647,7 +963,7 @@ export const works: WorkItem[] = [
     category: 'development',
     title: 'Workflow Automation Stack',
     titleKo: '워크플로우 자동화 스택',
-    year: 2023,
+    year: 2026,
     tools: ['Python', 'Make', 'Notion', 'Slack'],
     description:
       'End-to-end automation connecting project management, communication, and reporting.',
@@ -664,7 +980,7 @@ export const works: WorkItem[] = [
   // ─── Strategy ────────────────────────────────────────────────────────────
   {
     id: 's1',
-    category: 'strategy',
+    category: 'business',
     title: 'Strategy Operating System',
     titleKo: '전략 운영 시스템',
     year: 2026,
@@ -683,10 +999,10 @@ export const works: WorkItem[] = [
   },
   {
     id: 's2',
-    category: 'strategy',
+    category: 'business',
     title: 'AI Adoption Roadmap',
     titleKo: 'AI 도입 로드맵',
-    year: 2025,
+    year: 2026,
     tools: ['Notion', 'Figma', 'Claude'],
     description:
       'A structured approach for SMEs to adopt AI tools without disrupting existing operations.',
@@ -701,10 +1017,10 @@ export const works: WorkItem[] = [
   },
   {
     id: 's3',
-    category: 'strategy',
+    category: 'business',
     title: 'Personal Finance System',
     titleKo: '개인 재무 시스템',
-    year: 2023,
+    year: 2026,
     tools: ['Excel', 'Python', 'Notion'],
     description:
       'A comprehensive personal finance tracking and projection system built on accounting principles.',

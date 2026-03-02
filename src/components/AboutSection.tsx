@@ -35,12 +35,14 @@ export default function AboutSection() {
           transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           className="w-full md:w-2/5 border-b md:border-b-0 md:border-r border-[#e5e5e5] p-8 md:p-12 flex flex-col gap-8"
         >
-          {/* Photo placeholder */}
-          <div
-            className="w-full aspect-square max-w-[280px] bg-[#F4F4F2] border border-[#e5e5e5] flex flex-col items-center justify-center gap-2"
-          >
-            <div className="w-12 h-12 rounded-full bg-[#e5e5e5]" />
-            <p className="text-[8px] font-mono uppercase tracking-widest text-[#c3c3c3]">Photo — Soon</p>
+          {/* Photo */}
+          <div className="w-full max-w-[240px] border border-[#e5e5e5]" style={{ aspectRatio: '3/4' }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/about-photo.jpg"
+              alt="Jun Yusung"
+              className="w-full h-full object-cover"
+            />
           </div>
 
           {/* Name + status */}

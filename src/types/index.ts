@@ -4,7 +4,7 @@ export type CategoryId =
   | 'photography'
   | 'design'
   | 'development'
-  | 'strategy'
+  | 'business'
 
 export interface WorkItem {
   id: string
@@ -25,6 +25,7 @@ export interface WorkItem {
   imageSrc?: string       // /images/photo/{id}.jpg       (full display image)
   videoSrc?: string       // /videos/{id}.mp4
   audioSrc?: string       // /audio/{id}.mp3
+  aspectRatio?: string    // e.g. '512/768', '16/9', '1/1'  (natural video dimensions)
   featured?: boolean
 }
 

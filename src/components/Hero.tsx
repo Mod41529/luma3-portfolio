@@ -124,7 +124,18 @@ export default function Hero() {
       pts = initialParticles()
     }
     resize()
-    window.addEventListener('resize', resize)
+
+    // Debounced resize — ignores mobile address-bar scroll (≤100px height change)
+    let resizeTimer: ReturnType<typeof setTimeout>
+    const onResize = () => {
+      clearTimeout(resizeTimer)
+      resizeTimer = setTimeout(() => {
+        const newW = window.innerWidth
+        const newH = window.innerHeight
+        if (Math.abs(newW - W) > 40 || Math.abs(newH - H) > 100) resize()
+      }, 250)
+    }
+    window.addEventListener('resize', onResize)
 
     // ── Input — mouse + touch ───────────────────────────────────────────────
     const onMove  = (e: MouseEvent) => { mouseRef.current = { x: e.clientX, y: e.clientY } }
@@ -255,7 +266,8 @@ export default function Hero() {
 
     return () => {
       cancelAnimationFrame(rafRef.current)
-      window.removeEventListener('resize',     resize)
+      window.removeEventListener('resize',     onResize)
+      clearTimeout(resizeTimer)
       window.removeEventListener('mousemove',  onMove)
       window.removeEventListener('mouseleave', onLeave)
       window.removeEventListener('touchmove',  onTouch)
@@ -278,7 +290,7 @@ export default function Hero() {
           <motion.p
             variants={fadeUp}
             transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-            className="font-mono uppercase tracking-[0.28em] text-[#a3a3a3] mb-10
+            className="font-mono uppercase tracking-[0.28em] text-[#737373] mb-10
                        text-[10px] xl:text-[11px] 2xl:text-[12px]"
           >
             Portfolio — 2026
@@ -323,12 +335,25 @@ export default function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2, duration: 0.6 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-[#a3a3a3]"
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3"
       >
-        <motion.div animate={{ y: [0, 5, 0] }} transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}>
-          <ArrowDown size={13} strokeWidth={1.5} />
+        <span className="font-mono uppercase tracking-[0.3em] text-[13px] text-[#a3a3a3]">Scroll</span>
+
+        {/* Animated scroll line */}
+        <div className="relative w-px h-16 bg-[#e5e5e5] overflow-hidden">
+          <motion.div
+            className="absolute top-0 left-0 w-full bg-[#1a1a1a]"
+            animate={{ height: ['0%', '100%', '100%', '0%'], top: ['0%', '0%', '100%', '100%'] }}
+            transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut', times: [0, 0.45, 0.55, 1] }}
+          />
+        </div>
+
+        <motion.div
+          animate={{ y: [0, 4, 0] }}
+          transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
+        >
+          <ArrowDown size={16} strokeWidth={1.5} className="text-[#a3a3a3]" />
         </motion.div>
-        <span className="font-mono uppercase tracking-[0.25em] text-[9px] 2xl:text-[11px]">Scroll</span>
       </motion.div>
     </section>
   )

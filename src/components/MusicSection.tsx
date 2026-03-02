@@ -16,6 +16,13 @@ const GENRES = [
     accent: '#D97706',
     bg: '#1C1408',
     desc: 'Jazz hip-hop groove with warm vinyl texture and upright bass.',
+    chars: [
+      '즉흥과 편곡의 균형이 장르의 중심',
+      '스윙·싱코페이션이 리듬의 생동감을 만든다',
+      '베이스의 움직임이 있어야 전체 코드가 숨 쉰다',
+    ],
+    refs: ['Miles Davis — So What', 'John Coltrane — Giant Steps', 'Ella Fitzgerald — Summertime'],
+    sunoPrompt: 'jazz, upright bass, brushed drums, warm horn section, swinging groove, subtle room reverb',
   },
   {
     id: 'hiphop',
@@ -26,6 +33,13 @@ const GENRES = [
     accent: '#94A3B8',
     bg: '#0E1118',
     desc: 'High-energy trap beat with crisp hi-hats and deep 808 bass.',
+    chars: [
+      '보컬 플로우와 리듬의 결합으로 감정을 전달',
+      '라임이 박자 안을 이동할 때 장르 정체성이 드러남',
+      '베이스 타격감과 보컬 가시성의 균형이 핵심',
+    ],
+    refs: ['Kendrick Lamar — HUMBLE.', 'Jay-Z — 99 Problems', 'Nas — N.Y. State of Mind'],
+    sunoPrompt: 'hip-hop, crisp hi-hats, deep 808 bass, punchy snare, hard-hitting kicks, lyrical flow',
   },
   {
     id: 'lofi',
@@ -36,6 +50,13 @@ const GENRES = [
     accent: '#A78BFA',
     bg: '#120D1C',
     desc: 'Chill beat with soft vinyl crackle and mellow piano loop.',
+    chars: [
+      '완성도보다 질감과 여백이 먼저 전달되는 음악',
+      '작고 둔한 드럼 스냅이 중심, 노이즈가 감성 보강',
+      '반복 루프가 안정적으로 유지되어야 편안함이 유지',
+    ],
+    refs: ['Nujabes — Luv(sic) Part 3', 'Tomppabeats — Far', 'Jinsang — Life'],
+    sunoPrompt: 'lo-fi, vinyl crackle, gentle boom-bap drums, warm jazzy chords, soft bass, ambient city textures',
   },
   {
     id: 'rnb',
@@ -46,6 +67,13 @@ const GENRES = [
     accent: '#FB7185',
     bg: '#1C0810',
     desc: 'Contemporary R&B with groovy bassline and smooth electric piano.',
+    chars: [
+      '보컬 감정선이 베이스와 코드 진행을 이끈다',
+      '저역은 포근하고 둥글게, 보컬 떨림을 강조',
+      '장식음·호흡의 뉘앙스가 장르 정체성을 완성',
+    ],
+    refs: ['Frank Ocean — Thinkin Bout You', 'The Weeknd — Die For You', 'Daniel Caesar — Get You'],
+    sunoPrompt: 'smooth R&B, warm electric piano, velvet bassline, intimate vocal processing, soft drums, late-night atmosphere',
   },
   {
     id: 'rock',
@@ -56,6 +84,13 @@ const GENRES = [
     accent: '#E5E5E5',
     bg: '#111111',
     desc: 'Upbeat modern rock with driving electric guitars and punchy drums.',
+    chars: [
+      '라이브 악기와 전자음의 물리적 밀도가 공존',
+      '리프 반복이 감정적 클라이맥스를 형성한다',
+      '긴장-폭발-잔향 패턴이 록 특유의 몰입을 만든다',
+    ],
+    refs: ['Arctic Monkeys — Do I Wanna Know?', 'Radiohead — Idioteque', 'M83 — Midnight City'],
+    sunoPrompt: 'rock, distorted guitar layers, punchy drum bus, atmospheric pads, dynamic vocals, live-to-digital blend',
   },
 ] as const
 
@@ -101,20 +136,26 @@ function GenreCard({
   const audioRef = useRef<HTMLAudioElement>(null)
   const [progress, setProgress] = useState(0)
   const [duration, setDuration] = useState(0)
-  const [loaded, setLoaded] = useState(false)
 
-  // Play / pause
+  // Pause when another card takes over (pause() doesn't need user gesture)
   useEffect(() => {
     const audio = audioRef.current
-    if (!audio || !loaded) return
-    if (isPlaying) audio.play().catch(() => {})
-    else audio.pause()
-  }, [isPlaying, loaded])
+    if (!audio || isPlaying) return
+    audio.pause()
+  }, [isPlaying])
 
+  // play() must be called directly inside the click handler (browser autoplay policy)
   const handleClick = (e: React.MouseEvent) => {
-    e.preventDefault()
     e.stopPropagation()
-    onToggle(genre.id)
+    const audio = audioRef.current
+    if (!audio) return
+    if (isPlaying) {
+      onToggle(genre.id)
+    } else {
+      onToggle(genre.id)
+      const p = audio.play()
+      if (p) p.catch(() => onToggle(genre.id))
+    }
   }
 
   return (
@@ -123,8 +164,9 @@ function GenreCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-40px' }}
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-      className="relative overflow-hidden flex flex-col"
+      className="relative overflow-hidden flex flex-col cursor-pointer"
       style={{ backgroundColor: genre.bg, minHeight: '260px' }}
+      onClick={handleClick}
     >
       {/* Accent glow */}
       <div
@@ -204,14 +246,63 @@ function GenreCard({
             </div>
           </div>
         </div>
+
+        {/* Mobile inline description — md:hidden (desktop uses bottom panel) */}
+        <AnimatePresence>
+          {isPlaying && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              className="md:hidden overflow-hidden border-t"
+              style={{ borderColor: `${genre.accent}20` }}
+            >
+              <div className="pt-4 space-y-4">
+                {/* 장르 특징 */}
+                <div>
+                  <p className="text-[9px] font-mono uppercase tracking-[0.3em] mb-2" style={{ color: `${genre.accent}60` }}>장르 특징</p>
+                  <div className="space-y-2">
+                    {genre.chars.map((c, i) => (
+                      <div key={i} className="flex items-start gap-2">
+                        <span className="text-[9px] font-mono mt-0.5 shrink-0" style={{ color: `${genre.accent}50` }}>{String(i + 1).padStart(2, '0')}</span>
+                        <p className="text-[11px] text-white/60 leading-snug">{c}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                {/* 참고 트랙 */}
+                <div>
+                  <p className="text-[9px] font-mono uppercase tracking-[0.3em] mb-2" style={{ color: `${genre.accent}60` }}>참고 트랙</p>
+                  <div className="space-y-1.5">
+                    {genre.refs.map((r, i) => (
+                      <div key={i} className="flex items-center gap-2">
+                        <div className="w-px h-3 shrink-0" style={{ backgroundColor: `${genre.accent}40` }} />
+                        <p className="text-[11px] text-white/60">{r}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                {/* Suno Prompt */}
+                <div>
+                  <p className="text-[9px] font-mono uppercase tracking-[0.3em] mb-2" style={{ color: `${genre.accent}60` }}>Suno Prompt</p>
+                  <pre className="text-[10px] font-mono leading-relaxed whitespace-pre-wrap break-words p-2"
+                    style={{ color: `${genre.accent}80`, backgroundColor: `${genre.accent}08`, border: `1px solid ${genre.accent}18` }}>
+                    {genre.sunoPrompt}
+                  </pre>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       {/* Hidden audio */}
       <audio
         ref={audioRef}
         src={genre.audioSrc}
-        preload="metadata"
-        onLoadedMetadata={() => { setDuration(audioRef.current?.duration ?? 0); setLoaded(true) }}
+        preload="auto"
+        onLoadedMetadata={() => { setDuration(audioRef.current?.duration ?? 0) }}
         onTimeUpdate={() => {
           const a = audioRef.current
           if (a) setProgress(a.duration ? a.currentTime / a.duration : 0)
@@ -226,41 +317,80 @@ function GenreCard({
 export default function MusicSection() {
   const [playingId, setPlayingId] = useState<GenreId | null>(null)
 
+  // Stop when BentoCard starts playing
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const detail = (e as CustomEvent<string>).detail
+      if (!detail.startsWith('music-')) setPlayingId(null)
+    }
+    window.addEventListener('audio:play', handler)
+    return () => window.removeEventListener('audio:play', handler)
+  }, [])
+
   const handleToggle = useCallback((id: GenreId) => {
-    setPlayingId(cur => cur === id ? null : id)
+    setPlayingId(cur => {
+      const next = cur === id ? null : id
+      if (next !== null) {
+        setTimeout(() => window.dispatchEvent(new CustomEvent('audio:play', { detail: `music-${id}` })), 0)
+      }
+      return next
+    })
   }, [])
 
   return (
     <section id="music" className="border-t border-[#e5e5e5]">
       {/* Header */}
-      <div className="px-6 md:px-12 py-5 flex items-center justify-between border-b border-[#e5e5e5]">
+      <div className="px-6 md:px-12 py-5 flex items-center border-b border-[#e5e5e5]">
         <div className="flex items-baseline gap-4">
           <h2 className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#1a1a1a]">Music</h2>
           <span className="text-[10px] text-[#a3a3a3] font-mono">{String(GENRES.length).padStart(2, '0')} genres</span>
           <span className="text-[10px] text-[#a3a3a3] italic hidden md:inline">AI-generated · Suno</span>
         </div>
-        <Link
-          href="/work/music"
-          className="flex items-center gap-1.5 text-[10px] text-[#737373] hover:text-[#2563EB] transition-colors duration-150 group"
-        >
-          <span className="uppercase tracking-[0.2em] font-bold">View all</span>
-          <ArrowUpRight size={11} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-150" />
-        </Link>
       </div>
 
-      {/* 5-genre grid */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-px bg-[#e5e5e5]">
+      {/* Mobile: two independent flex columns — expanding a card never affects the other column */}
+      <div className="md:hidden flex gap-px bg-[#e5e5e5]">
+        <div className="flex-1 flex flex-col gap-px">
+          {GENRES.filter((_, i) => i % 2 === 0).map((genre) => (
+            <GenreCard key={genre.id} genre={genre} isPlaying={playingId === genre.id} onToggle={handleToggle} />
+          ))}
+        </div>
+        <div className="flex-1 flex flex-col gap-px">
+          {GENRES.filter((_, i) => i % 2 === 1).map((genre) => (
+            <GenreCard key={genre.id} genre={genre} isPlaying={playingId === genre.id} onToggle={handleToggle} />
+          ))}
+        </div>
+      </div>
+
+      {/* Desktop: grid */}
+      <div className="hidden md:grid md:grid-cols-3 lg:grid-cols-5 gap-px bg-[#e5e5e5] items-start">
         {GENRES.map((genre) => (
-          <GenreCard
-            key={genre.id}
-            genre={genre}
-            isPlaying={playingId === genre.id}
-            onToggle={handleToggle}
-          />
+          <GenreCard key={genre.id} genre={genre} isPlaying={playingId === genre.id} onToggle={handleToggle} />
         ))}
       </div>
 
-      {/* Description strip */}
+      {/* View more button */}
+      <div className="flex justify-center py-8">
+        <Link href="/work/music" className="group flex flex-col items-center gap-2">
+          <div className="flex items-center gap-4">
+            <div className="h-px w-10 bg-[#c3c3c3] group-hover:w-16 transition-all duration-300" />
+            <span className="font-mono text-[10px] uppercase tracking-[0.35em] text-[#737373]
+                             group-hover:text-[#1a1a1a] transition-colors duration-200">
+              View more
+            </span>
+            <div className="h-px w-10 bg-[#c3c3c3] group-hover:w-16 transition-all duration-300" />
+          </div>
+          <motion.div
+            animate={{ y: [0, 3, 0] }}
+            transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
+            className="text-[#c3c3c3] group-hover:text-[#1a1a1a] transition-colors duration-200"
+          >
+            <ArrowUpRight size={12} strokeWidth={1.5} className="rotate-90" />
+          </motion.div>
+        </Link>
+      </div>
+
+      {/* Detail panel — desktop only (mobile uses inline expansion inside GenreCard) */}
       <AnimatePresence>
         {playingId && (() => {
           const g = GENRES.find(g => g.id === playingId)!
@@ -270,16 +400,74 @@ export default function MusicSection() {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-              className="overflow-hidden border-t border-[#e5e5e5]"
+              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              className="hidden md:block overflow-hidden border-t border-[#e5e5e5]"
+              style={{ backgroundColor: g.bg }}
             >
-              <div className="px-6 md:px-12 py-4 flex items-center gap-4">
+              {/* Header */}
+              <div className="px-6 md:px-12 pt-6 pb-4 flex items-center gap-3 border-b"
+                style={{ borderColor: `${g.accent}20` }}>
                 <div className="w-1.5 h-1.5 rounded-full shrink-0" style={{ backgroundColor: g.accent }} />
-                <span className="text-[10px] font-bold uppercase tracking-[0.3em]" style={{ color: g.accent }}>
+                <span className="text-[10px] font-bold uppercase tracking-[0.35em]" style={{ color: g.accent }}>
                   {g.label}
                 </span>
-                <span className="text-[#e5e5e5]">—</span>
-                <p className="text-[11px] text-[#737373]">{g.desc}</p>
+                <span style={{ color: `${g.accent}30` }}>—</span>
+                <p className="text-[11px] text-white/40 font-light">{g.desc}</p>
+              </div>
+
+              {/* Body — 3 columns */}
+              <div className="px-6 md:px-12 py-6 grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-0 md:divide-x"
+                style={{ '--tw-divide-opacity': 0.12, borderColor: `${g.accent}20` } as React.CSSProperties}>
+
+                {/* Col 1 — Characteristics */}
+                <div className="md:pr-8">
+                  <p className="text-[9px] font-mono uppercase tracking-[0.3em] mb-4"
+                    style={{ color: `${g.accent}60` }}>
+                    장르 특징
+                  </p>
+                  <div className="space-y-3">
+                    {g.chars.map((c, i) => (
+                      <div key={i} className="flex items-start gap-3">
+                        <span className="text-[9px] font-mono mt-0.5 shrink-0" style={{ color: `${g.accent}50` }}>
+                          {String(i + 1).padStart(2, '0')}
+                        </span>
+                        <p className="text-[11px] text-white/60 leading-snug">{c}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Col 2 — Reference tracks */}
+                <div className="md:px-8">
+                  <p className="text-[9px] font-mono uppercase tracking-[0.3em] mb-4"
+                    style={{ color: `${g.accent}60` }}>
+                    참고 트랙
+                  </p>
+                  <div className="space-y-3">
+                    {g.refs.map((r, i) => (
+                      <div key={i} className="flex items-center gap-2">
+                        <div className="w-px h-3 shrink-0" style={{ backgroundColor: `${g.accent}40` }} />
+                        <p className="text-[11px] text-white/60 font-light">{r}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Col 3 — Suno prompt */}
+                <div className="md:pl-8">
+                  <p className="text-[9px] font-mono uppercase tracking-[0.3em] mb-4"
+                    style={{ color: `${g.accent}60` }}>
+                    Suno Prompt
+                  </p>
+                  <pre className="text-[10px] font-mono leading-relaxed whitespace-pre-wrap break-words p-3"
+                    style={{
+                      color: `${g.accent}80`,
+                      backgroundColor: `${g.accent}08`,
+                      border: `1px solid ${g.accent}18`,
+                    }}>
+                    {g.sunoPrompt}
+                  </pre>
+                </div>
               </div>
             </motion.div>
           )

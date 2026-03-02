@@ -17,6 +17,9 @@ const DESIGN_IMG_BG: Record<string, string> = {
   d3: '#0a0a0a',
   d4: '#1a2744',
   d5: '#f5f0e8',
+  d6: '#0d0d0d',
+  d7: '#0d0d0d',
+  d8: '#ede8e0',
 }
 
 // ── Thumbnail area — picks the right visual per category ──────────────────

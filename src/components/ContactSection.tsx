@@ -37,6 +37,15 @@ const LINKS = [
     external: true,
     isNaver:  true,
   },
+  {
+    label:    'YouTube',
+    handle:   'Yusung_fc',
+    href:     'https://www.youtube.com/@Yusung_fc',
+    Icon:     null,
+    accent:   '#FF0000',
+    external: true,
+    isYouTube: true,
+  },
 ]
 
 function LinkedInIcon({ size = 18 }: { size?: number }) {
@@ -55,9 +64,17 @@ function NaverIcon({ size = 18 }: { size?: number }) {
   )
 }
 
+function YouTubeIcon({ size = 18 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+    </svg>
+  )
+}
+
 export default function ContactSection() {
   return (
-    <section className="border-t border-[#e5e5e5]">
+    <section id="contact" className="border-t border-[#e5e5e5]">
       {/* Section header */}
       <div className="px-6 md:px-12 py-5 border-b border-[#e5e5e5]">
         <h2 className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#1a1a1a]">Contact</h2>
@@ -126,9 +143,11 @@ export default function ContactSection() {
                             style={{ color: accent }}>
                         {Icon
                           ? <Icon size={13} strokeWidth={1.8} />
-                          : (LINKS.find(l => l.handle === handle)?.isNaver
+                          : LINKS.find(l => l.handle === handle)?.isNaver
                               ? <NaverIcon size={13} />
-                              : <LinkedInIcon size={13} />)
+                              : LINKS.find(l => l.handle === handle)?.isYouTube
+                                  ? <YouTubeIcon size={13} />
+                                  : <LinkedInIcon size={13} />
                         }
                       </span>
                       <div>

@@ -3,28 +3,29 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 
 const workLinks = [
   { label: 'Video',       sectionId: 'video' },
   { label: 'Music',       sectionId: 'music' },
   { label: 'Design',      sectionId: 'design' },
   { label: 'Development', sectionId: 'development' },
-  { label: 'Business',    sectionId: 'strategy' },
+  { label: 'Business',    sectionId: 'business' },
 ]
 
-const ALL_SECTIONS = [...workLinks.map(l => l.sectionId), 'about']
+const ALL_SECTIONS = [...workLinks.map(l => l.sectionId), 'about', 'contact']
 
 export default function SideNav() {
   const [visible, setVisible]       = useState(false)
   const [activeId, setActiveId]     = useState<string | null>(null)
   const pathname = usePathname()
+  const router = useRouter()
 
   const scrollTo = (sectionId: string) => {
     if (pathname === '/') {
       document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' })
     } else {
-      window.location.href = `/#${sectionId}`
+      router.push(`/#${sectionId}`)
     }
   }
 
@@ -133,13 +134,13 @@ export default function SideNav() {
         >
           About
         </Link>
-        <a
-          href="mailto:yusung8307@gmail.com"
-          className="flex items-center gap-2.5 px-2 py-2 text-sm text-[#737373]
-                     hover:text-[#1a1a1a] hover:bg-[#f4f4f2] rounded-sm transition-colors duration-150"
+        <button
+          onClick={() => scrollTo('contact')}
+          className={`flex items-center gap-2.5 px-2 py-2 text-sm rounded-sm w-full text-left transition-colors duration-150
+                      ${activeId === 'contact' ? 'text-[#1978e5] font-semibold bg-[#F0F0F0]' : 'text-[#737373] hover:text-[#1a1a1a] hover:bg-[#f4f4f2]'}`}
         >
           Contact
-        </a>
+        </button>
       </nav>
 
       {/* Bottom */}

@@ -4,6 +4,7 @@ import { GeistMono } from 'geist/font/mono'
 import './globals.css'
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://luma3.vercel.app'),
   title: 'LUMA3 — Portfolio',
   description: 'I think in systems, create in layers.',
   openGraph: {
