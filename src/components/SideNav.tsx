@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import ThemeToggle from './ThemeToggle'
 
 const workLinks = [
   { label: 'Video',       sectionId: 'video' },
@@ -74,11 +73,10 @@ export default function SideNav() {
                  bg-bg/95 backdrop-blur-md border-r border-border"
     >
       {/* Brand */}
-      <div className="px-6 py-7 border-b border-border flex items-center justify-between">
+      <div className="px-6 py-7 border-b border-border flex items-center">
         <Link href="/" className="text-base font-black tracking-tighter hover:opacity-50 transition-opacity">
           luma3<span className="text-[#1978e5]">.</span>
         </Link>
-        <ThemeToggle />
       </div>
 
       {/* Nav */}

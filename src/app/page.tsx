@@ -8,6 +8,7 @@ import { DesignSection, DevelopmentSection, BusinessSection } from '@/components
 import AboutSection from '@/components/AboutSection'
 import ContactSection from '@/components/ContactSection'
 import BackToTop from '@/components/BackToTop'
+import ThemeToggle from '@/components/ThemeToggle'
 
 export default function Home() {
   return (
@@ -17,6 +18,11 @@ export default function Home() {
 
       {/* Mobile top nav — hidden on desktop where SideNav handles navigation */}
       <Navigation />
+
+      {/* Desktop theme toggle — fixed top-right, always visible */}
+      <div className="fixed top-5 right-6 z-50 hidden md:flex">
+        <ThemeToggle />
+      </div>
 
       {/* Floating back-to-top button */}
       <BackToTop />
