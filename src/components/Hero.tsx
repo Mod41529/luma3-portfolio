@@ -41,6 +41,10 @@ export default function Hero() {
     const ctx = canvas.getContext('2d') as CanvasRenderingContext2D
     if (!ctx) return
 
+    // Skip particle animation for users who prefer reduced motion
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (prefersReduced) return
+
     let W = window.innerWidth
     let H = window.innerHeight
 
@@ -230,6 +234,8 @@ export default function Hero() {
       }
 
       // Draw links — alpha follows dimmer endpoint
+      const isDarkMode = document.documentElement.classList.contains('dark')
+      const linkRgb = isDarkMode ? '229,229,229' : '26,26,26'
       const LINK_SQ = dynLinkDist ** 2
       ctx.lineWidth = Math.max(0.6, 0.8 * (Math.hypot(W, H) / REF_DIAG))
       for (let i = 0; i < pts.length; i++) {
@@ -243,17 +249,19 @@ export default function Hero() {
           ctx.beginPath()
           ctx.moveTo(pts[i].x, pts[i].y)
           ctx.lineTo(pts[j].x, pts[j].y)
-          ctx.strokeStyle = `rgba(26,26,26,${(base * distF * pairA).toFixed(3)})`
+          ctx.strokeStyle = `rgba(${linkRgb},${(base * distF * pairA).toFixed(3)})`
           ctx.stroke()
         }
       }
 
       // Draw dots
+      const isDark = document.documentElement.classList.contains('dark')
+      const dotColor = isDark ? '#e5e5e5' : '#1a1a1a'
       for (const p of pts) {
         const near = (p.x - mx) ** 2 + (p.y - my) ** 2 < dynRepelR ** 2
         ctx.beginPath()
         ctx.arc(p.x, p.y, near ? p.r * 1.5 : p.r, 0, Math.PI * 2)
-        ctx.fillStyle   = near ? '#1978e5' : '#1a1a1a'
+        ctx.fillStyle   = near ? '#1978e5' : dotColor
         ctx.globalAlpha = p.alpha * (near ? 0.65 : 0.28)
         ctx.fill()
       }
@@ -290,7 +298,7 @@ export default function Hero() {
           <motion.p
             variants={fadeUp}
             transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-            className="font-mono uppercase tracking-[0.28em] text-[#737373] mb-10
+            className="font-mono uppercase tracking-[0.28em] text-fg-muted mb-10
                        text-[10px] xl:text-[11px] 2xl:text-[12px]"
           >
             Portfolio — 2026
@@ -299,7 +307,7 @@ export default function Hero() {
           <motion.h1
             variants={fadeUp}
             transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
-            className="font-black leading-[0.88] tracking-tight text-[#1a1a1a] select-none
+            className="font-black leading-[0.88] tracking-tight text-fg select-none
                        text-[clamp(4.5rem,16vw,18rem)]"
           >
             luma3<span className="text-[#1978e5]">.</span>
@@ -308,7 +316,7 @@ export default function Hero() {
           <motion.div
             variants={fadeUp}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            className="w-full h-px bg-[#e5e5e5] mt-6"
+            className="w-full h-px bg-border mt-6"
           />
 
           <motion.div
@@ -316,16 +324,16 @@ export default function Hero() {
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             className="flex flex-col items-center mt-5 gap-3"
           >
-            <p className="font-light leading-relaxed text-[#737373]
+            <p className="font-light leading-relaxed text-fg-muted
                           text-xl md:text-2xl 2xl:text-3xl">
               Think in systems, create in layers.
             </p>
             <div className="flex flex-col items-center gap-1.5">
-              <span className="uppercase font-bold text-[#a3a3a3]
+              <span className="uppercase font-bold text-fg-subtle
                                tracking-[0.3em] text-[10px] xl:text-[11px] 2xl:text-[13px]">
                 Based in Seoul / Creative Designer
               </span>
-              <div className="h-px w-28 bg-[#e5e5e5]" />
+              <div className="h-px w-28 bg-border" />
             </div>
           </motion.div>
         </motion.div>
@@ -337,12 +345,12 @@ export default function Hero() {
         transition={{ delay: 1.2, duration: 0.6 }}
         className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3"
       >
-        <span className="font-mono uppercase tracking-[0.3em] text-[13px] text-[#a3a3a3]">Scroll</span>
+        <span className="font-mono uppercase tracking-[0.3em] text-[13px] text-fg-subtle">Scroll</span>
 
         {/* Animated scroll line */}
-        <div className="relative w-px h-16 bg-[#e5e5e5] overflow-hidden">
+        <div className="relative w-px h-16 bg-border overflow-hidden">
           <motion.div
-            className="absolute top-0 left-0 w-full bg-[#1a1a1a]"
+            className="absolute top-0 left-0 w-full bg-fg"
             animate={{ height: ['0%', '100%', '100%', '0%'], top: ['0%', '0%', '100%', '100%'] }}
             transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut', times: [0, 0.45, 0.55, 1] }}
           />
@@ -352,7 +360,7 @@ export default function Hero() {
           animate={{ y: [0, 4, 0] }}
           transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
         >
-          <ArrowDown size={16} strokeWidth={1.5} className="text-[#a3a3a3]" />
+          <ArrowDown size={16} strokeWidth={1.5} className="text-fg-subtle" />
         </motion.div>
       </motion.div>
     </section>

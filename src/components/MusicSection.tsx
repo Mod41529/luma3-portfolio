@@ -338,18 +338,18 @@ export default function MusicSection() {
   }, [])
 
   return (
-    <section id="music" className="border-t border-[#e5e5e5]">
+    <section id="music" className="border-t border-border">
       {/* Header */}
-      <div className="px-6 md:px-12 py-5 flex items-center border-b border-[#e5e5e5]">
+      <div className="px-6 md:px-12 py-5 flex items-center border-b border-border">
         <div className="flex items-baseline gap-4">
-          <h2 className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#1a1a1a]">Music</h2>
-          <span className="text-[10px] text-[#a3a3a3] font-mono">{String(GENRES.length).padStart(2, '0')} genres</span>
-          <span className="text-[10px] text-[#a3a3a3] italic hidden md:inline">AI-generated · Suno</span>
+          <h2 className="text-[10px] font-bold uppercase tracking-[0.4em] text-fg">Music</h2>
+          <span className="text-[10px] text-fg-subtle font-mono">{String(GENRES.length).padStart(2, '0')} genres</span>
+          <span className="text-[10px] text-fg-subtle italic hidden md:inline">AI-generated · Suno</span>
         </div>
       </div>
 
       {/* Mobile: two independent flex columns — expanding a card never affects the other column */}
-      <div className="md:hidden flex gap-px bg-[#e5e5e5]">
+      <div className="md:hidden flex gap-px bg-border">
         <div className="flex-1 flex flex-col gap-px">
           {GENRES.filter((_, i) => i % 2 === 0).map((genre) => (
             <GenreCard key={genre.id} genre={genre} isPlaying={playingId === genre.id} onToggle={handleToggle} />
@@ -363,7 +363,7 @@ export default function MusicSection() {
       </div>
 
       {/* Desktop: grid */}
-      <div className="hidden md:grid md:grid-cols-3 lg:grid-cols-5 gap-px bg-[#e5e5e5] items-start">
+      <div className="hidden md:grid md:grid-cols-3 lg:grid-cols-5 gap-px bg-border items-start">
         {GENRES.map((genre) => (
           <GenreCard key={genre.id} genre={genre} isPlaying={playingId === genre.id} onToggle={handleToggle} />
         ))}
@@ -373,17 +373,17 @@ export default function MusicSection() {
       <div className="flex justify-center py-8">
         <Link href="/work/music" className="group flex flex-col items-center gap-2">
           <div className="flex items-center gap-4">
-            <div className="h-px w-10 bg-[#c3c3c3] group-hover:w-16 transition-all duration-300" />
-            <span className="font-mono text-[10px] uppercase tracking-[0.35em] text-[#737373]
-                             group-hover:text-[#1a1a1a] transition-colors duration-200">
+            <div className="h-px w-10 bg-fg-faint group-hover:w-16 transition-all duration-300" />
+            <span className="font-mono text-[10px] uppercase tracking-[0.35em] text-fg-muted
+                             group-hover:text-fg transition-colors duration-200">
               View more
             </span>
-            <div className="h-px w-10 bg-[#c3c3c3] group-hover:w-16 transition-all duration-300" />
+            <div className="h-px w-10 bg-fg-faint group-hover:w-16 transition-all duration-300" />
           </div>
           <motion.div
             animate={{ y: [0, 3, 0] }}
             transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
-            className="text-[#c3c3c3] group-hover:text-[#1a1a1a] transition-colors duration-200"
+            className="text-fg-faint group-hover:text-fg transition-colors duration-200"
           >
             <ArrowUpRight size={12} strokeWidth={1.5} className="rotate-90" />
           </motion.div>
@@ -401,7 +401,7 @@ export default function MusicSection() {
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-              className="hidden md:block overflow-hidden border-t border-[#e5e5e5]"
+              className="hidden md:block overflow-hidden border-t border-border"
               style={{ backgroundColor: g.bg }}
             >
               {/* Header */}

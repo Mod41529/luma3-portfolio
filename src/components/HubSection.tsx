@@ -18,10 +18,10 @@ function SectionHeader({ categoryId }: { categoryId: CategoryId }) {
   const cat      = categories[categoryId]
   const catWorks = works.filter((w) => w.category === categoryId)
   return (
-    <div className="px-6 md:px-12 py-5 flex items-baseline border-b border-[#e5e5e5]">
+    <div className="px-6 md:px-12 py-5 flex items-baseline border-b border-border">
       <div className="flex items-baseline gap-4">
-        <h2 className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#1a1a1a]">{cat.nameEn}</h2>
-        <span className="text-[10px] text-[#a3a3a3] font-mono">
+        <h2 className="text-[10px] font-bold uppercase tracking-[0.4em] text-fg">{cat.nameEn}</h2>
+        <span className="text-[10px] text-fg-subtle font-mono">
           {String(catWorks.length).padStart(2, '0')} works
         </span>
       </div>
@@ -103,20 +103,20 @@ function DesignDetailPanel({ work, onClose }: { work: WorkItem; onClose: () => v
       exit={{ opacity: 0, y: 40 }}
       transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
       className="fixed bottom-0 left-0 right-0 z-[200] md:left-[200px]
-                 bg-[#FAFAFA] border-t border-[#e5e5e5] max-h-[60vh] overflow-y-auto"
+                 bg-bg-card border-t border-border max-h-[60vh] overflow-y-auto"
     >
-      <div className="sticky top-0 bg-[#FAFAFA]/95 backdrop-blur-sm border-b border-[#e5e5e5]
+      <div className="sticky top-0 bg-bg-card/95 backdrop-blur-sm border-b border-border
                       px-6 md:px-10 py-4 flex items-center justify-between z-10">
         <div className="flex items-center gap-4 min-w-0">
           <span className="text-[9px] font-mono uppercase tracking-[0.25em] text-[#E11D48] shrink-0">Design</span>
           <span className="text-[#e5e5e5] shrink-0">—</span>
-          <h2 className="text-sm font-black uppercase tracking-tight text-[#1a1a1a] truncate">{work.title}</h2>
-          <span className="text-[10px] text-[#a3a3a3] font-mono shrink-0">{work.year}</span>
+          <h2 className="text-sm font-black uppercase tracking-tight text-fg truncate">{work.title}</h2>
+          <span className="text-[10px] text-fg-subtle font-mono shrink-0">{work.year}</span>
         </div>
         <button
           onClick={onClose}
-          className="w-8 h-8 flex items-center justify-center text-[#a3a3a3]
-                     hover:text-[#1a1a1a] hover:bg-[#f0f0f0] transition-colors ml-4 shrink-0"
+          className="w-8 h-8 flex items-center justify-center text-fg-subtle
+                     hover:text-fg hover:bg-bg-hover transition-colors ml-4 shrink-0"
         >
           <X size={14} />
         </button>
@@ -124,12 +124,12 @@ function DesignDetailPanel({ work, onClose }: { work: WorkItem; onClose: () => v
 
       <div className="px-6 md:px-10 py-6 grid md:grid-cols-2 gap-8 max-w-4xl">
         <div className="space-y-5">
-          <p className="text-sm text-[#737373] font-light leading-relaxed">{work.description}</p>
-          <p className="text-sm text-[#a3a3a3] leading-relaxed">{work.descriptionKo}</p>
+          <p className="text-sm text-fg-muted font-light leading-relaxed">{work.description}</p>
+          <p className="text-sm text-fg-subtle leading-relaxed">{work.descriptionKo}</p>
           <div className="flex flex-wrap gap-2 pt-1">
             {work.tools.map((t) => (
               <span key={t} className="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider
-                                       text-[#737373] border border-[#e5e5e5] bg-[#f4f4f2]">
+                                       text-fg-muted border border-border bg-bg-subtle">
                 {t}
               </span>
             ))}
@@ -139,13 +139,13 @@ function DesignDetailPanel({ work, onClose }: { work: WorkItem; onClose: () => v
         <div>
           <button
             onClick={() => setHowOpen((o) => !o)}
-            className="w-full flex items-center justify-between py-3 border-b border-[#e5e5e5] text-left"
+            className="w-full flex items-center justify-between py-3 border-b border-border text-left"
           >
-            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#1a1a1a]">
+            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-fg">
               How I made this
             </span>
             <motion.div animate={{ rotate: howOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
-              <ChevronDown size={14} className="text-[#a3a3a3]" />
+              <ChevronDown size={14} className="text-fg-subtle" />
             </motion.div>
           </button>
           <AnimatePresence initial={false}>
@@ -160,7 +160,7 @@ function DesignDetailPanel({ work, onClose }: { work: WorkItem; onClose: () => v
                 <div className="py-5 space-y-4">
                   {work.howIMadeThis.prompt && (
                     <div>
-                      <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#a3a3a3] mb-2">Prompt</p>
+                      <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-fg-subtle mb-2">Prompt</p>
                       <pre className="bg-[#111821] text-[#94a3b8] text-[11px] font-mono
                                       leading-relaxed p-4 whitespace-pre-wrap break-words">
                         <span className="text-[#1978e5] italic block mb-1">// AI Prompt</span>
@@ -169,8 +169,8 @@ function DesignDetailPanel({ work, onClose }: { work: WorkItem; onClose: () => v
                     </div>
                   )}
                   <div>
-                    <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#a3a3a3] mb-2">Process</p>
-                    <p className="text-xs text-[#737373] leading-relaxed">{work.howIMadeThis.processNotes}</p>
+                    <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-fg-subtle mb-2">Process</p>
+                    <p className="text-xs text-fg-muted leading-relaxed">{work.howIMadeThis.processNotes}</p>
                   </div>
                 </div>
               </motion.div>
@@ -191,9 +191,9 @@ function DesignBody() {
   return (
     <>
       {/* Masonry — CSS columns, natural aspect ratios */}
-      <div className="relative border-b border-[#e5e5e5]">
+      <div className="relative border-b border-border">
         <div
-          className="bg-[#e5e5e5]"
+          className="bg-border"
           style={{
             columns: '4 180px',
             columnGap: '1px',
@@ -211,7 +211,7 @@ function DesignBody() {
         {/* Fade — solid #fafafa covers grey column gaps, fades into content above */}
         <div
           className="absolute bottom-0 left-0 right-0 h-72 pointer-events-none"
-          style={{ background: 'linear-gradient(to top, #fafafa 0%, #fafafa 30%, transparent 75%)' }}
+          style={{ background: 'linear-gradient(to top, var(--bg) 0%, var(--bg) 30%, transparent 75%)' }}
         />
 
         {/* View more button */}
@@ -219,8 +219,8 @@ function DesignBody() {
           <Link href="/work/design" className="group flex flex-col items-center gap-2">
             <div className="flex items-center gap-4">
               <div className="h-px w-10 bg-[#c3c3c3] group-hover:w-16 transition-all duration-300" />
-              <span className="font-mono text-[10px] uppercase tracking-[0.35em] text-[#737373]
-                               group-hover:text-[#1a1a1a] transition-colors duration-200">
+              <span className="font-mono text-[10px] uppercase tracking-[0.35em] text-fg-muted
+                               group-hover:text-fg transition-colors duration-200">
                 View more
               </span>
               <div className="h-px w-10 bg-[#c3c3c3] group-hover:w-16 transition-all duration-300" />
@@ -228,7 +228,7 @@ function DesignBody() {
             <motion.div
               animate={{ y: [0, 3, 0] }}
               transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
-              className="text-[#c3c3c3] group-hover:text-[#1a1a1a] transition-colors duration-200"
+              className="text-fg-faint group-hover:text-fg transition-colors duration-200"
             >
               <ArrowUpRight size={12} strokeWidth={1.5} className="rotate-90" />
             </motion.div>
@@ -267,40 +267,40 @@ function DevelopmentBody() {
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
     >
       {/* Top: project info */}
-      <div className="px-6 md:px-12 py-8 md:py-10 flex flex-col md:flex-row gap-8 md:gap-20 border-b border-[#e5e5e5]">
+      <div className="px-6 md:px-12 py-8 md:py-10 flex flex-col md:flex-row gap-8 md:gap-20 border-b border-border">
         <div className="flex gap-7 items-start shrink-0">
-          <span className="text-[10px] font-mono text-[#c3c3c3] mt-1.5 shrink-0">01</span>
-          <h3 className="text-3xl md:text-4xl font-black tracking-tighter text-[#1a1a1a] leading-[0.92]">
+          <span className="text-[10px] font-mono text-fg-faint mt-1.5 shrink-0">01</span>
+          <h3 className="text-3xl md:text-4xl font-black tracking-tighter text-fg leading-[0.92]">
             {featured.title}
           </h3>
         </div>
         <div>
-          <p className="text-sm text-[#737373] font-light leading-relaxed mb-5">
+          <p className="text-sm text-fg-muted font-light leading-relaxed mb-5">
             {featured.description}
           </p>
           <div className="flex flex-wrap items-center gap-1.5">
             {featured.tools.map((tool) => (
-              <span key={tool} className="px-2.5 py-1 text-[9px] font-bold uppercase tracking-wider text-[#737373] border border-[#e5e5e5]">
+              <span key={tool} className="px-2.5 py-1 text-[9px] font-bold uppercase tracking-wider text-fg-muted border border-border">
                 {tool}
               </span>
             ))}
-            <span className="text-[9px] font-mono text-[#c3c3c3] ml-3">{featured.year}</span>
+            <span className="text-[9px] font-mono text-fg-faint ml-3">{featured.year}</span>
           </div>
         </div>
       </div>
 
       {/* Bottom: full-width horizontal flowchart */}
-      <div className="bg-[#F8F8F8] relative flex items-center justify-center px-6 md:px-10 py-16 md:py-24 min-h-[380px] overflow-hidden">
+      <div className="bg-bg-subtle relative flex items-center justify-center px-6 md:px-10 py-16 md:py-24 min-h-[380px] overflow-hidden">
         {/* grid background */}
         <div
           className="absolute inset-0 opacity-40 pointer-events-none"
           style={{
-            backgroundImage: 'linear-gradient(to right, #e5e5e5 1px, transparent 1px), linear-gradient(to bottom, #e5e5e5 1px, transparent 1px)',
+            backgroundImage: 'linear-gradient(to right, var(--border) 1px, transparent 1px), linear-gradient(to bottom, var(--border) 1px, transparent 1px)',
             backgroundSize: '40px 40px',
           }}
         />
         {/* panel labels */}
-        <p className="absolute top-5 left-6 text-[8px] font-mono uppercase tracking-[0.25em] text-[#a3a3a3]">
+        <p className="absolute top-5 left-6 text-[8px] font-mono uppercase tracking-[0.25em] text-fg-subtle">
           Example — luma3 포트폴리오 빌드
         </p>
         <div className="absolute top-5 right-6 flex items-center gap-1.5">
@@ -538,7 +538,7 @@ function DomainPanel({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-40px' }}
       transition={{ duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] }}
-      className="bg-[#FAFAFA] p-8 md:p-10 flex flex-col gap-6 scroll-mt-8"
+      className="bg-bg-card p-8 md:p-10 flex flex-col gap-6 scroll-mt-8"
     >
       {/* Icon + label */}
       <div className="flex items-start gap-5">
@@ -549,13 +549,13 @@ function DomainPanel({
           <Icon size={24} strokeWidth={1.3} style={{ color }} />
         </div>
         <div>
-          <p className="text-xl font-black tracking-tight text-[#1a1a1a]">{label}</p>
-          <p className="text-[9px] font-mono uppercase tracking-[0.3em] text-[#a3a3a3] mt-0.5">{labelEn}</p>
+          <p className="text-xl font-black tracking-tight text-fg">{label}</p>
+          <p className="text-[9px] font-mono uppercase tracking-[0.3em] text-fg-subtle mt-0.5">{labelEn}</p>
         </div>
       </div>
 
       {/* Description */}
-      <p className="text-sm text-[#737373] leading-relaxed">{description}</p>
+      <p className="text-sm text-fg-muted leading-relaxed">{description}</p>
 
       {/* 3 key points */}
       <div className="space-y-3 flex-1">
@@ -570,8 +570,8 @@ function DomainPanel({
                 {String(i + 1).padStart(2, '0')}
               </span>
               <div>
-                <p className="text-xs font-bold text-[#1a1a1a] leading-tight">{title}</p>
-                <p className="text-[10px] text-[#a3a3a3] leading-snug mt-0.5">{rest.join(' — ')}</p>
+                <p className="text-xs font-bold text-fg leading-tight">{title}</p>
+                <p className="text-[10px] text-fg-subtle leading-snug mt-0.5">{rest.join(' — ')}</p>
               </div>
             </div>
           )
@@ -580,14 +580,14 @@ function DomainPanel({
 
       {/* Works */}
       {domainWorks.length > 0 && (
-        <div className="pt-4 border-t border-[#e5e5e5] space-y-2">
+        <div className="pt-4 border-t border-border space-y-2">
           {domainWorks.map((w) => (
             <Link key={w.id} href="/work/business" className="group flex items-center gap-2">
               <span className="w-1 h-1 rounded-full shrink-0" style={{ backgroundColor: color }} />
-              <span className="text-xs text-[#1a1a1a] font-medium group-hover:text-[#1978e5] transition-colors duration-150">
+              <span className="text-xs text-fg font-medium group-hover:text-[#1978e5] transition-colors duration-150">
                 {w.title}
               </span>
-              <ArrowUpRight size={10} className="text-[#c3c3c3] group-hover:text-[#1978e5] transition-colors duration-150 ml-auto" />
+              <ArrowUpRight size={10} className="text-fg-faint group-hover:text-[#1978e5] transition-colors duration-150 ml-auto" />
             </Link>
           ))}
         </div>
@@ -599,9 +599,9 @@ function DomainPanel({
 function BusinessBody() {
   const rows = [BUSINESS_DOMAINS.slice(0, 2), BUSINESS_DOMAINS.slice(2, 4)]
   return (
-    <div className="space-y-px border-b border-[#e5e5e5] bg-[#e5e5e5]">
+    <div className="space-y-px border-b border-border bg-border">
       {rows.map((row, rowIdx) => (
-        <div key={rowIdx} className="grid grid-cols-1 md:grid-cols-2 gap-px bg-[#e5e5e5]">
+        <div key={rowIdx} className="grid grid-cols-1 md:grid-cols-2 gap-px bg-border">
           {row.map((domain, colIdx) => (
             <DomainPanel
               key={domain.id}
@@ -618,7 +618,7 @@ function BusinessBody() {
 // ── Exported sections ─────────────────────────────────────────────────────────
 export function DesignSection() {
   return (
-    <section id="design" className="border-t border-[#e5e5e5]">
+    <section id="design" className="border-t border-border">
       <SectionHeader categoryId="design" />
       <DesignBody />
     </section>
@@ -627,7 +627,7 @@ export function DesignSection() {
 
 export function DevelopmentSection() {
   return (
-    <section id="development" className="border-t border-[#e5e5e5]">
+    <section id="development" className="border-t border-border">
       <SectionHeader categoryId="development" />
       <DevelopmentBody />
     </section>
@@ -636,7 +636,7 @@ export function DevelopmentSection() {
 
 export function BusinessSection() {
   return (
-    <section id="business" className="border-t border-[#e5e5e5]">
+    <section id="business" className="border-t border-border">
       <SectionHeader categoryId="business" />
       <BusinessBody />
     </section>

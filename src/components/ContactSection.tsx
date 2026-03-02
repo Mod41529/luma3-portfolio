@@ -9,7 +9,7 @@ const LINKS = [
     handle:   'yusung8307@gmail.com',
     href:     'mailto:yusung8307@gmail.com',
     Icon:     Mail,
-    accent:   '#1a1a1a',
+    accent:   'var(--fg)',
     external: false,
   },
   {
@@ -17,7 +17,7 @@ const LINKS = [
     handle:   'Mod41529',
     href:     'https://github.com/Mod41529',
     Icon:     Github,
-    accent:   '#1a1a1a',
+    accent:   'var(--fg)',
     external: true,
   },
   {
@@ -74,10 +74,10 @@ function YouTubeIcon({ size = 18 }: { size?: number }) {
 
 export default function ContactSection() {
   return (
-    <section id="contact" className="border-t border-[#e5e5e5]">
+    <section id="contact" className="border-t border-border">
       {/* Section header */}
-      <div className="px-6 md:px-12 py-5 border-b border-[#e5e5e5]">
-        <h2 className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#1a1a1a]">Contact</h2>
+      <div className="px-6 md:px-12 py-5 border-b border-border">
+        <h2 className="text-[10px] font-bold uppercase tracking-[0.4em] text-fg">Contact</h2>
       </div>
 
       <div className="px-6 md:px-12 py-16 md:py-20">
@@ -90,11 +90,11 @@ export default function ContactSection() {
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
             className="flex-1"
           >
-            <p className="text-[9px] font-mono uppercase tracking-[0.3em] text-[#a3a3a3] mb-6">Get in touch</p>
-            <h3 className="text-4xl md:text-5xl font-black tracking-tighter text-[#1a1a1a] leading-[0.95] mb-6">
+            <p className="text-[9px] font-mono uppercase tracking-[0.3em] text-fg-subtle mb-6">Get in touch</p>
+            <h3 className="text-4xl md:text-5xl font-black tracking-tighter text-fg leading-[0.95] mb-6">
               Let&apos;s work<br />together.
             </h3>
-            <p className="text-sm text-[#737373] font-light leading-relaxed max-w-sm mb-8">
+            <p className="text-sm text-fg-muted font-light leading-relaxed max-w-sm mb-8">
               Open to collaboration in strategy, design, and development.
               Whether it&apos;s a project, a conversation, or an idea worth building —
               reach out.
@@ -103,15 +103,15 @@ export default function ContactSection() {
             {/* Primary email CTA */}
             <a
               href="mailto:yusung8307@gmail.com"
-              className="group inline-flex items-center gap-3 border border-[#1a1a1a] px-6 py-3.5
-                         hover:bg-[#1a1a1a] transition-colors duration-200"
+              className="group inline-flex items-center gap-3 border border-fg px-6 py-3.5
+                         hover:bg-fg transition-colors duration-200"
             >
-              <span className="text-sm font-bold uppercase tracking-[0.15em] text-[#1a1a1a] group-hover:text-white transition-colors duration-200">
+              <span className="text-sm font-bold uppercase tracking-[0.15em] text-fg group-hover:text-white transition-colors duration-200">
                 yusung8307@gmail.com
               </span>
               <ArrowUpRight
                 size={14}
-                className="text-[#1a1a1a] group-hover:text-white transition-colors duration-200"
+                className="text-fg group-hover:text-white transition-colors duration-200"
               />
             </a>
           </motion.div>
@@ -126,7 +126,7 @@ export default function ContactSection() {
           >
             {/* Social links */}
             <div>
-              <p className="text-[9px] font-mono uppercase tracking-[0.3em] text-[#a3a3a3] mb-4">Links</p>
+              <p className="text-[9px] font-mono uppercase tracking-[0.3em] text-fg-subtle mb-4">Links</p>
               <div className="space-y-1">
                 {LINKS.map(({ label, handle, href, Icon, accent, external }) => (
                   <a
@@ -134,12 +134,12 @@ export default function ContactSection() {
                     href={href}
                     target={external ? '_blank' : undefined}
                     rel={external ? 'noopener noreferrer' : undefined}
-                    className="group flex items-center justify-between py-3 border-b border-[#e5e5e5]
-                               hover:border-[#c3c3c3] transition-colors duration-150"
+                    className="group flex items-center justify-between py-3 border-b border-border
+                               hover:border-fg-faint transition-colors duration-150"
                   >
                     <div className="flex items-center gap-3">
-                      <span className="w-7 h-7 flex items-center justify-center border border-[#e5e5e5]
-                                       group-hover:border-[#c3c3c3] transition-colors duration-150"
+                      <span className="w-7 h-7 flex items-center justify-center border border-border
+                                       group-hover:border-fg-faint transition-colors duration-150"
                             style={{ color: accent }}>
                         {Icon
                           ? <Icon size={13} strokeWidth={1.8} />
@@ -151,13 +151,13 @@ export default function ContactSection() {
                         }
                       </span>
                       <div>
-                        <p className="text-[9px] font-mono uppercase tracking-wider text-[#a3a3a3]">{label}</p>
-                        <p className="text-sm font-medium text-[#1a1a1a] leading-tight">{handle}</p>
+                        <p className="text-[9px] font-mono uppercase tracking-wider text-fg-subtle">{label}</p>
+                        <p className="text-sm font-medium text-fg leading-tight">{handle}</p>
                       </div>
                     </div>
                     <ArrowUpRight
                       size={12}
-                      className="text-[#c3c3c3] group-hover:text-[#1a1a1a] transition-colors duration-150"
+                      className="text-fg-faint group-hover:text-fg transition-colors duration-150"
                     />
                   </a>
                 ))}
@@ -167,15 +167,15 @@ export default function ContactSection() {
             {/* Meta */}
             <div className="space-y-4">
               <div>
-                <p className="text-[8px] font-mono uppercase tracking-[0.3em] text-[#c3c3c3] mb-1">Location</p>
-                <p className="text-sm text-[#737373]">Seoul, Korea</p>
+                <p className="text-[8px] font-mono uppercase tracking-[0.3em] text-fg-faint mb-1">Location</p>
+                <p className="text-sm text-fg-muted">Seoul, Korea</p>
               </div>
               <div>
-                <p className="text-[8px] font-mono uppercase tracking-[0.3em] text-[#c3c3c3] mb-1">Response time</p>
-                <p className="text-sm text-[#737373]">Usually within 24h</p>
+                <p className="text-[8px] font-mono uppercase tracking-[0.3em] text-fg-faint mb-1">Response time</p>
+                <p className="text-sm text-fg-muted">Usually within 24h</p>
               </div>
               <div>
-                <p className="text-[8px] font-mono uppercase tracking-[0.3em] text-[#c3c3c3] mb-1">Status</p>
+                <p className="text-[8px] font-mono uppercase tracking-[0.3em] text-fg-faint mb-1">Status</p>
                 <div className="flex items-center gap-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#059669] animate-pulse" />
                   <p className="text-sm text-[#059669] font-medium">Open to collaboration</p>

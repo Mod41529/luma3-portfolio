@@ -60,7 +60,7 @@ function DesignThumb() {
       {/* Fade: mobile only — on desktop the light image bg contrasts fine with dark text */}
       <div
         className="absolute inset-0 pointer-events-none md:hidden"
-        style={{ background: 'linear-gradient(to bottom, rgba(250,250,250,0.2) 0%, transparent 22%, transparent 48%, #fafafa 88%)' }}
+        style={{ background: 'linear-gradient(to bottom, color-mix(in srgb, var(--bg) 20%, transparent) 0%, transparent 22%, transparent 48%, var(--bg) 88%)' }}
       />
     </div>
   )
@@ -145,13 +145,13 @@ function BusinessThumb() {
           className="flex-1 flex flex-col items-center justify-center gap-3 cursor-pointer transition-all duration-200 hover:brightness-95 hover:scale-[1.02]"
           style={{
             backgroundColor: color + '12',
-            borderRight: i < 3 ? '1px solid #e5e5e5' : 'none',
+            borderRight: i < 3 ? '1px solid var(--border)' : 'none',
           }}
         >
           <Icon size={38} strokeWidth={1.3} style={{ color }} />
           <div className="text-center">
             <p className="text-sm font-bold" style={{ color }}>{label}</p>
-            <p className="text-[8px] font-mono text-[#a3a3a3] uppercase tracking-wider mt-0.5">{labelEn}</p>
+            <p className="text-[8px] font-mono text-fg-subtle uppercase tracking-wider mt-0.5">{labelEn}</p>
           </div>
         </div>
       ))}
@@ -211,14 +211,14 @@ export default function BentoCard({
       <div className="block h-full cursor-pointer" onClick={scrollToSection}>
         <div
           className="group relative h-full overflow-hidden cursor-pointer transition-colors duration-200"
-          style={{ backgroundColor: '#FAFAFA' }}
+          style={{ backgroundColor: 'var(--bg-card)' }}
           onMouseEnter={e => {
             e.currentTarget.style.boxShadow = `inset 0 0 0 1.5px ${category.accent}55`
-            if (!hasSpecialBg && !isMusic) e.currentTarget.style.backgroundColor = '#F0F0F0'
+            if (!hasSpecialBg && !isMusic) e.currentTarget.style.backgroundColor = 'var(--bg-hover)'
           }}
           onMouseLeave={e => {
             e.currentTarget.style.boxShadow = ''
-            if (!hasSpecialBg && !isMusic) e.currentTarget.style.backgroundColor = '#FAFAFA'
+            if (!hasSpecialBg && !isMusic) e.currentTarget.style.backgroundColor = 'var(--bg-card)'
           }}
         >
           {/* ── Video background ── */}
@@ -300,21 +300,21 @@ export default function BentoCard({
               {/* Track info */}
               <div className="flex-1 min-w-0">
                 {audioTitle && (
-                  <p className="text-[11px] font-bold uppercase tracking-wider text-[#1a1a1a] truncate">{audioTitle}</p>
+                  <p className="text-[11px] font-bold uppercase tracking-wider text-fg truncate">{audioTitle}</p>
                 )}
                 {audioTitleKo && (
-                  <p className="text-[9px] text-[#a3a3a3] font-mono mt-0.5">{audioTitleKo}</p>
+                  <p className="text-[9px] text-fg-subtle font-mono mt-0.5">{audioTitleKo}</p>
                 )}
               </div>
 
               {/* Progress + time */}
               <div className="w-28 md:w-52 shrink-0">
-                <div className="h-[2px] bg-[#e5e5e5] w-full">
+                <div className="h-[2px] bg-border w-full">
                   <div className="h-full transition-none" style={{ width: `${progress * 100}%`, backgroundColor: category.accent }} />
                 </div>
                 <div className="flex justify-between mt-1.5">
-                  <span className="text-[9px] font-mono text-[#a3a3a3]">{fmt(progress * duration)}</span>
-                  <span className="text-[9px] font-mono text-[#a3a3a3]">{fmt(duration)}</span>
+                  <span className="text-[9px] font-mono text-fg-subtle">{fmt(progress * duration)}</span>
+                  <span className="text-[9px] font-mono text-fg-subtle">{fmt(duration)}</span>
                 </div>
               </div>
             </div>
@@ -339,18 +339,18 @@ export default function BentoCard({
 
               {audioTitle && (
                 <div className="text-center">
-                  <p className="text-[11px] font-bold uppercase tracking-wider text-[#1a1a1a] leading-tight">{audioTitle}</p>
-                  {audioTitleKo && <p className="text-[9px] text-[#a3a3a3] font-mono mt-0.5">{audioTitleKo}</p>}
+                  <p className="text-[11px] font-bold uppercase tracking-wider text-fg leading-tight">{audioTitle}</p>
+                  {audioTitleKo && <p className="text-[9px] text-fg-subtle font-mono mt-0.5">{audioTitleKo}</p>}
                 </div>
               )}
 
               <div className="w-full">
-                <div className="h-[2px] bg-[#e5e5e5] w-full">
+                <div className="h-[2px] bg-border w-full">
                   <div className="h-full transition-none" style={{ width: `${progress * 100}%`, backgroundColor: category.accent }} />
                 </div>
                 <div className="flex justify-between mt-1.5">
-                  <span className="text-[9px] font-mono text-[#a3a3a3]">{fmt(progress * duration)}</span>
-                  <span className="text-[9px] font-mono text-[#a3a3a3]">{fmt(duration)}</span>
+                  <span className="text-[9px] font-mono text-fg-subtle">{fmt(progress * duration)}</span>
+                  <span className="text-[9px] font-mono text-fg-subtle">{fmt(duration)}</span>
                 </div>
               </div>
             </div>
@@ -360,15 +360,15 @@ export default function BentoCard({
           {isMusic && wide ? (
             // Music wide card: single-line flex row so it doesn't clash with the player
             <div className="absolute bottom-5 left-5 right-5 z-10 flex items-baseline gap-3">
-              <p className="text-base font-medium leading-none text-[#1a1a1a] shrink-0">{category.nameKo}</p>
-              <p className="text-xs text-[#737373] truncate">{category.description}</p>
+              <p className="text-base font-medium leading-none text-fg shrink-0">{category.nameKo}</p>
+              <p className="text-xs text-fg-muted truncate">{category.description}</p>
             </div>
           ) : category.id !== 'business' ? (
             <div className="absolute bottom-5 left-5 right-5 z-10">
-              <p className={`text-base font-medium leading-tight mb-1.5 ${hasSpecialBg || category.id === 'development' ? 'text-white' : 'text-[#1a1a1a]'}`}>
+              <p className={`text-base font-medium leading-tight mb-1.5 ${hasSpecialBg || category.id === 'development' ? 'text-white' : 'text-fg'}`}>
                 {category.nameKo}
               </p>
-              <p className={`text-xs leading-relaxed line-clamp-2 ${hasSpecialBg || category.id === 'development' ? 'text-white/60' : 'text-[#737373]'}`}>
+              <p className={`text-xs leading-relaxed line-clamp-2 ${hasSpecialBg || category.id === 'development' ? 'text-white/60' : 'text-fg-muted'}`}>
                 {category.description}
               </p>
             </div>

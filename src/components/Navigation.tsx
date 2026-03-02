@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useState, useEffect } from 'react'
 import { Menu, X } from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
+import ThemeToggle from './ThemeToggle'
 
 const sections = [
   { label: 'Video',       id: 'video' },
@@ -59,7 +60,7 @@ export default function Navigation() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
         className="fixed top-0 left-0 right-0 z-50 px-6 py-5 flex items-center justify-between md:hidden"
-        style={{ backdropFilter: 'blur(12px)', backgroundColor: 'rgba(250,250,250,0.85)' }}
+        style={{ backdropFilter: 'blur(12px)', backgroundColor: 'var(--overlay)' }}
       >
         <div className="flex items-center gap-3">
           <Link
@@ -68,7 +69,7 @@ export default function Navigation() {
           >
             luma3
           </Link>
-          {/* Current section indicator — mobile only */}
+          {/* Current section indicator */}
           <AnimatePresence mode="wait">
             {activeId && (
               <motion.span
@@ -77,7 +78,7 @@ export default function Navigation() {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 4 }}
                 transition={{ duration: 0.18 }}
-                className="md:hidden text-[10px] font-mono uppercase tracking-[0.25em] text-[#a3a3a3]"
+                className="text-[10px] font-mono uppercase tracking-[0.25em] text-fg-subtle"
               >
                 {sections.find(s => s.id === activeId)?.label}
               </motion.span>
@@ -85,27 +86,12 @@ export default function Navigation() {
           </AnimatePresence>
         </div>
 
-        <div className="flex items-center gap-4">
-          {/* Desktop links */}
-          <div className="hidden md:flex items-center gap-6 text-sm text-fg-muted">
-            <a href="mailto:yusung8307@gmail.com" className="hover:text-fg transition-colors duration-200">
-              Contact
-            </a>
-            <a
-              href="https://github.com/Mod41529"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-fg transition-colors duration-200"
-            >
-              GitHub
-            </a>
-          </div>
-
-          {/* Mobile menu toggle — only on md: hidden (i.e. small screens) */}
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
           <button
             onClick={() => setOpen(o => !o)}
-            className="md:hidden flex items-center justify-center w-8 h-8
-                       text-[#737373] hover:text-[#1a1a1a] transition-colors duration-150"
+            className="flex items-center justify-center w-8 h-8
+                       text-fg-muted hover:text-fg transition-colors duration-150"
             aria-label={open ? 'Close menu' : 'Open menu'}
           >
             {open ? <X size={18} strokeWidth={1.5} /> : <Menu size={18} strokeWidth={1.5} />}
@@ -136,11 +122,12 @@ export default function Navigation() {
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
               className="fixed top-[64px] left-4 right-4 z-50 md:hidden
-                         bg-[#FAFAFA]/97 backdrop-blur-md border border-[#e5e5e5] shadow-lg"
+                         backdrop-blur-md border border-border shadow-lg"
+              style={{ backgroundColor: 'var(--overlay-strong)' }}
             >
               {/* Section links */}
               <div className="p-3">
-                <p className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#a3a3a3] px-3 py-2">
+                <p className="text-[9px] font-bold uppercase tracking-[0.3em] text-fg-subtle px-3 py-2">
                   Sections
                 </p>
                 {sections.map(({ label, id }) => {
@@ -152,13 +139,13 @@ export default function Navigation() {
                       className="w-full text-left px-3 py-2.5 text-sm transition-colors duration-150
                                  flex items-center gap-2.5 rounded-sm"
                       style={{
-                        backgroundColor: isActive ? '#F0F0F0' : 'transparent',
-                        color: isActive ? '#1978e5' : '#737373',
+                        backgroundColor: isActive ? 'var(--bg-hover)' : 'transparent',
+                        color: isActive ? '#1978e5' : 'var(--fg-muted)',
                       }}
                     >
                       <span
                         className="w-1 h-1 rounded-full shrink-0 transition-colors duration-150"
-                        style={{ backgroundColor: isActive ? '#1978e5' : '#e5e5e5' }}
+                        style={{ backgroundColor: isActive ? '#1978e5' : 'var(--border)' }}
                       />
                       <span className={isActive ? 'font-semibold' : ''}>
                         {label}
@@ -169,11 +156,11 @@ export default function Navigation() {
               </div>
 
               {/* Divider + external links */}
-              <div className="border-t border-[#e5e5e5] p-3 flex gap-2">
+              <div className="border-t border-border p-3 flex gap-2">
                 <a
                   href="mailto:yusung8307@gmail.com"
-                  className="flex-1 text-center py-2.5 text-sm text-[#737373]
-                             hover:text-[#1a1a1a] border border-[#e5e5e5] hover:border-[#c3c3c3]
+                  className="flex-1 text-center py-2.5 text-sm text-fg-muted
+                             hover:text-fg border border-border hover:border-fg-faint
                              transition-colors duration-150"
                 >
                   Contact
@@ -182,8 +169,8 @@ export default function Navigation() {
                   href="https://github.com/Mod41529"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 text-center py-2.5 text-sm text-[#737373]
-                             hover:text-[#1a1a1a] border border-[#e5e5e5] hover:border-[#c3c3c3]
+                  className="flex-1 text-center py-2.5 text-sm text-fg-muted
+                             hover:text-fg border border-border hover:border-fg-faint
                              transition-colors duration-150"
                 >
                   GitHub

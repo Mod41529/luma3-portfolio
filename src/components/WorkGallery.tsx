@@ -56,7 +56,7 @@ function WorkThumbnail({ work, accent, bg }: { work: WorkItem; accent: string; b
         />
         <div className="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
           <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center
-                          group-hover:bg-white/35 transition-colors duration-200">
+                          group-hover:bg-bg-hover/35 transition-colors duration-200">
             <Play size={14} className="text-white ml-0.5" fill="white" />
           </div>
         </div>
@@ -114,7 +114,7 @@ export default function WorkGallery({ works, category }: WorkGalleryProps) {
 
   return (
     <>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-[#e5e5e5] border border-[#e5e5e5]">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-border border border-border">
         {works.map((work, index) => (
           <motion.div
             key={work.id}
@@ -125,7 +125,7 @@ export default function WorkGallery({ works, category }: WorkGalleryProps) {
             <motion.button
               whileHover={{ scale: 1.0 }}
               onClick={() => setSelected(work)}
-              className="group w-full text-left overflow-hidden bg-[#FAFAFA] hover:bg-white
+              className="group w-full text-left overflow-hidden bg-bg-card hover:bg-bg-hover
                          transition-colors duration-200 block"
             >
               {/* Thumbnail */}
@@ -136,13 +136,13 @@ export default function WorkGallery({ works, category }: WorkGalleryProps) {
               />
 
               {/* Info bar */}
-              <div className="px-5 py-4 border-t border-[#e5e5e5]">
+              <div className="px-5 py-4 border-t border-border">
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0">
-                    <h3 className="text-sm font-bold leading-tight text-[#1a1a1a] truncate">
+                    <h3 className="text-sm font-bold leading-tight text-fg truncate">
                       {work.title}
                     </h3>
-                    <p className="text-[10px] text-[#a3a3a3] font-mono mt-0.5 truncate">
+                    <p className="text-[10px] text-fg-subtle font-mono mt-0.5 truncate">
                       {work.titleKo} · {work.year}
                     </p>
                   </div>
@@ -150,7 +150,7 @@ export default function WorkGallery({ works, category }: WorkGalleryProps) {
                     {work.tools.slice(0, 2).map((tool) => (
                       <span
                         key={tool}
-                        className="text-[9px] px-2 py-0.5 font-bold uppercase tracking-wider border border-[#e5e5e5] text-[#a3a3a3] whitespace-nowrap"
+                        className="text-[9px] px-2 py-0.5 font-bold uppercase tracking-wider border border-border text-fg-subtle whitespace-nowrap"
                       >
                         {tool}
                       </span>

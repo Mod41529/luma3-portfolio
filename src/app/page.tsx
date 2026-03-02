@@ -18,6 +18,9 @@ export default function Home() {
       {/* Mobile top nav — hidden on desktop where SideNav handles navigation */}
       <Navigation />
 
+      {/* Floating back-to-top button */}
+      <BackToTop />
+
       <main>
         {/* Hero: full width, no left offset — SideNav is hidden here */}
         <Hero />
@@ -53,28 +56,25 @@ export default function Home() {
           <ContactSection />
 
           {/* Footer */}
-          <footer className="px-6 md:px-12 py-8 border-t border-[#e5e5e5]">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-              <div className="flex items-center gap-6">
-                <span className="font-mono text-[10px] text-[#a3a3a3]">© 2026 luma3</span>
-                <span className="text-[#e5e5e5]">·</span>
-                <a
-                  href="mailto:yusung8307@gmail.com"
-                  className="font-mono text-[10px] text-[#a3a3a3] hover:text-[#1a1a1a] transition-colors duration-150"
-                >
-                  yusung8307@gmail.com
-                </a>
-                <span className="text-[#e5e5e5]">·</span>
-                <a
-                  href="https://github.com/Mod41529"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-mono text-[10px] text-[#a3a3a3] hover:text-[#1a1a1a] transition-colors duration-150"
-                >
-                  GitHub
-                </a>
-              </div>
-              <BackToTop />
+          <footer className="px-6 md:px-12 py-8 border-t border-border">
+            <div className="flex items-center gap-6">
+              <span className="font-mono text-[10px] text-fg-subtle">© 2026 luma3</span>
+              <span className="text-border">·</span>
+              <a
+                href="mailto:yusung8307@gmail.com"
+                className="font-mono text-[10px] text-fg-subtle hover:text-fg transition-colors duration-150"
+              >
+                yusung8307@gmail.com
+              </a>
+              <span className="text-border">·</span>
+              <a
+                href="https://github.com/Mod41529"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-mono text-[10px] text-fg-subtle hover:text-fg transition-colors duration-150"
+              >
+                GitHub
+              </a>
             </div>
           </footer>
         </div>

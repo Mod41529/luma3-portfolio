@@ -1,7 +1,6 @@
 export type CategoryId =
   | 'video'
   | 'music'
-  | 'photography'
   | 'design'
   | 'development'
   | 'business'

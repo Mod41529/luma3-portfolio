@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
+import ThemeToggle from './ThemeToggle'
 
 const workLinks = [
   { label: 'Video',       sectionId: 'video' },
@@ -44,7 +45,6 @@ export default function SideNav() {
 
     const observer = new IntersectionObserver(
       (entries) => {
-        // Pick the entry closest to the center that's intersecting
         const visible = entries
           .filter(e => e.isIntersecting)
           .sort((a, b) => {
@@ -71,13 +71,14 @@ export default function SideNav() {
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
       style={{ pointerEvents: visible ? 'auto' : 'none' }}
       className="fixed left-0 top-0 bottom-0 w-[200px] z-50 hidden md:flex flex-col
-                 bg-[#FAFAFA]/95 backdrop-blur-md border-r border-[#e5e5e5]"
+                 bg-bg/95 backdrop-blur-md border-r border-border"
     >
       {/* Brand */}
-      <div className="px-6 py-7 border-b border-[#e5e5e5]">
+      <div className="px-6 py-7 border-b border-border flex items-center justify-between">
         <Link href="/" className="text-base font-black tracking-tighter hover:opacity-50 transition-opacity">
           luma3<span className="text-[#1978e5]">.</span>
         </Link>
+        <ThemeToggle />
       </div>
 
       {/* Nav */}
@@ -89,14 +90,14 @@ export default function SideNav() {
             else window.location.href = '/'
           }}
           className="flex items-center gap-2.5 px-2 py-2 text-sm font-medium w-full text-left
-                     text-[#1a1a1a] hover:bg-[#f4f4f2] rounded-sm transition-colors duration-150 mb-1"
+                     text-fg hover:bg-bg-hover rounded-sm transition-colors duration-150 mb-1"
         >
           Main
         </button>
 
-        <div className="h-px bg-[#e5e5e5] mx-2 mb-3" />
+        <div className="h-px bg-border mx-2 mb-3" />
 
-        <p className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#a3a3a3] px-2 mb-2">
+        <p className="text-[9px] font-bold uppercase tracking-[0.3em] text-fg-subtle px-2 mb-2">
           Work
         </p>
 
@@ -109,15 +110,15 @@ export default function SideNav() {
               className="flex items-center gap-2.5 px-2 py-2 text-sm rounded-sm w-full text-left
                          transition-colors duration-150 group"
               style={{
-                backgroundColor: isActive ? '#F0F0F0' : 'transparent',
-                color: isActive ? '#1978e5' : '#737373',
+                backgroundColor: isActive ? 'var(--bg-hover)' : 'transparent',
+                color: isActive ? '#1978e5' : 'var(--fg-muted)',
               }}
             >
               <span
                 className="w-1 h-1 rounded-full shrink-0 transition-colors duration-150"
-                style={{ backgroundColor: isActive ? '#1978e5' : '#e5e5e5' }}
+                style={{ backgroundColor: isActive ? '#1978e5' : 'var(--border)' }}
               />
-              <span className={`transition-colors duration-150 ${isActive ? 'font-semibold' : 'group-hover:text-[#1a1a1a]'}`}>
+              <span className={`transition-colors duration-150 ${isActive ? 'font-semibold' : 'group-hover:text-fg'}`}>
                 {label}
               </span>
             </button>
@@ -125,28 +126,28 @@ export default function SideNav() {
         })}
 
         {/* Divider */}
-        <div className="h-px bg-[#e5e5e5] my-3 mx-2" />
+        <div className="h-px bg-border my-3 mx-2" />
 
         <Link
           href="/#about"
           className={`flex items-center gap-2.5 px-2 py-2 text-sm rounded-sm transition-colors duration-150
-                      ${activeId === 'about' ? 'text-[#1978e5] font-semibold bg-[#F0F0F0]' : 'text-[#737373] hover:text-[#1a1a1a] hover:bg-[#f4f4f2]'}`}
+                      ${activeId === 'about' ? 'text-[#1978e5] font-semibold bg-bg-hover' : 'text-fg-muted hover:text-fg hover:bg-bg-hover'}`}
         >
           About
         </Link>
         <button
           onClick={() => scrollTo('contact')}
           className={`flex items-center gap-2.5 px-2 py-2 text-sm rounded-sm w-full text-left transition-colors duration-150
-                      ${activeId === 'contact' ? 'text-[#1978e5] font-semibold bg-[#F0F0F0]' : 'text-[#737373] hover:text-[#1a1a1a] hover:bg-[#f4f4f2]'}`}
+                      ${activeId === 'contact' ? 'text-[#1978e5] font-semibold bg-bg-hover' : 'text-fg-muted hover:text-fg hover:bg-bg-hover'}`}
         >
           Contact
         </button>
       </nav>
 
       {/* Bottom */}
-      <div className="px-6 py-5 border-t border-[#e5e5e5]">
-        <span className="text-[9px] font-mono text-[#c3c3c3] uppercase tracking-widest">
-          © 2026 luma3
+      <div className="px-6 py-5 border-t border-border">
+        <span className="text-[9px] font-mono text-fg-faint uppercase tracking-widest">
+          &copy; 2026 luma3
         </span>
       </div>
     </motion.aside>

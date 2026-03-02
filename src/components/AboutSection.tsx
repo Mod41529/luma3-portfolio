@@ -19,10 +19,10 @@ const DISCIPLINES = [
 
 export default function AboutSection() {
   return (
-    <section id="about" className="border-t border-[#e5e5e5]">
+    <section id="about" className="border-t border-border">
       {/* Section header */}
-      <div className="px-6 md:px-12 py-5 border-b border-[#e5e5e5]">
-        <h2 className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#1a1a1a]">About</h2>
+      <div className="px-6 md:px-12 py-5 border-b border-border">
+        <h2 className="text-[10px] font-bold uppercase tracking-[0.4em] text-fg">About</h2>
       </div>
 
       {/* Split layout */}
@@ -33,10 +33,10 @@ export default function AboutSection() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true, margin: '-40px' }}
           transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-          className="w-full md:w-2/5 border-b md:border-b-0 md:border-r border-[#e5e5e5] p-8 md:p-12 flex flex-col gap-8"
+          className="w-full md:w-2/5 border-b md:border-b-0 md:border-r border-border p-8 md:p-12 flex flex-col gap-8"
         >
           {/* Photo */}
-          <div className="w-full max-w-[240px] border border-[#e5e5e5]" style={{ aspectRatio: '3/4' }}>
+          <div className="w-full max-w-[240px] border border-border" style={{ aspectRatio: '3/4' }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/about-photo.jpg"
@@ -47,10 +47,10 @@ export default function AboutSection() {
 
           {/* Name + status */}
           <div>
-            <p className="text-xl font-black tracking-tight text-[#1a1a1a]">Jun Yusung</p>
-            <p className="text-[10px] font-mono text-[#a3a3a3] mt-0.5 mb-4">전유성</p>
+            <p className="text-xl font-black tracking-tight text-fg">Jun Yusung</p>
+            <p className="text-[10px] font-mono text-fg-subtle mt-0.5 mb-4">전유성</p>
             {/* Availability badge */}
-            <div className="inline-flex items-center gap-2 border border-[#e5e5e5] px-3 py-1.5">
+            <div className="inline-flex items-center gap-2 border border-border px-3 py-1.5">
               <span className="w-1.5 h-1.5 rounded-full bg-[#059669] animate-pulse" />
               <span className="text-[9px] font-bold uppercase tracking-[0.25em] text-[#059669]">
                 Open to Collaboration
@@ -60,7 +60,7 @@ export default function AboutSection() {
 
           {/* Disciplines */}
           <div>
-            <p className="text-[8px] font-mono uppercase tracking-[0.3em] text-[#a3a3a3] mb-3">Disciplines</p>
+            <p className="text-[8px] font-mono uppercase tracking-[0.3em] text-fg-subtle mb-3">Disciplines</p>
             <div className="flex flex-wrap gap-1.5">
               {DISCIPLINES.map(({ name, accent }) => (
                 <span
@@ -85,11 +85,11 @@ export default function AboutSection() {
         >
           {/* Philosophy */}
           <div>
-            <p className="text-[9px] font-mono uppercase tracking-[0.3em] text-[#a3a3a3] mb-5">Philosophy</p>
-            <blockquote className="text-3xl md:text-4xl font-black tracking-tighter text-[#1a1a1a] leading-[1.05] mb-6">
+            <p className="text-[9px] font-mono uppercase tracking-[0.3em] text-fg-subtle mb-5">Philosophy</p>
+            <blockquote className="text-3xl md:text-4xl font-black tracking-tighter text-fg leading-[1.05] mb-6">
               Think in systems,<br />create in layers.
             </blockquote>
-            <p className="text-sm text-[#737373] font-light leading-relaxed max-w-lg">
+            <p className="text-sm text-fg-muted font-light leading-relaxed max-w-lg">
               Strategic designer and systems builder at the intersection of business thinking,
               creative craft, and AI-powered operations. I build frameworks that connect
               analysis to execution — across disciplines, not within one.
@@ -98,7 +98,7 @@ export default function AboutSection() {
 
           {/* What I'm working on */}
           <div>
-            <p className="text-[9px] font-mono uppercase tracking-[0.3em] text-[#a3a3a3] mb-4">Currently</p>
+            <p className="text-[9px] font-mono uppercase tracking-[0.3em] text-fg-subtle mb-4">Currently</p>
             <div className="space-y-2.5">
               {[
                 'Building luma3 — a multi-discipline creative portfolio',
@@ -106,10 +106,10 @@ export default function AboutSection() {
                 'Developing a multi-agent orchestration system (Claude + Codex + Gemini)',
               ].map((item, i) => (
                 <div key={i} className="flex items-start gap-3">
-                  <span className="text-[8px] font-mono text-[#c3c3c3] mt-0.5 shrink-0">
+                  <span className="text-[8px] font-mono text-fg-faint mt-0.5 shrink-0">
                     {String(i + 1).padStart(2, '0')}
                   </span>
-                  <p className="text-sm text-[#1a1a1a] leading-snug">{item}</p>
+                  <p className="text-sm text-fg leading-snug">{item}</p>
                 </div>
               ))}
             </div>
@@ -117,14 +117,14 @@ export default function AboutSection() {
 
           {/* Background */}
           <div>
-            <p className="text-[9px] font-mono uppercase tracking-[0.3em] text-[#a3a3a3] mb-4">Background</p>
+            <p className="text-[9px] font-mono uppercase tracking-[0.3em] text-fg-subtle mb-4">Background</p>
             <div className="space-y-3">
               {BACKGROUND.map(({ label, value }) => (
                 <div key={label} className="flex gap-6">
-                  <span className="text-[9px] font-mono uppercase tracking-wider text-[#a3a3a3] w-24 shrink-0 pt-0.5">
+                  <span className="text-[9px] font-mono uppercase tracking-wider text-fg-subtle w-24 shrink-0 pt-0.5">
                     {label}
                   </span>
-                  <span className="text-sm text-[#737373]">{value}</span>
+                  <span className="text-sm text-fg-muted">{value}</span>
                 </div>
               ))}
             </div>
