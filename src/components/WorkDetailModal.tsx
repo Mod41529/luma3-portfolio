@@ -23,6 +23,7 @@ function MediaPanel({ work, accent, bg }: { work: WorkItem; accent: string; bg: 
         <img
           src={work.imageSrc}
           alt={work.thumbnailAlt}
+          loading="lazy"
           className="w-full h-full object-cover"
         />
       </div>

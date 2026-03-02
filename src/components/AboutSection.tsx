@@ -41,6 +41,7 @@ export default function AboutSection() {
             <img
               src="/about-photo.jpg"
               alt="Jun Yusung"
+              loading="lazy"
               className="w-full h-full object-cover"
             />
           </div>

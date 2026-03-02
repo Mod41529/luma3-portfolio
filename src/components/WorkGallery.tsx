@@ -37,6 +37,7 @@ function WorkThumbnail({ work, accent, bg }: { work: WorkItem; accent: string; b
         <img
           src={work.imageSrc}
           alt={work.thumbnailAlt}
+          loading="lazy"
           className={`w-full h-full ${isDesign ? 'object-contain p-4' : 'object-cover'} group-hover:scale-[1.03] transition-transform duration-500`}
         />
         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/15 transition-colors duration-300" />
@@ -52,6 +53,7 @@ function WorkThumbnail({ work, accent, bg }: { work: WorkItem; accent: string; b
         <img
           src={work.thumbnailSrc}
           alt={work.thumbnailAlt}
+          loading="lazy"
           className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
         />
         <div className="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">

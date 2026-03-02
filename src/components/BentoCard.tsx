@@ -54,6 +54,7 @@ function DesignThumb() {
       <img
         src="/design-thumb.png"
         alt=""
+        loading="lazy"
         className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.05]"
         style={{ opacity: 0.92, objectPosition: '50% 55%' }}
       />
@@ -233,7 +234,7 @@ export default function BentoCard({
           {isPhoto && (
             <>
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={imageSrc} alt="" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.05]" />
+              <img src={imageSrc} alt="" loading="lazy" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.05]" />
               <div className="absolute inset-0 bg-black/50 group-hover:bg-black/40 transition-colors duration-300" />
             </>
           )}

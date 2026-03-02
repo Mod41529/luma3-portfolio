@@ -66,6 +66,7 @@ function DesignCard({
       <img
         src={work.imageSrc}
         alt={work.thumbnailAlt}
+        loading="lazy"
         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
       />
       {/* Hover overlay */}
