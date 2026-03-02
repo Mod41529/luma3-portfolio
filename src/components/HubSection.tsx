@@ -1,7 +1,7 @@
 'use client'
 
 import { motion, AnimatePresence } from 'framer-motion'
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useCallback, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { ArrowUpRight, X, ChevronDown, Compass, BarChart2, Megaphone, Workflow } from 'lucide-react'
 import { works, categories } from '@/data/works'
@@ -49,8 +49,47 @@ function DesignCard({
   index: number
   onClick: (w: WorkItem) => void
 }) {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const videoRef     = useRef<HTMLVideoElement>(null)
+  const [videoReady, setVideoReady] = useState(false)
+
+  // Lazy-load video when near viewport
+  useEffect(() => {
+    if (!work.videoSrc) return
+    const container = containerRef.current
+    if (!container) return
+    const loader = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return
+        loader.disconnect()
+        fetch(work.videoSrc!, { method: 'HEAD' })
+          .then((r) => { if (r.ok) setVideoReady(true) })
+          .catch(() => {})
+      },
+      { rootMargin: '200px' }
+    )
+    loader.observe(container)
+    return () => loader.disconnect()
+  }, [work.videoSrc])
+
+  // Play/pause on visibility
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video || !videoReady) return
+    const player = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) video.play().catch(() => {})
+        else video.pause()
+      },
+      { threshold: 0.15 }
+    )
+    player.observe(video)
+    return () => player.disconnect()
+  }, [videoReady])
+
   return (
     <motion.div
+      ref={containerRef}
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
@@ -62,13 +101,26 @@ function DesignCard({
         backgroundColor: DESIGN_IMG_BG[work.id] ?? '#F4F4F2',
       }}
     >
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={work.imageSrc}
-        alt={work.thumbnailAlt}
-        loading="lazy"
-        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-      />
+      {work.videoSrc ? (
+        videoReady ? (
+          <video
+            ref={videoRef}
+            src={work.videoSrc}
+            muted loop playsInline preload="metadata"
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+          />
+        ) : (
+          <div className="w-full h-full" />
+        )
+      ) : (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={work.imageSrc}
+          alt={work.thumbnailAlt}
+          loading="lazy"
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+        />
+      )}
       {/* Hover overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent
                       opacity-0 group-hover:opacity-100 transition-opacity duration-250" />
@@ -187,7 +239,7 @@ function DesignDetailPanel({ work, onClose }: { work: WorkItem; onClose: () => v
 function DesignBody() {
   const [selected, setSelected] = useState<WorkItem | null>(null)
   const handleClose = useCallback(() => setSelected(null), [])
-  const imageWorks = works.filter((w) => w.category === 'design' && w.imageSrc)
+  const imageWorks = works.filter((w) => w.category === 'design' && (w.imageSrc || w.videoSrc))
 
   return (
     <>
