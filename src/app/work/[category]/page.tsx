@@ -10,6 +10,8 @@ interface PageProps {
   params: { category: string }
 }
 
+export const dynamicParams = false
+
 export function generateStaticParams() {
   return Object.keys(categories).map((cat) => ({ category: cat }))
 }
