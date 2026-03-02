@@ -1,21 +1,29 @@
 import type { Metadata } from 'next'
 import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
+import { Analytics } from '@vercel/analytics/react'
 import './globals.css'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://luma3-portfolio.vercel.app'),
   title: 'LUMA3 — Portfolio',
   description: 'I think in systems, create in layers.',
+  alternates: {
+    canonical: 'https://luma3-portfolio.vercel.app',
+  },
   openGraph: {
     title: 'LUMA3',
     description: 'I think in systems, create in layers.',
     siteName: 'LUMA3 Portfolio',
+    url: 'https://luma3-portfolio.vercel.app',
     images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'LUMA3 Portfolio' }],
   },
   twitter: {
     card: 'summary_large_image',
     images: ['/og-image.png'],
+  },
+  icons: {
+    apple: '/apple-touch-icon.png',
   },
 }
 
@@ -63,6 +71,7 @@ export default function RootLayout({
       </head>
       <body className="font-sans bg-bg text-fg antialiased">
         {children}
+        <Analytics />
       </body>
     </html>
   )

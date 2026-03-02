@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://luma3-portfolio.vercel.app/sitemap.xml
