@@ -4,7 +4,7 @@ import { GeistMono } from 'geist/font/mono'
 import './globals.css'
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://luma3.vercel.app'),
+  metadataBase: new URL('https://luma3-portfolio.vercel.app'),
   title: 'LUMA3 — Portfolio',
   description: 'I think in systems, create in layers.',
   openGraph: {
@@ -20,7 +20,7 @@ const jsonLd = {
   '@type': 'Person',
   name: 'Jun Yusung',
   alternateName: 'luma3',
-  url: 'https://luma3.vercel.app',
+  url: 'https://luma3-portfolio.vercel.app',
   jobTitle: 'Strategic Designer',
   knowsAbout: ['Video Production', 'Music Production', 'Design', 'Web Development', 'Business Strategy'],
   sameAs: [
