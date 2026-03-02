@@ -19,33 +19,47 @@ function VideoCard({
   index: number
   onClick: (w: WorkItem) => void
 }) {
-  const videoRef  = useRef<HTMLVideoElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const videoRef     = useRef<HTMLVideoElement>(null)
   const [ready, setReady] = useState(false)
 
-  // Check file exists, then autoplay via IntersectionObserver
+  // Step 1: observe container — load video only when near viewport (rootMargin 200px)
   useEffect(() => {
     if (!work.videoSrc) return
-    fetch(work.videoSrc, { method: 'HEAD' })
-      .then((r) => { if (r.ok) setReady(true) })
-      .catch(() => {})
+    const container = containerRef.current
+    if (!container) return
+    const loader = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return
+        loader.disconnect()
+        fetch(work.videoSrc!, { method: 'HEAD' })
+          .then((r) => { if (r.ok) setReady(true) })
+          .catch(() => {})
+      },
+      { rootMargin: '200px' }
+    )
+    loader.observe(container)
+    return () => loader.disconnect()
   }, [work.videoSrc])
 
+  // Step 2: once loaded, play/pause on visibility
   useEffect(() => {
     const video = videoRef.current
     if (!video || !ready) return
-    const observer = new IntersectionObserver(
+    const player = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) video.play().catch(() => {})
         else video.pause()
       },
       { threshold: 0.15 }
     )
-    observer.observe(video)
-    return () => observer.disconnect()
+    player.observe(video)
+    return () => player.disconnect()
   }, [ready])
 
   return (
     <motion.div
+      ref={containerRef}
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
