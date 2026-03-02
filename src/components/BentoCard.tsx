@@ -1,7 +1,6 @@
 'use client'
 
-import { useRef, useState } from 'react'
-import Link from 'next/link'
+import { useRef, useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { ArrowUpRight, Play, Pause, Compass, BarChart2, Megaphone, Workflow } from 'lucide-react'
 import { CategoryConfig } from '@/types'
@@ -18,17 +17,51 @@ interface BentoCardProps {
   wide?: boolean
 }
 
+// ── Waveform bars (same as MusicSection) ─────────────────────────────────────
+function WaveformBars({ playing, accent }: { playing: boolean; accent: string }) {
+  const heights = [0.3, 0.6, 1, 0.7, 0.4, 0.9, 0.5, 0.8, 0.6, 1, 0.4, 0.7, 0.3, 0.85, 0.55]
+  return (
+    <div className="flex items-end gap-[2px] h-8 shrink-0">
+      {heights.map((h, i) => (
+        <motion.div
+          key={i}
+          className="w-[2px] rounded-full origin-bottom"
+          animate={playing
+            ? { scaleY: [h, h * 0.4 + 0.1, h * 1.2 > 1 ? 1 : h * 1.2, h] }
+            : { scaleY: 0.15 }
+          }
+          transition={playing
+            ? { duration: 0.6 + i * 0.05, repeat: Infinity, ease: 'easeInOut' }
+            : { duration: 0.3 }
+          }
+          style={{ height: '100%', backgroundColor: accent, opacity: playing ? 0.9 : 0.3 }}
+        />
+      ))}
+    </div>
+  )
+}
+
 function fmt(s: number) {
   if (!isFinite(s) || s === 0) return '—:——'
   return `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`
 }
 
-// ── Design thumbnail: MOD logo on plain background ───────────────────────────
+// ── Design thumbnail: brand illustration with bottom fade ────────────────────
 function DesignThumb() {
   return (
-    <div className="absolute inset-0 flex items-center justify-center">
+    <div className="absolute inset-0">
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/mod-logo.png" alt="MOD" className="w-20 h-auto" style={{ opacity: 0.88 }} />
+      <img
+        src="/design-thumb.png"
+        alt=""
+        className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.05]"
+        style={{ opacity: 0.92, objectPosition: '50% 55%' }}
+      />
+      {/* Fade: mobile only — on desktop the light image bg contrasts fine with dark text */}
+      <div
+        className="absolute inset-0 pointer-events-none md:hidden"
+        style={{ background: 'linear-gradient(to bottom, rgba(250,250,250,0.2) 0%, transparent 22%, transparent 48%, #fafafa 88%)' }}
+      />
     </div>
   )
 }
@@ -36,7 +69,7 @@ function DesignThumb() {
 // ── Development thumbnail: AI Agent triangle ─────────────────────────────────
 function DevThumb() {
   return (
-    <div className="absolute inset-0 flex items-center justify-center" style={{ backgroundColor: '#0F172A' }}>
+    <div className="absolute inset-0 flex items-center justify-center transition-transform duration-500 ease-out group-hover:scale-[1.05]" style={{ backgroundColor: '#0F172A' }}>
       {/* Triangle layout: Claude top-center, Gemini bottom-left, Codex bottom-right */}
       <div className="relative w-36 h-32">
         {/* Connector lines */}
@@ -84,7 +117,7 @@ function DevThumb() {
 }
 
 // ── Business thumbnail: 4-column accent strips (individually clickable) ──────
-function StrategyThumb() {
+function BusinessThumb() {
   const domains = [
     { label: '전략', labelEn: 'Strategy',    Icon: Compass,   color: '#B45309', anchor: 'business-전략' },
     { label: '재무', labelEn: 'Finance',     Icon: BarChart2, color: '#0369A1', anchor: 'business-재무' },
@@ -135,13 +168,31 @@ export default function BentoCard({
   const [progress, setProgress] = useState(0)
   const [duration, setDuration] = useState(0)
 
+  const scrollToSection = () => {
+    const el = document.getElementById(category.id)
+    if (el) el.scrollIntoView({ behavior: 'smooth' })
+  }
+
+  // Stop when MusicSection starts playing
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const detail = (e as CustomEvent<string>).detail
+      if (detail !== 'bento') audioRef.current?.pause()
+    }
+    window.addEventListener('audio:play', handler)
+    return () => window.removeEventListener('audio:play', handler)
+  }, [])
+
   const togglePlay = (e: React.MouseEvent) => {
-    e.preventDefault()
     e.stopPropagation()
     const audio = audioRef.current
     if (!audio) return
-    if (playing) { audio.pause(); setPlaying(false) }
-    else { audio.play().catch(() => {}); setPlaying(true) }
+    if (playing) {
+      audio.pause()
+    } else {
+      window.dispatchEvent(new CustomEvent('audio:play', { detail: 'bento' }))
+      audio.play().catch(() => {})
+    }
   }
 
   const isVideo = !!videoSrc
@@ -157,17 +208,23 @@ export default function BentoCard({
       transition={{ duration: 0.5, delay: index * 0.06, ease: [0.22, 1, 0.36, 1] }}
       className={className}
     >
-      <Link href={`/work/${category.id}`} className="block h-full">
+      <div className="block h-full cursor-pointer" onClick={scrollToSection}>
         <div
           className="group relative h-full overflow-hidden cursor-pointer transition-colors duration-200"
           style={{ backgroundColor: '#FAFAFA' }}
-          onMouseEnter={e => { if (!hasSpecialBg && !isMusic) e.currentTarget.style.backgroundColor = '#F0F0F0' }}
-          onMouseLeave={e => { if (!hasSpecialBg && !isMusic) e.currentTarget.style.backgroundColor = '#FAFAFA' }}
+          onMouseEnter={e => {
+            e.currentTarget.style.boxShadow = `inset 0 0 0 1.5px ${category.accent}55`
+            if (!hasSpecialBg && !isMusic) e.currentTarget.style.backgroundColor = '#F0F0F0'
+          }}
+          onMouseLeave={e => {
+            e.currentTarget.style.boxShadow = ''
+            if (!hasSpecialBg && !isMusic) e.currentTarget.style.backgroundColor = '#FAFAFA'
+          }}
         >
           {/* ── Video background ── */}
           {isVideo && (
             <>
-              <video src={videoSrc} autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover" />
+              <video src={videoSrc} autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.05]" />
               <div className="absolute inset-0 bg-black/50 group-hover:bg-black/40 transition-colors duration-300" />
             </>
           )}
@@ -176,7 +233,7 @@ export default function BentoCard({
           {isPhoto && (
             <>
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={imageSrc} alt="" className="absolute inset-0 w-full h-full object-cover" />
+              <img src={imageSrc} alt="" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.05]" />
               <div className="absolute inset-0 bg-black/50 group-hover:bg-black/40 transition-colors duration-300" />
             </>
           )}
@@ -184,7 +241,7 @@ export default function BentoCard({
           {/* ── Category-specific static thumbnails ── */}
           {!isVideo && !isMusic && !isPhoto && category.id === 'design'      && <DesignThumb />}
           {!isVideo && !isMusic && !isPhoto && category.id === 'development' && <DevThumb />}
-          {!isVideo && !isMusic && !isPhoto && category.id === 'strategy'    && <StrategyThumb />}
+          {!isVideo && !isMusic && !isPhoto && category.id === 'business'    && <BusinessThumb />}
 
           {/* ── Category label — top-left ── */}
           <div className="absolute top-5 left-5 right-5 flex items-start justify-between z-10">
@@ -195,7 +252,7 @@ export default function BentoCard({
               {category.nameEn}
             </p>
             <div
-              className="w-6 h-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-150 shrink-0"
+              className="w-6 h-6 flex items-center justify-center opacity-40 group-hover:opacity-100 transition-opacity duration-150 shrink-0"
               style={{ color: hasSpecialBg ? 'white' : category.accent }}
             >
               <ArrowUpRight size={14} strokeWidth={1.5} />
@@ -207,33 +264,29 @@ export default function BentoCard({
             <audio
               ref={audioRef}
               src={audioSrc}
-              preload="metadata"
+              preload="auto"
               onLoadedMetadata={() => setDuration(audioRef.current?.duration ?? 0)}
               onTimeUpdate={() => {
                 const a = audioRef.current
                 if (a) setProgress(a.duration ? a.currentTime / a.duration : 0)
               }}
+              onPlay={() => setPlaying(true)}
+              onPause={() => setPlaying(false)}
               onEnded={() => setPlaying(false)}
             />
           )}
 
           {/* ── Music player — wide (horizontal) ── */}
           {isMusic && wide && (
-            <div className="absolute inset-0 flex items-center gap-5 z-10 px-6">
+            <div
+              className="absolute inset-0 flex items-center gap-3 md:gap-5 z-20 px-5 md:px-6 cursor-pointer"
+              onClick={togglePlay}
+            >
               {/* Waveform bars */}
-              <div className="flex items-end gap-[3px] h-8 shrink-0">
-                {[0.4, 0.7, 1, 0.6, 0.8, 0.5, 0.9, 0.65, 0.4, 0.75].map((h, i) => (
-                  <div
-                    key={i}
-                    className="w-[3px] rounded-full transition-colors duration-300"
-                    style={{ height: `${h * 100}%`, backgroundColor: playing ? category.accent : '#d4d4d4' }}
-                  />
-                ))}
-              </div>
+              <WaveformBars playing={playing} accent={category.accent} />
 
               {/* Play/Pause */}
-              <button
-                onClick={togglePlay}
+              <div
                 className="w-10 h-10 border flex items-center justify-center shrink-0 hover:opacity-70 transition-opacity"
                 style={{ borderColor: category.accent }}
                 aria-label={playing ? 'Pause' : 'Play'}
@@ -242,7 +295,7 @@ export default function BentoCard({
                   ? <Pause size={14} style={{ color: category.accent }} />
                   : <Play size={14} style={{ color: category.accent }} className="ml-0.5" />
                 }
-              </button>
+              </div>
 
               {/* Track info */}
               <div className="flex-1 min-w-0">
@@ -255,7 +308,7 @@ export default function BentoCard({
               </div>
 
               {/* Progress + time */}
-              <div className="w-28 shrink-0">
+              <div className="w-28 md:w-52 shrink-0">
                 <div className="h-[2px] bg-[#e5e5e5] w-full">
                   <div className="h-full transition-none" style={{ width: `${progress * 100}%`, backgroundColor: category.accent }} />
                 </div>
@@ -269,9 +322,11 @@ export default function BentoCard({
 
           {/* ── Music player — narrow (vertical, original) ── */}
           {isMusic && !wide && (
-            <div className="absolute inset-0 flex flex-col justify-center items-center z-10 px-6 gap-4">
-              <button
-                onClick={togglePlay}
+            <div
+              className="absolute inset-0 flex flex-col justify-center items-center z-20 px-6 gap-4 cursor-pointer"
+              onClick={togglePlay}
+            >
+              <div
                 className="w-12 h-12 border flex items-center justify-center hover:opacity-70 transition-opacity duration-150"
                 style={{ borderColor: category.accent }}
                 aria-label={playing ? 'Pause' : 'Play'}
@@ -280,7 +335,7 @@ export default function BentoCard({
                   ? <Pause size={15} style={{ color: category.accent }} />
                   : <Play size={15} style={{ color: category.accent }} className="ml-0.5" />
                 }
-              </button>
+              </div>
 
               {audioTitle && (
                 <div className="text-center">
@@ -302,14 +357,22 @@ export default function BentoCard({
           )}
 
           {/* ── Bottom text block ── */}
-          <div className="absolute bottom-5 left-5 right-5 z-10">
-            <p className={`text-base font-medium leading-tight mb-1.5 ${hasSpecialBg ? 'text-white' : 'text-[#1a1a1a]'}`}>
-              {category.nameKo}
-            </p>
-            <p className={`text-xs leading-relaxed line-clamp-2 ${hasSpecialBg ? 'text-white/70' : 'text-[#737373]'}`}>
-              {category.description}
-            </p>
-          </div>
+          {isMusic && wide ? (
+            // Music wide card: single-line flex row so it doesn't clash with the player
+            <div className="absolute bottom-5 left-5 right-5 z-10 flex items-baseline gap-3">
+              <p className="text-base font-medium leading-none text-[#1a1a1a] shrink-0">{category.nameKo}</p>
+              <p className="text-xs text-[#737373] truncate">{category.description}</p>
+            </div>
+          ) : category.id !== 'business' ? (
+            <div className="absolute bottom-5 left-5 right-5 z-10">
+              <p className={`text-base font-medium leading-tight mb-1.5 ${hasSpecialBg || category.id === 'development' ? 'text-white' : 'text-[#1a1a1a]'}`}>
+                {category.nameKo}
+              </p>
+              <p className={`text-xs leading-relaxed line-clamp-2 ${hasSpecialBg || category.id === 'development' ? 'text-white/60' : 'text-[#737373]'}`}>
+                {category.description}
+              </p>
+            </div>
+          ) : null}
 
           {/* ── Accent tint on hover (plain cards only) ── */}
           {!isVideo && !isMusic && !isPhoto && (
@@ -319,7 +382,7 @@ export default function BentoCard({
             />
           )}
         </div>
-      </Link>
+      </div>
     </motion.div>
   )
 }
