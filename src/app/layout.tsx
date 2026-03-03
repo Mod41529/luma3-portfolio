@@ -23,6 +23,7 @@ export const metadata: Metadata = {
     images: ['/og-image.png'],
   },
   icons: {
+    icon: '/icon.svg',
     apple: '/apple-touch-icon.png',
   },
 }
