@@ -516,7 +516,127 @@ function DevelopmentBody() {
           <text x="777" y="111" textAnchor="middle" fill="white"   fontSize="12"  fontFamily="sans-serif" fontWeight="900">luma3.dev</text>
         </svg>
       </div>
+
+      {/* ── Orchestration Records panel ── */}
+      <OrchRecords />
     </motion.div>
+  )
+}
+
+// ── Orchestration Records ──────────────────────────────────────────────────────
+const ORCH_TASKS = [
+  { id: 'T046', name: 'youtube-channel-analysis',    agent: 'gemini', date: 'Mar 8' },
+  { id: 'T043', name: 'ai-hub-restructure',          agent: 'codex',  date: 'Mar 6' },
+  { id: 'T040', name: 'unity-vibe-coding',           agent: 'gemini', date: 'Mar 6' },
+  { id: 'T038', name: 'noren-core-scripts',          agent: 'codex',  date: 'Mar 5' },
+  { id: 'T037', name: 'investment-strategy-research',agent: 'gemini', date: 'Mar 5' },
+  { id: 'T029', name: 'futsal-app',                  agent: 'codex',  date: 'Mar 4' },
+  { id: 'T028', name: 'factor-investment-survey',    agent: 'gemini', date: 'Mar 4' },
+  { id: 'T023', name: 'invest-bot-execution',        agent: 'codex',  date: 'Feb 28' },
+  { id: 'T019', name: 'invest-bot-skeleton',         agent: 'codex',  date: 'Feb 27' },
+  { id: 'T008', name: 'multi-agent-research',        agent: 'gemini', date: 'Feb 24' },
+] as const
+
+const AGENT_COLORS = {
+  gemini: { dot: '#059669', label: '#059669', bg: 'rgba(5,150,105,0.08)' },
+  codex:  { dot: '#D97706', label: '#D97706', bg: 'rgba(217,119,6,0.08)'  },
+  claude: { dot: '#475569', label: '#475569', bg: 'rgba(71,85,105,0.08)'  },
+} as const
+
+function OrchRecords() {
+  return (
+    <div className="border-t border-border">
+      {/* Header row */}
+      <div className="px-6 md:px-12 py-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b border-border">
+        <div className="flex items-center gap-3">
+          <p className="text-[9px] font-mono uppercase tracking-[0.25em] text-fg-subtle">
+            Orchestration Records
+          </p>
+          <span className="text-[9px] font-mono text-fg-faint">— 실전 기록</span>
+        </div>
+        {/* Agent stats */}
+        <div className="flex items-center gap-4">
+          {(['gemini', 'codex', 'claude'] as const).map((agent) => {
+            const count = agent === 'gemini' ? 45 : agent === 'codex' ? 15 : 5
+            const pct   = agent === 'gemini' ? 69  : agent === 'codex' ? 23  : 8
+            const c = AGENT_COLORS[agent]
+            return (
+              <div key={agent} className="flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: c.dot }} />
+                <span className="text-[9px] font-mono uppercase tracking-wider" style={{ color: c.label }}>
+                  {agent}
+                </span>
+                <span className="text-[9px] font-mono text-fg-faint">{count}</span>
+                <span className="text-[8px] text-fg-subtle">({pct}%)</span>
+              </div>
+            )
+          })}
+          <span className="text-[9px] font-mono text-fg-muted ml-2 pl-2 border-l border-border">
+            65 total
+          </span>
+        </div>
+      </div>
+
+      {/* Bar chart */}
+      <div className="px-6 md:px-12 py-4 border-b border-border flex flex-col gap-2">
+        {(['gemini', 'codex', 'claude'] as const).map((agent) => {
+          const count = agent === 'gemini' ? 45 : agent === 'codex' ? 15 : 5
+          const pct   = agent === 'gemini' ? 69  : agent === 'codex' ? 23  : 8
+          const c = AGENT_COLORS[agent]
+          return (
+            <div key={agent} className="flex items-center gap-3">
+              <span className="text-[9px] font-mono uppercase tracking-wider w-14 shrink-0" style={{ color: c.label }}>
+                {agent}
+              </span>
+              <div className="flex-1 h-1.5 bg-border rounded-full overflow-hidden">
+                <motion.div
+                  className="h-full rounded-full"
+                  style={{ backgroundColor: c.dot }}
+                  initial={{ width: 0 }}
+                  whileInView={{ width: `${pct}%` }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+                />
+              </div>
+              <span className="text-[9px] font-mono text-fg-faint w-6 text-right">{count}</span>
+            </div>
+          )
+        })}
+      </div>
+
+      {/* Task log */}
+      <div className="bg-bg-subtle">
+        {ORCH_TASKS.map((task, i) => {
+          const c = AGENT_COLORS[task.agent]
+          return (
+            <motion.div
+              key={task.id}
+              initial={{ opacity: 0, x: -6 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: '-20px' }}
+              transition={{ duration: 0.3, delay: i * 0.04 }}
+              className="flex items-center gap-4 px-6 md:px-12 py-2.5 border-b border-border last:border-0 hover:bg-bg-hover transition-colors duration-100"
+            >
+              {/* check */}
+              <span className="text-[#059669] text-[10px] shrink-0">✓</span>
+              {/* id */}
+              <span className="text-[9px] font-mono text-fg-faint w-8 shrink-0">{task.id}</span>
+              {/* name */}
+              <span className="text-[11px] font-mono text-fg-muted flex-1 truncate">{task.name}</span>
+              {/* agent badge */}
+              <span
+                className="text-[8px] font-bold uppercase tracking-wider px-1.5 py-0.5 shrink-0"
+                style={{ color: c.label, backgroundColor: c.bg }}
+              >
+                {task.agent}
+              </span>
+              {/* date */}
+              <span className="text-[9px] font-mono text-fg-faint w-12 text-right shrink-0">{task.date}</span>
+            </motion.div>
+          )
+        })}
+      </div>
+    </div>
   )
 }
 

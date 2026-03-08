@@ -870,6 +870,61 @@ export const works: WorkItem[] = [
     thumbnailAlt: 'Workflow diagram abstract',
   },
 
+  {
+    id: 'dev4',
+    category: 'development',
+    title: 'luma3 Portfolio',
+    titleKo: 'luma3 포트폴리오 웹사이트',
+    year: 2026,
+    tools: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Framer Motion', 'Vercel'],
+    description:
+      'This portfolio site — built with Next.js static export, IntersectionObserver-based lazy loading for 19+ videos, dark mode, and full SEO setup.',
+    descriptionKo:
+      'Next.js 정적 내보내기 기반 포트폴리오. 영상 19개 IntersectionObserver 레이지 로딩, 다크모드, SEO 완성.',
+    howIMadeThis: {
+      tools: ['Next.js 14', 'TypeScript', 'Tailwind CSS', 'Framer Motion', 'Vercel', 'satori + resvg'],
+      processNotes:
+        'Solved a @vercel/next v50 NEXT_MISSING_LAMBDA bug by switching to output: export. Generated OG image at build-time with satori + resvg without any native binaries.',
+    },
+    thumbnailAlt: 'luma3 portfolio site screenshot',
+  },
+  {
+    id: 'dev5',
+    category: 'development',
+    title: 'Investment Automation Bot',
+    titleKo: '투자 자동화 봇',
+    year: 2026,
+    tools: ['Python', 'KIS API', 'Alpaca', 'SQLite', 'Telegram'],
+    description:
+      'Automated trading bot covering Korean (KIS) and US (Alpaca) markets — momentum strategy, backtesting engine, and Telegram push alerts.',
+    descriptionKo:
+      '국내(KIS)·미국(Alpaca) 시장 모멘텀 전략 자동매매. 백테스팅 엔진 및 텔레그램 알림 포함.',
+    howIMadeThis: {
+      tools: ['Python', 'KIS Open API', 'Alpaca API', 'SQLite', 'Telegram Bot API', 'pandas'],
+      processNotes:
+        'Built modular execution, portfolio, and notify layers independently, then wired together via live.py. Momentum strategy validated with 1Y backtest before connecting to paper trading.',
+    },
+    thumbnailAlt: 'Investment bot backtesting chart',
+  },
+  {
+    id: 'dev6',
+    category: 'development',
+    title: 'OpenClaw AI Agent Setup',
+    titleKo: 'OpenClaw AI 에이전트 구축',
+    year: 2026,
+    tools: ['OpenClaw', 'Node.js', 'Telegram', 'MCP'],
+    description:
+      'Local AI agent platform wiring Telegram as a command channel — skill-based task routing, multi-channel interface, and cost-controlled model dispatch.',
+    descriptionKo:
+      'Telegram을 명령 채널로 연결한 로컬 AI 에이전트. 스킬 기반 라우팅, 멀티채널 인터페이스, 비용 통제 모델 디스패치.',
+    howIMadeThis: {
+      tools: ['OpenClaw', 'Node.js', 'Telegram Bot API', 'MCP'],
+      processNotes:
+        'Configured skill whitelists and approval gates for high-permission tasks. Integrated with existing multi-agent orchestration system as an additional command entry point.',
+    },
+    thumbnailAlt: 'OpenClaw agent channel diagram',
+  },
+
   // ─── Strategy ────────────────────────────────────────────────────────────
   {
     id: 's1',
