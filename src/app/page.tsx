@@ -5,6 +5,7 @@ import BentoGrid from '@/components/BentoGrid'
 import VideoSection from '@/components/VideoSection'
 import MusicSection from '@/components/MusicSection'
 import { DesignSection, DevelopmentSection, BusinessSection } from '@/components/HubSection'
+import AISection from '@/components/AISection'
 import AboutSection from '@/components/AboutSection'
 import ContactSection from '@/components/ContactSection'
 import BackToTop from '@/components/BackToTop'
@@ -49,6 +50,10 @@ export default function Home() {
 
           <div className="mt-16 md:mt-24">
             <DevelopmentSection />
+          </div>
+
+          <div className="mt-16 md:mt-24">
+            <AISection />
           </div>
 
           <div className="mt-16 md:mt-24">

@@ -12,6 +12,7 @@ const sections = [
   { label: 'Music',       id: 'music' },
   { label: 'Design',      id: 'design' },
   { label: 'Development', id: 'development' },
+  { label: 'AI',          id: 'ai' },
   { label: 'Business',    id: 'business' },
   { label: 'About',       id: 'about' },
 ]

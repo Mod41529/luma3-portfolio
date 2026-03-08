@@ -10,6 +10,7 @@ const workLinks = [
   { label: 'Music',       sectionId: 'music' },
   { label: 'Design',      sectionId: 'design' },
   { label: 'Development', sectionId: 'development' },
+  { label: 'AI',          sectionId: 'ai' },
   { label: 'Business',    sectionId: 'business' },
 ]
 
