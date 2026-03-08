@@ -72,6 +72,12 @@ export const works: WorkItem[] = [
         'A slow-motion sequence of light refracting through water droplets on glass, golden hour, cinematic, 35mm film grain, hyperrealistic',
       processNotes:
         'Generated base footage with Sora using cinematic prompts, then composited in After Effects with color grading in Premiere. Added ambient sound design in post.',
+      contribution: [
+        { label: 'Concept', pct: 100 },
+        { label: 'Direction', pct: 100 },
+        { label: 'Editing', pct: 90 },
+        { label: 'Visual FX', pct: 85 },
+      ],
     },
     thumbnailAlt: 'Dragon flying above colorful sunset sky',
     videoSrc: '/videos/v1.mp4',
@@ -96,6 +102,11 @@ export const works: WorkItem[] = [
         'Microscopic biological cells glowing in vibrant colors, bioluminescent, alien ecosystem, deep space aesthetic, ultra detailed',
       processNotes:
         'Generated the base image in Midjourney, then animated with Kling to bring the cellular structures to life. The motion reveals depth that the static image only hints at.',
+      contribution: [
+        { label: 'Concept', pct: 100 },
+        { label: 'Prompt Direction', pct: 100 },
+        { label: 'Editing', pct: 65 },
+      ],
     },
     thumbnailAlt: 'Glowing microscopic cells',
     videoSrc: '/videos/v2.mp4',
@@ -119,6 +130,11 @@ export const works: WorkItem[] = [
         'First-person perspective of a child releasing colorful balloons into blue summer sky, cinematic, warm sunlight, dreamy',
       processNotes:
         'The first-person framing was intentional — placing the viewer inside the memory rather than observing it. Kling preserved the soft light remarkably well.',
+      contribution: [
+        { label: 'Concept', pct: 100 },
+        { label: 'Prompt Direction', pct: 100 },
+        { label: 'Editing', pct: 65 },
+      ],
     },
     thumbnailAlt: 'Child releasing colorful balloons into sky',
     videoSrc: '/videos/v3.mp4',
@@ -142,6 +158,11 @@ export const works: WorkItem[] = [
         'Deep sea diver surrounded by glowing bioluminescent creatures, dark underwater, neon purples and greens, cinematic wide shot',
       processNotes:
         'The scale contrast between the diver and the environment was the core concept. Kling added subtle particle movement that made the creatures feel alive.',
+      contribution: [
+        { label: 'Concept', pct: 100 },
+        { label: 'Prompt Direction', pct: 100 },
+        { label: 'Editing', pct: 65 },
+      ],
     },
     thumbnailAlt: 'Diver in bioluminescent deep sea',
     videoSrc: '/videos/v4.mp4',
@@ -165,6 +186,11 @@ export const works: WorkItem[] = [
         'Luxury sports car speeding through mountain road, dramatic sunset sky, motion blur, cinematic, hyperrealistic',
       processNotes:
         'Focused on the motion blur in the road surface — Kling handled the directional blur well, giving the sense of real velocity.',
+      contribution: [
+        { label: 'Concept', pct: 100 },
+        { label: 'Prompt Direction', pct: 100 },
+        { label: 'Editing', pct: 65 },
+      ],
     },
     thumbnailAlt: 'Orange supercar on mountain road at sunset',
     videoSrc: '/videos/v5.mp4',
@@ -188,6 +214,11 @@ export const works: WorkItem[] = [
         'Explosion of liquid colors in mid-air, swirling paint, black background, ultra detailed, macro photography style',
       processNotes:
         'The static image was already striking, but the animation added a sense of ongoing expansion — like the explosion is still happening.',
+      contribution: [
+        { label: 'Concept', pct: 100 },
+        { label: 'Prompt Direction', pct: 100 },
+        { label: 'Editing', pct: 65 },
+      ],
     },
     thumbnailAlt: 'Colorful liquid paint explosion on black background',
     videoSrc: '/videos/v6.mp4',
@@ -212,6 +243,11 @@ export const works: WorkItem[] = [
         'High fashion model walking through colorful urban street, editorial photography style, vivid colors, cinematic bokeh',
       processNotes:
         'The challenge was keeping the model sharp while the background felt alive. Kling introduced subtle movement in her dress and the background elements.',
+      contribution: [
+        { label: 'Concept', pct: 100 },
+        { label: 'Prompt Direction', pct: 100 },
+        { label: 'Editing', pct: 65 },
+      ],
     },
     thumbnailAlt: 'Fashion model on colorful urban street',
     videoSrc: '/videos/v7.mp4',
@@ -235,6 +271,11 @@ export const works: WorkItem[] = [
         'Athletic man doing push-ups, black and white, dramatic lighting, close-up, raw and gritty, cinematic',
       processNotes:
         'Shot in monochrome to strip away all distraction. The tight framing puts focus entirely on the physical effort.',
+      contribution: [
+        { label: 'Concept', pct: 100 },
+        { label: 'Prompt Direction', pct: 100 },
+        { label: 'Editing', pct: 65 },
+      ],
     },
     thumbnailAlt: 'Athlete doing push-ups in black and white',
     videoSrc: '/videos/v8.mp4',
@@ -258,6 +299,11 @@ export const works: WorkItem[] = [
         'Bioluminescent ocean waves crashing on dark beach at night, glowing blue, magical, long exposure style',
       processNotes:
         'The challenge was sustaining the glow intensity through the wave motion. Kling handled the particle dispersal naturally.',
+      contribution: [
+        { label: 'Concept', pct: 100 },
+        { label: 'Prompt Direction', pct: 100 },
+        { label: 'Editing', pct: 65 },
+      ],
     },
     thumbnailAlt: 'Glowing bioluminescent waves on dark beach',
     videoSrc: '/videos/v9.mp4',
@@ -281,6 +327,11 @@ export const works: WorkItem[] = [
         'Elite special forces soldiers moving through dense jungle fog, tactical gear, cinematic, muted colors, tense atmosphere',
       processNotes:
         'Kept the motion slow and deliberate. The fog layer added natural depth without any post-processing.',
+      contribution: [
+        { label: 'Concept', pct: 100 },
+        { label: 'Prompt Direction', pct: 100 },
+        { label: 'Editing', pct: 65 },
+      ],
     },
     thumbnailAlt: 'Special forces in jungle fog',
     videoSrc: '/videos/v10.mp4',
@@ -304,6 +355,11 @@ export const works: WorkItem[] = [
         'Indie rock band playing in dimly lit garage, vintage amps, gritty atmosphere, warm tungsten light, documentary style',
       processNotes:
         'The tungsten warmth was key — cool light would have killed the intimacy. Kling captured the subtle instrument vibration well.',
+      contribution: [
+        { label: 'Concept', pct: 100 },
+        { label: 'Prompt Direction', pct: 100 },
+        { label: 'Editing', pct: 65 },
+      ],
     },
     thumbnailAlt: 'Indie rock band playing in a garage',
     videoSrc: '/videos/v11.mp4',
@@ -327,6 +383,11 @@ export const works: WorkItem[] = [
         'Lone silhouette standing at dramatic cliff edge, crashing ocean waves far below, overcast sky, cinematic wide shot, solitude',
       processNotes:
         'The vertical framing emphasizes the height and isolation. Kling added cloud movement and wave spray that made the scale feel real.',
+      contribution: [
+        { label: 'Concept', pct: 100 },
+        { label: 'Prompt Direction', pct: 100 },
+        { label: 'Editing', pct: 65 },
+      ],
     },
     thumbnailAlt: 'Lone figure at dramatic cliff edge above ocean',
     videoSrc: '/videos/v12.mp4',
@@ -350,6 +411,11 @@ export const works: WorkItem[] = [
         'Snow-capped mountain peaks above clouds at golden hour, aerial view, serene, cinematic, warm orange light',
       processNotes:
         'The slow cloud drift was the only motion needed. Kling kept it subtle — any faster and the serenity would have been lost.',
+      contribution: [
+        { label: 'Concept', pct: 100 },
+        { label: 'Prompt Direction', pct: 100 },
+        { label: 'Editing', pct: 65 },
+      ],
     },
     thumbnailAlt: 'Snow-capped mountain peaks above clouds at golden hour',
     videoSrc: '/videos/v13.mp4',
@@ -373,6 +439,11 @@ export const works: WorkItem[] = [
         'Fighter jet flying at high speed through clear blue sky, ultra-wide angle, motion blur, cinematic, dramatic',
       processNotes:
         'The ultra-wide crop was deliberate — more sky emphasizes the isolation and velocity. Kling nailed the contrail and blur.',
+      contribution: [
+        { label: 'Concept', pct: 100 },
+        { label: 'Prompt Direction', pct: 100 },
+        { label: 'Editing', pct: 65 },
+      ],
     },
     thumbnailAlt: 'Fighter jet flying through clear blue sky',
     videoSrc: '/videos/v14.mp4',
@@ -396,6 +467,11 @@ export const works: WorkItem[] = [
         'Professional chef plating a fine dining dish, close-up hands, warm kitchen light, cinematic, precise movements',
       processNotes:
         'Square format felt right for the intimacy of the close-up. The warm kitchen light required no color grading.',
+      contribution: [
+        { label: 'Concept', pct: 100 },
+        { label: 'Prompt Direction', pct: 100 },
+        { label: 'Editing', pct: 65 },
+      ],
     },
     thumbnailAlt: 'Chef plating a fine dining dish',
     videoSrc: '/videos/v15.mp4',
@@ -419,6 +495,11 @@ export const works: WorkItem[] = [
         'Runner on coastal path at dawn, ocean beside them, soft morning light, cinematic, solitude and motion',
       processNotes:
         'The 3:2 crop mirrors a classic film still. Dawn light needed no enhancement — the scene was already perfect.',
+      contribution: [
+        { label: 'Concept', pct: 100 },
+        { label: 'Prompt Direction', pct: 100 },
+        { label: 'Editing', pct: 65 },
+      ],
     },
     thumbnailAlt: 'Runner on coastal path at dawn',
     videoSrc: '/videos/v16.mp4',
@@ -442,6 +523,11 @@ export const works: WorkItem[] = [
         'Brutalist concrete architecture shot from below, dramatic perspective, geometric patterns, overcast sky, architectural photography',
       processNotes:
         'The low angle was essential — it transforms familiar concrete into something monolithic. Cloud movement added life to an otherwise static subject.',
+      contribution: [
+        { label: 'Concept', pct: 100 },
+        { label: 'Prompt Direction', pct: 100 },
+        { label: 'Editing', pct: 65 },
+      ],
     },
     thumbnailAlt: 'Brutalist architecture shot from below',
     videoSrc: '/videos/v17.mp4',
@@ -465,6 +551,12 @@ export const works: WorkItem[] = [
         'Close-up of lemon slices dropping into water, slow motion, satisfying ASMR textures, soft natural lighting',
       processNotes:
         'Generated with Kling for the visual and paired with a minimal ambient track from Suno. Focused on texture — the translucent rind, water ripples, citrus color.',
+      contribution: [
+        { label: 'Concept', pct: 100 },
+        { label: 'Prompt Direction', pct: 100 },
+        { label: 'Editing', pct: 55 },
+        { label: 'Music Direction', pct: 80 },
+      ],
     },
     thumbnailAlt: 'Close-up of lemon slice in water',
     videoSrc: '/videos/v18.mp4',
@@ -485,6 +577,11 @@ export const works: WorkItem[] = [
       tools: ['Kling AI', 'Midjourney v6'],
       processNotes:
         'Explored prompt-to-video pipelines with Kling. Multiple iterations on motion quality, temporal consistency, and cinematic framing.',
+      contribution: [
+        { label: 'Concept', pct: 100 },
+        { label: 'Prompt Direction', pct: 100 },
+        { label: 'Editing', pct: 65 },
+      ],
     },
     thumbnailAlt: 'AI-generated cinematic video frame',
     videoSrc: '/videos/v19.mp4',
@@ -509,6 +606,12 @@ export const works: WorkItem[] = [
         'Ambient meditation music, Japanese koto, gentle piano, 60bpm, calm, introspective, no drums, soft reverb, lo-fi texture',
       processNotes:
         'Generated base tracks in SUNO and Udio, then imported stems into Logic Pro for arrangement and EQ work.',
+      contribution: [
+        { label: 'Concept & Theme', pct: 100 },
+        { label: 'Lyric Direction', pct: 90 },
+        { label: 'Arrangement', pct: 70 },
+        { label: 'Mix & Master', pct: 60 },
+      ],
     },
     thumbnailAlt: 'Calm water surface',
     audioSrc: '/audio/m1.mp3',
@@ -530,6 +633,12 @@ export const works: WorkItem[] = [
         'Progressive electronic, starts minimal with just bass, elements compound over 4 minutes, techno influenced, 128bpm, builds to euphoric drop',
       processNotes:
         'Conceptually mapped the finance concept of compound growth to musical density. Each 30 seconds adds new layers.',
+      contribution: [
+        { label: 'Concept & Theme', pct: 100 },
+        { label: 'Lyric Direction', pct: 90 },
+        { label: 'Arrangement', pct: 70 },
+        { label: 'Mix & Master', pct: 60 },
+      ],
     },
     thumbnailAlt: 'Sound wave visualization',
     audioSrc: '/audio/m2.mp3',
@@ -549,6 +658,12 @@ export const works: WorkItem[] = [
         'Lo-fi hip hop, Seoul late night, rain sounds, jazz samples, melancholy, 75bpm, vinyl crackle, Korean city atmosphere',
       processNotes:
         'Generated multiple variations in Udio, selected the most atmospheric one, added field recordings of Seoul streets.',
+      contribution: [
+        { label: 'Concept & Theme', pct: 100 },
+        { label: 'Lyric Direction', pct: 90 },
+        { label: 'Arrangement', pct: 70 },
+        { label: 'Mix & Master', pct: 60 },
+      ],
     },
     thumbnailAlt: 'Seoul nightscape abstract',
     audioSrc: '/audio/m3.mp3',
@@ -568,6 +683,12 @@ export const works: WorkItem[] = [
       tools: ['SUNO', 'Ableton Live'],
       processNotes:
         'The title came first — the feeling of being wired at 2am. Built the arrangement around that tension: a beat that keeps threatening to drop but never fully resolves.',
+      contribution: [
+        { label: 'Concept & Theme', pct: 100 },
+        { label: 'Lyric Direction', pct: 90 },
+        { label: 'Arrangement', pct: 70 },
+        { label: 'Mix & Master', pct: 60 },
+      ],
     },
     thumbnailAlt: 'Night synth waveform',
     audioSrc: '/audio/m4.mp3',
@@ -589,6 +710,12 @@ export const works: WorkItem[] = [
         'Clave rhythm, afrobeat influence, heavily distorted percussion, dreamy atmosphere, hypnotic loop, 95bpm',
       processNotes:
         'Started with a traditional clave pattern, then ran it through distortion chains until it felt hallucinatory. Mixed clean and destroyed versions in parallel.',
+      contribution: [
+        { label: 'Concept & Theme', pct: 100 },
+        { label: 'Lyric Direction', pct: 90 },
+        { label: 'Arrangement', pct: 70 },
+        { label: 'Mix & Master', pct: 60 },
+      ],
     },
     thumbnailAlt: 'Distorted rhythm waveform',
     audioSrc: '/audio/m5.mp3',
@@ -610,6 +737,12 @@ export const works: WorkItem[] = [
         'jazz hip-hop, cafe vibe, catchy piano riff, punchy boom-bap drums, finger snaps, upright bass, vinyl crackle, no trumpet, no horns, melodic piano loop, head-nodding groove, 90bpm, instrumental',
       processNotes:
         'Generated with a hook-forward prompt — wanted the piano to carry the melody without any brass. Kept the boom-bap drums punchy to balance the softness of the chords.',
+      contribution: [
+        { label: 'Concept & Theme', pct: 100 },
+        { label: 'Lyric Direction', pct: 95 },
+        { label: 'Arrangement', pct: 45 },
+        { label: 'Mix & Master', pct: 0 },
+      ],
     },
     thumbnailAlt: 'Jazz piano waveform',
     audioSrc: '/audio/bento-music.mp3',
@@ -629,6 +762,12 @@ export const works: WorkItem[] = [
       tools: ['SUNO', 'Udio'],
       processNotes:
         'Made three versions before this one. Kept the rough edges intentionally — sometimes the imperfection is the point.',
+      contribution: [
+        { label: 'Concept & Theme', pct: 100 },
+        { label: 'Lyric Direction', pct: 95 },
+        { label: 'Arrangement', pct: 45 },
+        { label: 'Mix & Master', pct: 0 },
+      ],
     },
     thumbnailAlt: 'Soft waveform',
     audioSrc: '/audio/m6.mp3',

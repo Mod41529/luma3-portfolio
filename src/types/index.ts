@@ -18,6 +18,7 @@ export interface WorkItem {
     tools: string[]
     prompt?: string
     processNotes: string
+    contribution?: { label: string; pct: number }[]
   }
   thumbnailAlt: string
   thumbnailSrc?: string   // /images/thumbnails/{id}.jpg  (video poster / preview)
