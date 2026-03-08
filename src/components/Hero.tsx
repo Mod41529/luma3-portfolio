@@ -331,7 +331,7 @@ export default function Hero() {
             <div className="flex flex-col items-center gap-1.5">
               <span className="uppercase font-bold text-fg-subtle
                                tracking-[0.3em] text-[10px] xl:text-[11px] 2xl:text-[13px]">
-                Based in Seoul / Creative Designer
+                Based in Seoul / Finance × AI Systems Designer
               </span>
               <div className="h-px w-28 bg-border" />
             </div>

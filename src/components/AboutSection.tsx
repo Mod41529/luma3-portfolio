@@ -4,8 +4,8 @@ import { motion } from 'framer-motion'
 
 const BACKGROUND = [
   { label: 'University',   value: 'Sungkyunkwan University — Global Business Administration' },
-  { label: 'Field',        value: 'Business Strategy & Finance' },
-  { label: 'Operations',   value: 'AI-powered Creative Operations' },
+  { label: 'Field',        value: 'Finance & Tax Automation / AI Systems' },
+  { label: 'Operations',   value: 'AI-powered Finance & Business Operations' },
   { label: 'Location',     value: 'Seoul, Korea' },
 ]
 
