@@ -924,6 +924,42 @@ export const works: WorkItem[] = [
     },
     thumbnailAlt: 'OpenClaw agent channel diagram',
   },
+  {
+    id: 'dev7',
+    category: 'development',
+    title: 'Content Automation Pipeline',
+    titleKo: '콘텐츠 자동화 파이프라인',
+    year: 2026,
+    tools: ['Python', 'Claude API', 'Runway', 'CapCut API'],
+    description:
+      'End-to-end content factory for YouTube and Instagram. Given a creative topic, the system generates thumbnails, scripts, video, and subtitles — fully automated.',
+    descriptionKo:
+      '유튜브·인스타그램용 콘텐츠 자동화 시스템. 주제만 입력하면 썸네일, 영상 내용, 영상화, 자막 편집까지 자동으로 처리.',
+    howIMadeThis: {
+      tools: ['Python', 'Claude API', 'Runway', 'CapCut API', 'Gemini'],
+      processNotes:
+        'Orchestrated a multi-step pipeline: Claude generates scripts and thumbnail concepts, Runway renders video, CapCut API handles subtitle editing. Human input is limited to topic selection and final approval.',
+    },
+    thumbnailAlt: 'Content automation pipeline diagram',
+  },
+  {
+    id: 'dev8',
+    category: 'development',
+    title: 'Futsal Training App',
+    titleKo: '풋살 트레이닝 앱',
+    year: 2026,
+    tools: ['TypeScript', 'Next.js', 'YouTube API'],
+    description:
+      'A self-coaching app for futsal beginners. Structured training plans covering fitness, passing, and dribbling — each drill linked to curated YouTube lesson videos.',
+    descriptionKo:
+      '풋살 초보자를 위한 자기주도 훈련 앱. 기초 체력부터 패스·드리블까지 단계별 커리큘럼을 유튜브 강의 영상과 연동해 혼자서도 체계적으로 연습할 수 있도록 설계.',
+    howIMadeThis: {
+      tools: ['TypeScript', 'Next.js', 'YouTube Data API', 'Codex'],
+      processNotes:
+        'Codex implemented the training plan data model and YouTube API integration. Curriculum structure and drill sequencing were designed by hand based on beginner futsal coaching frameworks.',
+    },
+    thumbnailAlt: 'Futsal training app screenshot',
+  },
 
   // ─── Strategy ────────────────────────────────────────────────────────────
   {
