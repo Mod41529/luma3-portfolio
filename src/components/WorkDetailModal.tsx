@@ -259,35 +259,6 @@ export default function WorkDetailModal({ work, onClose }: WorkDetailModalProps)
                             </div>
                           )}
 
-                          {/* Contribution breakdown */}
-                          {work.howIMadeThis.contribution && (
-                            <div>
-                              <p className="text-[10px] text-fg-subtle uppercase tracking-[0.15em] font-mono mb-3">
-                                My Contribution
-                              </p>
-                              <div className="space-y-2">
-                                {work.howIMadeThis.contribution.map(({ label, pct }) => (
-                                  <div key={label} className="flex items-center gap-2.5">
-                                    <span className="text-[10px] font-mono text-fg-muted w-28 shrink-0">{label}</span>
-                                    <div className="flex-1 h-1 bg-border rounded-full overflow-hidden">
-                                      <motion.div
-                                        className="h-full rounded-full"
-                                        style={{ backgroundColor: category.accent }}
-                                        initial={{ width: 0 }}
-                                        animate={{ width: `${pct}%` }}
-                                        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                                      />
-                                    </div>
-                                    <span className="text-[10px] font-mono w-8 text-right shrink-0"
-                                      style={{ color: pct > 0 ? category.accent : 'var(--fg-subtle)' }}>
-                                      {pct}%
-                                    </span>
-                                  </div>
-                                ))}
-                              </div>
-                            </div>
-                          )}
-
                           {/* Process */}
                           <div>
                             <p className="text-[10px] text-fg-subtle uppercase tracking-[0.15em] font-mono mb-2">
