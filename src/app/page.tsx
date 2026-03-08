@@ -49,11 +49,11 @@ export default function Home() {
           </div>
 
           <div className="mt-16 md:mt-24">
-            <DevelopmentSection />
+            <AISection />
           </div>
 
           <div className="mt-16 md:mt-24">
-            <AISection />
+            <DevelopmentSection />
           </div>
 
           <div className="mt-16 md:mt-24">

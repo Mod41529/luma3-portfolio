@@ -9,8 +9,8 @@ const workLinks = [
   { label: 'Video',       sectionId: 'video' },
   { label: 'Music',       sectionId: 'music' },
   { label: 'Design',      sectionId: 'design' },
-  { label: 'Development', sectionId: 'development' },
   { label: 'AI',          sectionId: 'ai' },
+  { label: 'Development', sectionId: 'development' },
   { label: 'Business',    sectionId: 'business' },
 ]
 

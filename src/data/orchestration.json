@@ -4,13 +4,13 @@
   "agents": [
     {
       "name": "Gemini",
-      "tasks": 43,
-      "pct": 66
+      "tasks": 42,
+      "pct": 64
     },
     {
       "name": "Codex",
-      "tasks": 19,
-      "pct": 29
+      "tasks": 20,
+      "pct": 31
     },
     {
       "name": "Claude",
@@ -18,5 +18,5 @@
       "pct": 5
     }
   ],
-  "generatedAt": "2026-03-08T12:47:06.453Z"
+  "generatedAt": "2026-03-08T13:19:48.798Z"
 }
