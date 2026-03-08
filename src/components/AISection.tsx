@@ -3,19 +3,25 @@
 import { motion } from 'framer-motion'
 import { Brain, GitBranch, Eye, Layers, Cpu, Zap } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
+import orchStats from '@/data/orchestration.json'
 
-// ── Orchestration data ────────────────────────────────────────────────────────
+// ── Orchestration data (auto-generated at build time) ────────────────────────
 const STATS = [
-  { value: '65', label: 'Tasks Delegated' },
-  { value: '3',  label: 'AI Agents' },
-  { value: '9',  label: 'Months Active' },
+  { value: String(orchStats.total),     label: 'Tasks Delegated' },
+  { value: String(orchStats.agents.length), label: 'AI Agents' },
+  { value: String(orchStats.completed), label: 'Completed' },
 ]
 
-const AGENTS = [
-  { name: 'Gemini', role: 'Research & Analysis', tasks: 45, pct: 69, color: '#059669' },
-  { name: 'Codex',  role: 'Code Generation',     tasks: 15, pct: 23, color: '#D97706' },
-  { name: 'Claude', role: 'Orchestration',        tasks: 5,  pct: 8,  color: '#475569' },
-]
+const AGENT_META: Record<string, { role: string; color: string }> = {
+  Gemini: { role: 'Research & Analysis', color: '#059669' },
+  Codex:  { role: 'Code Generation',     color: '#D97706' },
+  Claude: { role: 'Orchestration',       color: '#475569' },
+}
+
+const AGENTS = orchStats.agents.map(a => ({
+  ...a,
+  ...(AGENT_META[a.name] ?? { role: 'Agent', color: '#737373' }),
+}))
 
 // ── Competencies ──────────────────────────────────────────────────────────────
 interface Competency {
@@ -102,7 +108,9 @@ export default function AISection() {
               </span>
             </div>
           ))}
-          <p className="text-[9px] font-mono text-fg-faint mt-1">{agent_role_labels()}</p>
+          <p className="text-[9px] font-mono text-fg-faint mt-1">
+          {AGENTS.map(a => `${a.name} — ${a.role}`).join('  ·  ')}
+        </p>
         </div>
       </div>
 
@@ -140,6 +148,3 @@ export default function AISection() {
   )
 }
 
-function agent_role_labels() {
-  return AGENTS.map(a => `${a.name} — ${a.role}`).join('  ·  ')
-}
