@@ -4,100 +4,110 @@ import { motion } from 'framer-motion'
 import { Brain, GitBranch, Eye, Layers, Cpu, Zap } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 
-const SOURCE_COLOR: Record<string, string> = {
-  Mollick:   '#7C3AED',
-  McKinsey:  '#1978e5',
-  WEF:       '#059669',
-  ODSC:      '#D97706',
-  Flowkater: '#E11D48',
-}
+// ── Orchestration data ────────────────────────────────────────────────────────
+const STATS = [
+  { value: '65', label: 'Tasks Delegated' },
+  { value: '3',  label: 'AI Agents' },
+  { value: '9',  label: 'Months Active' },
+]
 
+const AGENTS = [
+  { name: 'Gemini', role: 'Research & Analysis', tasks: 45, pct: 69, color: '#059669' },
+  { name: 'Codex',  role: 'Code Generation',     tasks: 15, pct: 23, color: '#D97706' },
+  { name: 'Claude', role: 'Orchestration',        tasks: 5,  pct: 8,  color: '#475569' },
+]
+
+// ── Competencies ──────────────────────────────────────────────────────────────
 interface Competency {
   icon: LucideIcon
   name: string
-  sources: string[]
   evidence: string
-  stat?: string
 }
 
 const COMPETENCIES: Competency[] = [
   {
     icon: Brain,
     name: 'Judgment & Oversight',
-    sources: ['Mollick', 'McKinsey', 'WEF'],
-    evidence: 'Review, direction, taste — always human. AI executes; human decides.',
+    evidence: 'Every AI output goes through human review. Direction, final call, and taste stay with me.',
   },
   {
     icon: Layers,
     name: 'Context Framing',
-    sources: ['Mollick', 'ODSC'],
-    evidence: 'CLAUDE.md + SHARED_MEMORY.md — structured context preserved across sessions.',
+    evidence: 'Dedicated instruction files brief each agent on its role, constraints, and memory before every session.',
   },
   {
     icon: GitBranch,
     name: 'Task Decomposition',
-    sources: ['McKinsey', 'ODSC', 'Flowkater'],
-    evidence: 'Problems broken into agent-sized briefs with explicit Done Criteria.',
-    stat: '65 tasks',
+    evidence: '65 tasks structured with goal, scope, constraints, and done criteria — written before delegation.',
   },
   {
     icon: Cpu,
     name: 'Multi-Agent Orchestration',
-    sources: ['McKinsey', 'ODSC', 'Flowkater'],
-    evidence: 'Claude · Codex · Gemini running concurrently on a single production project.',
-    stat: '3 agents',
+    evidence: 'Claude, Codex, and Gemini assigned by task type and quota, running concurrently on one project.',
   },
   {
     icon: Eye,
     name: 'Observability',
-    sources: ['ODSC', 'Flowkater'],
-    evidence: 'activity.jsonl real-time event log with persistent queue and state tracking.',
+    evidence: 'Every agent action logged in real time. Task queue persists across sessions with full status tracking.',
   },
   {
     icon: Zap,
     name: 'Adaptability',
-    sources: ['WEF', 'McKinsey'],
-    evidence: 'Actively switched toolchains across GPT, Claude, and Gemini as the landscape evolved.',
+    evidence: 'Switched models and toolchains multiple times as the AI landscape evolved — without losing momentum.',
   },
 ]
 
-const EXPERT_SOURCES = [
-  { name: 'Ethan Mollick',           note: 'Co-Intelligence (2024 · 2025 ed.)' },
-  { name: 'McKinsey Global Institute', note: 'Agents, Robots, and Us (2025)' },
-  { name: 'World Economic Forum',    note: 'Future of Jobs Report (2025)' },
-  { name: 'ODSC',                    note: 'Agentic AI Skills (2026)' },
-  { name: 'Flowkater',               note: '에이전틱 엔지니어링 시대의 생존 스킬 9가지 (2026)' },
-]
+const EXPERT_SOURCES = ['Ethan Mollick', 'McKinsey Global Institute', 'World Economic Forum', 'ODSC', 'Flowkater']
 
+// ── Component ─────────────────────────────────────────────────────────────────
 export default function AISection() {
   return (
     <section id="ai" className="border-t border-border">
       {/* Section header */}
-      <div className="px-6 md:px-12 py-5 flex items-baseline border-b border-border">
-        <div className="flex items-baseline gap-4">
-          <h2 className="text-[10px] font-bold uppercase tracking-[0.4em] text-fg">AI Capabilities</h2>
-          <span className="text-[10px] text-fg-subtle font-mono">{COMPETENCIES.length} competencies</span>
+      <div className="px-6 md:px-12 py-5 border-b border-border flex items-baseline gap-4">
+        <h2 className="text-[10px] font-bold uppercase tracking-[0.4em] text-fg">AI Capabilities</h2>
+        <span className="text-[10px] font-mono text-fg-subtle">Agentic Engineering</span>
+      </div>
+
+      {/* ── Data panel ─────────────────────────────────────────────────────── */}
+      <div className="px-6 md:px-12 py-8 border-b border-border flex flex-col md:flex-row gap-8 md:gap-16">
+
+        {/* Stats */}
+        <div className="flex items-center gap-8 shrink-0">
+          {STATS.map(({ value, label }) => (
+            <div key={label}>
+              <p className="text-3xl font-black tracking-tight text-fg">{value}</p>
+              <p className="text-[9px] font-mono uppercase tracking-[0.2em] text-fg-subtle mt-0.5">{label}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Agent bar chart */}
+        <div className="flex-1 flex flex-col justify-center gap-3">
+          {AGENTS.map((agent, i) => (
+            <div key={agent.name} className="flex items-center gap-3">
+              <span className="text-[10px] font-mono w-14 shrink-0 text-fg-muted">{agent.name}</span>
+              <div className="flex-1 h-1.5 bg-bg-subtle rounded-full overflow-hidden">
+                <motion.div
+                  className="h-full rounded-full"
+                  style={{ backgroundColor: agent.color }}
+                  initial={{ width: 0 }}
+                  whileInView={{ width: `${agent.pct}%` }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: i * 0.1 }}
+                />
+              </div>
+              <span className="text-[10px] font-mono text-fg-faint w-16 shrink-0">
+                {agent.tasks} tasks · {agent.pct}%
+              </span>
+            </div>
+          ))}
+          <p className="text-[9px] font-mono text-fg-faint mt-1">{agent_role_labels()}</p>
         </div>
       </div>
 
-      {/* Source attribution strip */}
-      <div className="px-6 md:px-12 py-3 border-b border-border flex flex-wrap items-center gap-x-4 gap-y-1.5">
-        <span className="text-[9px] font-mono uppercase tracking-[0.25em] text-fg-faint shrink-0">
-          Referenced from
-        </span>
-        {EXPERT_SOURCES.map(({ name, note }) => (
-          <span
-            key={name}
-            title={note}
-            className="text-[10px] font-mono text-fg-subtle hover:text-fg transition-colors duration-150 cursor-default"
-          >
-            {name}
-          </span>
-        ))}
-      </div>
-
-      {/* Competency grid */}
-      <div className="px-6 md:px-12 py-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      {/* ── Competency cards ───────────────────────────────────────────────── */}
+      <div className="px-6 md:px-12 py-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {COMPETENCIES.map((comp, i) => {
           const Icon = comp.icon
           return (
@@ -106,44 +116,30 @@ export default function AISection() {
               initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-30px' }}
-              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1], delay: i * 0.05 }}
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1], delay: i * 0.06 }}
               className="flex flex-col gap-3 p-4 border border-border hover:bg-bg-subtle transition-colors duration-150"
             >
-              {/* Icon row */}
-              <div className="flex items-center justify-between">
-                <Icon size={13} className="text-fg-faint" strokeWidth={1.5} />
-                {comp.stat && (
-                  <span className="text-[11px] font-mono font-bold" style={{ color: '#1978e5' }}>
-                    {comp.stat}
-                  </span>
-                )}
-              </div>
-
-              {/* Name */}
-              <p className="text-sm font-semibold text-fg leading-tight">{comp.name}</p>
-
-              {/* Evidence */}
-              <p className="text-xs text-fg-muted leading-relaxed flex-1">{comp.evidence}</p>
-
-              {/* Source tags */}
-              <div className="flex flex-wrap gap-1.5 pt-1">
-                {comp.sources.map(src => (
-                  <span
-                    key={src}
-                    className="text-[9px] font-mono px-1.5 py-0.5"
-                    style={{
-                      color: SOURCE_COLOR[src],
-                      backgroundColor: SOURCE_COLOR[src] + '18',
-                    }}
-                  >
-                    {src}
-                  </span>
-                ))}
-              </div>
+              <Icon size={18} strokeWidth={1.5} style={{ color: '#1978e5' }} />
+              <p className="text-sm font-semibold text-fg">{comp.name}</p>
+              <p className="text-xs text-fg-muted leading-relaxed">{comp.evidence}</p>
             </motion.div>
           )
         })}
       </div>
+
+      {/* Footer attribution */}
+      <div className="px-6 md:px-12 py-4 border-t border-border flex flex-wrap items-center gap-x-3 gap-y-1">
+        <span className="text-[9px] font-mono uppercase tracking-[0.25em] text-fg-faint">Referenced from</span>
+        {EXPERT_SOURCES.map((name, i) => (
+          <span key={name} className="text-[9px] font-mono text-fg-faint">
+            {name}{i < EXPERT_SOURCES.length - 1 ? ' ·' : ''}
+          </span>
+        ))}
+      </div>
     </section>
   )
+}
+
+function agent_role_labels() {
+  return AGENTS.map(a => `${a.name} — ${a.role}`).join('  ·  ')
 }
