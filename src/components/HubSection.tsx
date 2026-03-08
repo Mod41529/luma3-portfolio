@@ -319,7 +319,7 @@ function DevelopmentBody() {
       viewport={{ once: true, margin: '-40px' }}
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
     >
-      {/* Top: project info */}
+      {/* Top: featured project info */}
       <div className="px-6 md:px-12 py-8 md:py-10 flex flex-col md:flex-row gap-8 md:gap-20 border-b border-border">
         <div className="flex gap-7 items-start shrink-0">
           <span className="text-[10px] font-mono text-fg-faint mt-1.5 shrink-0">01</span>
@@ -342,6 +342,58 @@ function DevelopmentBody() {
         </div>
       </div>
 
+      {/* Rest of dev works — compact list */}
+      <div className="border-b border-border">
+        {works
+          .filter((w) => w.category === 'development' && !w.featured)
+          .map((w, i) => (
+            <motion.div
+              key={w.id}
+              initial={{ opacity: 0, x: -6 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: '-20px' }}
+              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1], delay: i * 0.05 }}
+              className="flex items-center gap-4 px-6 md:px-12 py-3.5 border-b border-border last:border-0
+                         hover:bg-bg-subtle transition-colors duration-150"
+            >
+              <span className="text-[10px] font-mono text-fg-faint w-5 shrink-0">
+                {String(i + 2).padStart(2, '0')}
+              </span>
+              <span className="text-sm text-fg flex-1 font-medium">{w.title}</span>
+              <div className="hidden sm:flex flex-wrap gap-1.5">
+                {w.tools.slice(0, 3).map((tool) => (
+                  <span key={tool} className="text-[9px] font-mono text-fg-faint px-1.5 py-0.5 bg-bg-subtle border border-border">
+                    {tool}
+                  </span>
+                ))}
+              </div>
+              <span className="text-[9px] font-mono text-fg-faint shrink-0">{w.year}</span>
+            </motion.div>
+          ))}
+      </div>
+
+      {/* View more */}
+      <div className="px-6 md:px-12 py-6 flex justify-center">
+        <Link
+          href="/work/development"
+          className="group flex flex-col items-center gap-2"
+        >
+          <div className="flex items-center gap-4">
+            <div className="h-px w-10 bg-border group-hover:w-16 transition-all duration-300" />
+            <span className="font-mono text-[10px] uppercase tracking-[0.35em] text-fg-muted group-hover:text-fg transition-colors duration-200">
+              View more
+            </span>
+            <div className="h-px w-10 bg-border group-hover:w-16 transition-all duration-300" />
+          </div>
+          <motion.div
+            animate={{ y: [0, 3, 0] }}
+            transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
+            className="text-fg-faint group-hover:text-fg transition-colors duration-200"
+          >
+            <ArrowUpRight size={12} strokeWidth={1.5} className="rotate-90" />
+          </motion.div>
+        </Link>
+      </div>
     </motion.div>
   )
 }
