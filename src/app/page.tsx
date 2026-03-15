@@ -64,7 +64,9 @@ export default function Home() {
             <AboutSection />
           </div>
 
-          <ContactSection />
+          <div className="mt-16 md:mt-24">
+            <ContactSection />
+          </div>
 
           {/* Footer */}
           <footer className="px-6 md:px-12 py-8 border-t border-border">
