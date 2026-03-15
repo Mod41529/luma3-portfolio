@@ -127,13 +127,13 @@ export default function SideNav() {
         {/* Divider */}
         <div className="h-px bg-border my-3 mx-2" />
 
-        <Link
-          href="/#about"
-          className={`flex items-center gap-2.5 px-2 py-2 text-sm rounded-sm transition-colors duration-150
+        <button
+          onClick={() => scrollTo('about')}
+          className={`flex items-center gap-2.5 px-2 py-2 text-sm rounded-sm w-full text-left transition-colors duration-150
                       ${activeId === 'about' ? 'text-[#1978e5] font-semibold bg-bg-hover' : 'text-fg-muted hover:text-fg hover:bg-bg-hover'}`}
         >
           About
-        </Link>
+        </button>
         <button
           onClick={() => scrollTo('contact')}
           className={`flex items-center gap-2.5 px-2 py-2 text-sm rounded-sm w-full text-left transition-colors duration-150

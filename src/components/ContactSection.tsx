@@ -8,7 +8,7 @@ const LINKS = [
     label:    'Email',
     handle:   'yusung8307@gmail.com',
     href:     'mailto:yusung8307@gmail.com',
-    Icon:     Mail,
+    renderIcon: () => <Mail size={13} strokeWidth={1.8} />,
     accent:   'var(--fg)',
     external: false,
   },
@@ -16,7 +16,7 @@ const LINKS = [
     label:    'GitHub',
     handle:   'Mod41529',
     href:     'https://github.com/Mod41529',
-    Icon:     Github,
+    renderIcon: () => <Github size={13} strokeWidth={1.8} />,
     accent:   'var(--fg)',
     external: true,
   },
@@ -24,7 +24,7 @@ const LINKS = [
     label:    'LinkedIn',
     handle:   'yusung-jun',
     href:     'https://www.linkedin.com/in/yusung-jun-b09952279/',
-    Icon:     null,
+    renderIcon: () => <LinkedInIcon size={13} />,
     accent:   '#0A66C2',
     external: true,
   },
@@ -32,19 +32,17 @@ const LINKS = [
     label:    'Blog',
     handle:   'cretablog',
     href:     'https://blog.naver.com/cretablog',
-    Icon:     null,
+    renderIcon: () => <NaverIcon size={13} />,
     accent:   '#03C75A',
     external: true,
-    isNaver:  true,
   },
   {
     label:    'YouTube',
     handle:   'Yusung_fc',
     href:     'https://www.youtube.com/@Yusung_fc',
-    Icon:     null,
+    renderIcon: () => <YouTubeIcon size={13} />,
     accent:   '#FF0000',
     external: true,
-    isYouTube: true,
   },
 ]
 
@@ -128,7 +126,7 @@ export default function ContactSection() {
             <div>
               <p className="text-[9px] font-mono uppercase tracking-[0.3em] text-fg-subtle mb-4">Links</p>
               <div className="space-y-1">
-                {LINKS.map(({ label, handle, href, Icon, accent, external }) => (
+                {LINKS.map(({ label, handle, href, renderIcon, accent, external }) => (
                   <a
                     key={label}
                     href={href}
@@ -141,14 +139,7 @@ export default function ContactSection() {
                       <span className="w-7 h-7 flex items-center justify-center border border-border
                                        group-hover:border-fg-faint transition-colors duration-150"
                             style={{ color: accent }}>
-                        {Icon
-                          ? <Icon size={13} strokeWidth={1.8} />
-                          : LINKS.find(l => l.handle === handle)?.isNaver
-                              ? <NaverIcon size={13} />
-                              : LINKS.find(l => l.handle === handle)?.isYouTube
-                                  ? <YouTubeIcon size={13} />
-                                  : <LinkedInIcon size={13} />
-                        }
+                        {renderIcon()}
                       </span>
                       <div>
                         <p className="text-[9px] font-mono uppercase tracking-wider text-fg-subtle">{label}</p>

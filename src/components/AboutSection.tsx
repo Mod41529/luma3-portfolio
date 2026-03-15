@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 
 const BACKGROUND = [
   { label: 'University',   value: 'Sungkyunkwan University — Global Business Administration' },
-  { label: 'Field',        value: 'Finance & Tax Automation / AI Systems' },
+  { label: 'Field',        value: 'AI Systems / Finance & Business Automation' },
   { label: 'Operations',   value: 'AI-powered Finance & Business Operations' },
   { label: 'Location',     value: 'Seoul, Korea' },
 ]
@@ -102,9 +102,9 @@ export default function AboutSection() {
             <p className="text-[9px] font-mono uppercase tracking-[0.3em] text-fg-subtle mb-4">Currently</p>
             <div className="space-y-2.5">
               {[
-                'Building luma3 — a multi-discipline creative portfolio',
-                'Deepening financial modeling and business analysis frameworks',
-                'Developing a multi-agent orchestration system (Claude + Codex + Gemini)',
+                'Operating a 4-machine AI orchestration system — Claude, Codex, and Gemini as specialized worker agents with blueprint templates and cross-device sync',
+                'Building an Expert AI persona network in Obsidian vault — domain specialists across finance, tax, law, and business strategy with linked knowledge graphs',
+                'Automating a law compliance pipeline — legal API + PDF ingestion + scheduled discovery, bridging Korean legal registry with local vault search',
               ].map((item, i) => (
                 <div key={i} className="flex items-start gap-3">
                   <span className="text-[8px] font-mono text-fg-faint mt-0.5 shrink-0">
