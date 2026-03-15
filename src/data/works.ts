@@ -1042,19 +1042,56 @@ export const works: WorkItem[] = [
   {
     id: 's3',
     category: 'business',
-    title: 'Personal Finance System',
-    titleKo: '개인 재무 시스템',
+    title: 'Startup Financial Intelligence',
+    titleKo: '스타트업 재무 인텔리전스',
     year: 2026,
-    tools: ['Excel', 'Python', 'Notion'],
+    tools: ['Excel', 'Python', 'Notion', 'Claude'],
     description:
-      'A comprehensive personal finance tracking and projection system built on accounting principles.',
-    descriptionKo: '회계 원칙 기반의 포괄적인 개인 재무 추적 및 예측 시스템.',
+      'SaaS financial health dashboard tracking MRR, burn rate, LTV:CAC ratio, and runway — designed to surface decision-critical signals before they become crises.',
+    descriptionKo:
+      'MRR·번레이트·LTV:CAC 비율·런웨이를 추적하는 SaaS 재무 인텔리전스 대시보드 — 위기 전에 의사결정 신호를 포착합니다.',
     howIMadeThis: {
-      tools: ['Microsoft Excel', 'Python', 'Notion'],
+      tools: ['Microsoft Excel', 'Python', 'Notion', 'Claude as analyst'],
       processNotes:
-        'Applied double-entry bookkeeping principles to personal finance. Built automated monthly closes and 5-year projections with scenario modeling.',
+        'Built a financial model from first principles: cohort-based LTV:CAC calculation, rolling 3-month burn average, scenario runway with 3 hiring assumptions. Layered Claude-generated commentary for weekly digest. Used for startup financial reviews and extended into a reusable template for early-stage SaaS.',
     },
-    thumbnailAlt: 'Financial spreadsheet abstract',
+    thumbnailAlt: 'Financial dashboard with SaaS metrics',
+  },
+  {
+    id: 's4',
+    category: 'business',
+    title: 'GTM Automation Pipeline',
+    titleKo: 'GTM 자동화 파이프라인',
+    year: 2026,
+    tools: ['Clay', 'lemlist', 'Notion', 'Claude'],
+    description:
+      'Two-track outbound system: ICP identification via Clay enrichment, personalized sequence generation with Claude, automated delivery through lemlist — list to booked meeting in under 2 hours.',
+    descriptionKo:
+      'Clay 데이터 보강으로 ICP 식별 → Claude 개인화 시퀀스 생성 → lemlist 자동 발송. 2트랙 아웃바운드 시스템으로 리스트에서 미팅까지 2시간 이내.',
+    howIMadeThis: {
+      tools: ['Clay', 'lemlist', 'Claude', 'Notion'],
+      processNotes:
+        'Two-track ICP system: Track A (warm — prior touch + high-intent signals) and Track B (cold — firmographic match). Clay handles enrichment and scoring; Claude generates personalized email copy from ICP profile; lemlist sequences and tracks replies. Notion CRM captures pipeline state end-to-end.',
+    },
+    thumbnailAlt: 'GTM pipeline automation diagram',
+  },
+  {
+    id: 's5',
+    category: 'business',
+    title: 'AI Consulting Delivery Framework',
+    titleKo: 'AI 컨설팅 딜리버리 프레임워크',
+    year: 2026,
+    tools: ['Claude', 'Notion', 'Python', 'Figma'],
+    description:
+      'End-to-end consulting delivery system: scoping → PoC → custom model integration. Standardized proposal templates, milestone gates, and ROI measurement — refined through POSCO and SME engagements.',
+    descriptionKo:
+      '스코핑 → PoC → 커스텀 모델 통합까지의 AI 컨설팅 딜리버리 시스템. 포스코 및 SME 프로젝트에서 검증한 표준 제안서, 마일스톤 게이트, ROI 측정 체계.',
+    howIMadeThis: {
+      tools: ['Claude as architect', 'Notion', 'Python', 'Figma'],
+      processNotes:
+        'Distilled patterns from 3 engagements (POSCO AI proposal, 2× SME PoC projects) into a repeatable delivery framework. Modules: (1) Discovery — workflow audit + AI-readiness scoring; (2) PoC — 2-week sprint with pre-defined stop criteria; (3) Scale — handoff documentation + operator training. Proposal template reduced scoping time by ~60%.',
+    },
+    thumbnailAlt: 'Consulting framework diagram',
   },
 ]
 
