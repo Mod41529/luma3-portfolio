@@ -26,6 +26,7 @@ export interface WorkItem {
   audioSrc?: string       // /audio/{id}.mp3
   aspectRatio?: string    // e.g. '512/768', '16/9', '1/1'  (natural video dimensions)
   featured?: boolean
+  showOnHome?: boolean   // false = archive only (view more page), defaults to true
 }
 
 export interface CategoryConfig {

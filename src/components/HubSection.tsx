@@ -345,7 +345,7 @@ function DevelopmentBody() {
       {/* Rest of dev works — compact list */}
       <div className="border-b border-border">
         {works
-          .filter((w) => w.category === 'development' && !w.featured)
+          .filter((w) => w.category === 'development' && !w.featured && w.showOnHome !== false)
           .map((w, i) => (
             <motion.div
               key={w.id}

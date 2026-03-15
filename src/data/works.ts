@@ -820,15 +820,15 @@ export const works: WorkItem[] = [
     title: 'Multi-Agent Orchestration',
     titleKo: '멀티에이전트 오케스트레이션',
     year: 2026,
-    tools: ['Claude Code', 'Bash', 'Python', 'YAML'],
+    tools: ['Claude Code', 'Bash', 'Python', 'YAML', 'GCP', 'MCP'],
     description:
-      'A personal orchestration system managing Claude, Codex, and Gemini as specialized worker agents.',
+      'A personal orchestration system managing Claude, Codex, and Gemini as specialized worker agents — persistent task queue, blueprint templates, JSON status API, and cross-device sync across 4 machines via GCP Secret Manager and Tailscale.',
     descriptionKo:
-      'Claude, Codex, Gemini를 전문 작업자 에이전트로 관리하는 개인 오케스트레이션 시스템.',
+      'Claude, Codex, Gemini를 전문 에이전트로 관리하는 오케스트레이션 시스템. 영속 태스크 큐, 블루프린트 템플릿, JSON 상태 API, GCP Secret Manager·Tailscale 기반 4대 기기 실시간 동기화.',
     howIMadeThis: {
-      tools: ['Claude Code', 'Bash scripts', 'Python', 'YAML config'],
+      tools: ['Claude Code', 'Bash', 'Python', 'YAML', 'GCP Secret Manager', 'Tailscale', 'MCP'],
       processNotes:
-        'Built a persistent queue system with JSON state files, routing logic based on task type, and automatic fallback between agents. E2E tested across macOS and Windows.',
+        'Built a persistent queue with JSON state files and routing logic that dispatches tasks to the right agent based on type — research to Gemini, heavy code to Codex, judgment to Claude. Added a blueprint system (YAML-driven multi-step workflows), --status --json / schema --json APIs for agent-readable output, and GCP Secret Manager for zero-copy secrets across macOS and Windows. MCP routing table covers Google Workspace, Notion, and Slack.',
     },
     thumbnailAlt: 'System architecture diagram',
     featured: true,
@@ -850,6 +850,7 @@ export const works: WorkItem[] = [
         'Built a unified CLI that wraps both personal and company Notion tokens, with smart routing based on content type and workspace context.',
     },
     thumbnailAlt: 'Terminal interface abstract',
+    showOnHome: false,
   },
   {
     id: 'dev3',
@@ -868,6 +869,7 @@ export const works: WorkItem[] = [
         'Mapped all manual weekly reporting tasks, then built automation for 80% of them. Saved ~4 hours/week across the team.',
     },
     thumbnailAlt: 'Workflow diagram abstract',
+    showOnHome: false,
   },
 
   {
@@ -905,6 +907,7 @@ export const works: WorkItem[] = [
         'Built modular execution, portfolio, and notify layers independently, then wired together via live.py. Momentum strategy validated with 1Y backtest before connecting to paper trading.',
     },
     thumbnailAlt: 'Investment bot backtesting chart',
+    showOnHome: false,
   },
   {
     id: 'dev6',
@@ -923,6 +926,7 @@ export const works: WorkItem[] = [
         'Configured skill whitelists and approval gates for high-permission tasks. Integrated with existing multi-agent orchestration system as an additional command entry point.',
     },
     thumbnailAlt: 'OpenClaw agent channel diagram',
+    showOnHome: false,
   },
   {
     id: 'dev7',
@@ -959,6 +963,42 @@ export const works: WorkItem[] = [
         'Codex implemented the training plan data model and YouTube API integration. Curriculum structure and drill sequencing were designed by hand based on beginner futsal coaching frameworks.',
     },
     thumbnailAlt: 'Futsal training app screenshot',
+  },
+  {
+    id: 'dev9',
+    category: 'development',
+    title: 'Slide & Document Generator',
+    titleKo: '슬라이드·문서 생성기',
+    year: 2026,
+    tools: ['Bash', 'Python', 'Gemini', 'Playwright', 'HTML/CSS'],
+    description:
+      'A local pipeline that turns any topic into a presentation deck or A4 document PDF. Gemini generates structured JSON, Python assembles it into fixed HTML templates, Playwright renders to print-ready PDF.',
+    descriptionKo:
+      '주제 하나로 슬라이드 덱 또는 A4 문서 PDF를 자동 생성하는 로컬 파이프라인. Gemini가 구조화 JSON을 생성하고, Python이 고정 HTML 템플릿에 조립, Playwright가 PDF로 렌더링.',
+    howIMadeThis: {
+      tools: ['Bash', 'Python (Jinja2-style injector)', 'Gemini 2.5 Flash', 'Playwright', 'pandoc'],
+      processNotes:
+        'Designed 9 slide types (title panel, card grid, timeline, comparison table, big statement, bar chart, quote, before/after, numbered list) and 7 document section types as fixed HTML components. Gemini only handles data (JSON) — never layout — giving consistent design output regardless of AI quality variance. Includes 24 inline SVG icons with brand color inheritance, and a before/after layout for client-facing business decks. Adding --word flag also outputs DOCX via pandoc.',
+    },
+    thumbnailAlt: 'Slide and document generation pipeline',
+  },
+  {
+    id: 'dev10',
+    category: 'development',
+    title: 'Telegram Bot Ecosystem',
+    titleKo: '텔레그램 봇 에코시스템',
+    year: 2026,
+    tools: ['Python', 'Telegram API', 'KIS API', 'Yahoo Finance', 'Notion'],
+    description:
+      'A network of 11 specialized Telegram bots: market open/close alerts, real-time forex, content pipeline notifications, ingredient inventory tracking, and a Claude Code remote command channel.',
+    descriptionKo:
+      '11개 전문화된 텔레그램 봇 네트워크. 장시작·마감 알림, 실시간 환율, 콘텐츠 파이프라인 알림, 식재료 재고 추적, Claude Code 원격 명령 채널까지 도메인별 단일 채널 구조.',
+    howIMadeThis: {
+      tools: ['Python', 'Telegram Bot API', 'KIS Open API', 'Yahoo Finance API', 'Notion API', 'launchd'],
+      processNotes:
+        'Each bot handles exactly one domain and routes to a dedicated Telegram channel. HTML-formatted messages with Notion deep-links for drill-down. Investment bot integrates KIS API for Korean market data and Yahoo Finance for real-time forex. Non-critical events use silent DB-only logging to avoid notification fatigue. All bots run on launchd schedules (macOS) with cron fallback.',
+    },
+    thumbnailAlt: 'Telegram bot network diagram',
   },
 
   // ─── Strategy ────────────────────────────────────────────────────────────
