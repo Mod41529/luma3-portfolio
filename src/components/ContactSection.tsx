@@ -38,8 +38,8 @@ const LINKS = [
   },
   {
     label:    'YouTube',
-    handle:   'Yusung_fc',
-    href:     'https://www.youtube.com/@Yusung_fc',
+    handle:   'luma_nico',
+    href:     'https://www.youtube.com/@luma_nico',
     renderIcon: () => <YouTubeIcon size={13} />,
     accent:   '#FF0000',
     external: true,
